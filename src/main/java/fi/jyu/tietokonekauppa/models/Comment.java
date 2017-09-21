@@ -1,13 +1,24 @@
 package fi.jyu.tietokonekauppa.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class Comment {
 
+    @JsonProperty("id")
     Long id;
+
+    @JsonProperty("item")
     Component item;
+
+    @JsonProperty("contents")
     String contents;
+
+    @JsonProperty("user_name")
     String userName;
+
+    @JsonProperty("date")
     Date date;
 
     public Comment(Component item, String contents, String userName, Date date) {

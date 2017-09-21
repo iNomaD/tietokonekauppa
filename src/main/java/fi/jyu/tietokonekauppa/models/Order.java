@@ -1,13 +1,25 @@
 package fi.jyu.tietokonekauppa.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import java.util.List;
 
 public class Order {
 
+    @JsonProperty("id")
+    Long id;
+
+    @JsonProperty("components")
     List<Component> components;
+
+    @JsonProperty("user_name")
     String userName;
+
+    @JsonProperty("user_email")
     String userEmail;
+
+    @JsonProperty("date")
     Date date;
 
     public Order(List<Component> components, String userName, String userEmail, Date date) {
