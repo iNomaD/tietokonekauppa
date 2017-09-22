@@ -1,5 +1,6 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
+import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.Disk;
 import fi.jyu.tietokonekauppa.services.DiskService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
@@ -13,6 +14,8 @@ import javax.ws.rs.core.UriInfo;
 
 import java.net.URI;
 import java.util.List;
+
+import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
 
 @Path("/admin/disks")
 public class DiskController {
@@ -43,6 +46,11 @@ public class DiskController {
             throw new DataExistsException("Disk already exists");
         }
         item = diskService.add(item);
+        if(item == null){
+            throw new DataNotFoundException("Disk was not created");
+        }
+        addLinks(item, uriInfo, DiskController.class, fi.jyu.tietokonekauppa.web.controllers.common.DiskController.class);
+        item = diskService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();
