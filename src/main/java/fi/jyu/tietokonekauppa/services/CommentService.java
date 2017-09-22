@@ -17,7 +17,7 @@ public class CommentService {
         List<Comment> result = new ArrayList<>();
         List<Comment> comments = getAll();
         for(Comment c : comments){
-            if(c.getItemType() == type){
+            if(c.getItemType() == type && c.getItem().getId() == itemId){
                 result.add(c);
             }
         }
