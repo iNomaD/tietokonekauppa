@@ -2,6 +2,9 @@ package fi.jyu.tietokonekauppa.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Component {
 
     public static enum Type{
@@ -41,6 +44,9 @@ public abstract class Component {
 
     @JsonProperty("amount_available")
     private Integer amountAvailable; // >=0
+
+    @JsonProperty("links")
+    private List<Link> links = new ArrayList<>();
 
     protected Component(){}
 
@@ -98,5 +104,10 @@ public abstract class Component {
 
     public void setAmountAvailable(Integer amountAvailable) {
         this.amountAvailable = amountAvailable;
+    }
+
+    public void addLink(String url, String rel) {
+        Link link = new Link(url, rel);
+        links.add(link);
     }
 }
