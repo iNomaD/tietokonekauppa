@@ -1,5 +1,7 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
+import fi.jyu.tietokonekauppa.models.Comment;
+import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.Disk;
 import fi.jyu.tietokonekauppa.services.DiskService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
@@ -11,7 +13,8 @@ import java.util.List;
 
 @Path("/disks")
 public class DiskController {
-    DiskService diskService = new DiskService();
+
+    private DiskService diskService = new DiskService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -21,4 +24,9 @@ public class DiskController {
         return Response.ok().entity(list).build();
     }
 
+    @GET
+    @Path("/{id}/comments")
+    public CommentController getCommentResource(){
+        return new CommentController(Component.Type.Disk);
+    }
 }

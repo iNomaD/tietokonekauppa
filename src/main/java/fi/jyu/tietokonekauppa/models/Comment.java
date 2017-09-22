@@ -12,6 +12,9 @@ public class Comment {
     @JsonProperty("item")
     Component item;
 
+    @JsonProperty("item_type")
+    Component.Type itemType;
+
     @JsonProperty("contents")
     String contents;
 
@@ -23,6 +26,7 @@ public class Comment {
 
     public Comment(Component item, String contents, String userName, Date date) {
         this.item = item;
+        this.itemType = Component.Type.getType(item);
         this.contents = contents;
         this.userName = userName;
         this.date = date;
@@ -66,5 +70,13 @@ public class Comment {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public Component.Type getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(Component.Type itemType) {
+        this.itemType = itemType;
     }
 }

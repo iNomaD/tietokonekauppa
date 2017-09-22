@@ -4,6 +4,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public abstract class Component {
 
+    public static enum Type{
+        Case, Disk, GPU, Motherboard, Processor, PSU, RAM;
+
+        public static Type getType(Component item) {
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Case)
+                return Case;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Disk)
+                return Disk;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.GPU)
+                return GPU;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Motherboard)
+                return Motherboard;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Processor)
+                return Processor;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.PSU)
+                return PSU;
+            return RAM;
+        }
+    }
+
     @JsonProperty("id")
     private Long id;
 

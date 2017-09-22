@@ -17,7 +17,7 @@ import java.util.List;
 @Path("/admin/disks")
 public class DiskController {
 
-    DiskService diskService = new DiskService();
+    private DiskService diskService = new DiskService();
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

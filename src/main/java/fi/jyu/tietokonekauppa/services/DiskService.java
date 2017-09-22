@@ -9,6 +9,7 @@ import java.util.List;
 public class DiskService {
 
     public List<Disk> getAll() {
+        // TODO to implement
         return null;
     }
 
@@ -25,22 +26,26 @@ public class DiskService {
     }
 
     public Disk get(long id) {
+        // TODO to implement
         return null;
     }
 
     public boolean isDiskExist(Disk item) {
+        // TODO to implement
         return false;
     }
 
     public Disk add(Disk item) {
+        // TODO to implement
         return null;
     }
 
     public Disk update(Disk item) {
+        // TODO to implement
         return null;
     }
 
     public void remove(long id) {
-
+        // TODO to implement
     }
 }
