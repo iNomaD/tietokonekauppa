@@ -8,23 +8,25 @@
 <li>Hibernate 4</li>
 <li>PostgreSQL</li>
 </ul>
-<br/>
   
 <b>Frontend Technologies:</b>
 <ul>
 <li>Bootstrap</li>
 <li>AngularJS 2</li>
 </ul>
-<br/>
 
-<p>Update credentials in resources/config.properties</p>
+<h2>Prepare database</h2>
+<p>Install PostgreSQL</p>
+<p>Create table tietokonekauppa with pgAdmin or cmd</p>
+<pre>createdb -E utf8 -U postgres tietokonekauppa</pre>
+<p>Update credentials in resources/hibernate.cfg.xml</p>
 <pre>
-host = localhost:5432
-db_username = postgres
-db_password = 12345
+connection.url = jdbc:postgresql://localhost:5432/tietokonekauppa
+connection.username = postgres (your username)
+connection.password = 12345 (your password)
 </pre>
-<br/>
 
+<h2>Use app</h2>
 <p>Go to GUI: localhost:8080/index.jsp</p>
 <p>Common API: localhost:8080/api/</p>
 <p>Admin  API: localhost:8080/api/admin/</p>
