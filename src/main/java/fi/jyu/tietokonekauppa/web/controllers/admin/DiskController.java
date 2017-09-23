@@ -26,7 +26,7 @@ public class DiskController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDisks(){
         List<Disk> list = diskService.getAll();
-        return Response.ok().entity(list).header("Access-Control-Allow-Origin","*").build();
+        return Response.ok().entity(list).build();
     }
 
     @GET
@@ -36,7 +36,7 @@ public class DiskController {
             if(item == null){
                 throw new DataNotFoundException("Disk with id "+id+" not found");
             }
-            return Response.ok().entity(item).header("Access-Control-Allow-Origin","*").build();
+            return Response.ok().entity(item).build();
     }
 
     @POST
@@ -53,7 +53,7 @@ public class DiskController {
         item = diskService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
-        return Response.created(uri).entity(item).header("Access-Control-Allow-Origin","*").build();
+        return Response.created(uri).entity(item).build();
     }
 
     @PUT
@@ -66,7 +66,7 @@ public class DiskController {
         }
         item.setId(id);
         item = diskService.update(item);
-        return Response.ok().entity(item).header("Access-Control-Allow-Origin","*").build();
+        return Response.ok().entity(item).build();
     }
 
     @DELETE
@@ -77,6 +77,6 @@ public class DiskController {
             throw new DataNotFoundException("Disk with id "+id+" not found");
         }
         diskService.remove(id);
-        return Response.noContent().header("Access-Control-Allow-Origin","*").build();
+        return Response.noContent().build();
     }
 }
