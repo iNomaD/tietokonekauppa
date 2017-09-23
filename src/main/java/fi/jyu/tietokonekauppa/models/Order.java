@@ -2,14 +2,20 @@ package fi.jyu.tietokonekauppa.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "orders")
 public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     Long id;
 
+    @OneToMany
     @JsonProperty("components")
     List<Component> components;
 
@@ -22,11 +28,21 @@ public class Order {
     @JsonProperty("date")
     Date date;
 
+    public Order(){};
+
     public Order(List<Component> components, String userName, String userEmail, Date date) {
         this.components = components;
         this.userName = userName;
         this.userEmail = userEmail;
         this.date = date;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public List<Component> getComponents() {

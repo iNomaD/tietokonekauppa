@@ -3,6 +3,11 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "rams")
 public class RAM extends Component {
 
     @JsonProperty("memorySize")
@@ -19,6 +24,8 @@ public class RAM extends Component {
 
     @JsonProperty("ramMemoryTechnology")
     private String ramMemoryTechnology;
+
+    public RAM(){};
 
     public RAM(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, Integer memorySize, String ramType, String formFactor, Integer speed, String ramMemoryTechnology) {
         super(name, vendor, price, priceUnits, amountAvailable);

@@ -3,6 +3,11 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "processors")
 public class Processor extends Component {
 
     @JsonProperty("processorCount")
@@ -19,6 +24,8 @@ public class Processor extends Component {
 
     @JsonProperty("manufacturer")
     private String manufacturer;
+
+    public Processor(){};
 
     public Processor(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, Integer processorCount, Integer speed, String ramType, String socket, String manufacturer) {
         super(name, vendor, price, priceUnits, amountAvailable);

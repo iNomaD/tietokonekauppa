@@ -3,6 +3,11 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "motherboards")
 public class Motherboard extends Component {
 
     @JsonProperty("cpuModelSocket")
@@ -16,6 +21,8 @@ public class Motherboard extends Component {
 
     @JsonProperty("memoryMaximumSize")
     private Integer memoryMaximumSize;//GB
+
+    public Motherboard(){};
 
     public Motherboard(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, String cpuModelSocket, String ramMemoryTechnology, String formFactor, Integer memoryMaximumSize) {
         super(name, vendor, price, priceUnits, amountAvailable);

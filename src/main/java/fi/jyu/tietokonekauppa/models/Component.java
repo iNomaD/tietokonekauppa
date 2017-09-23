@@ -2,9 +2,12 @@ package fi.jyu.tietokonekauppa.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Component {
 
     public static enum Type{
@@ -27,6 +30,8 @@ public abstract class Component {
         }
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     private Long id;
 
@@ -45,6 +50,7 @@ public abstract class Component {
     @JsonProperty("amount_available")
     private Integer amountAvailable; // >=0
 
+    @OneToMany(mappedBy="component", cascade=CascadeType.ALL)
     @JsonProperty("links")
     private List<Link> links = new ArrayList<>();
 

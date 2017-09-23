@@ -3,6 +3,11 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "gpus")
 public class GPU extends Component {
 
     @JsonProperty("ramSize")
@@ -19,6 +24,8 @@ public class GPU extends Component {
 
     @JsonProperty("clockSpeed")
     private Integer clockSpeed;//MHz
+
+    public GPU(){};
 
     public GPU(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, Integer ramSize, String ramType, String coprocessor, Integer busWidth, Integer clockSpeed) {
         super(name, vendor, price, priceUnits, amountAvailable);

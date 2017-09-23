@@ -3,8 +3,12 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlType;
 
+@Entity
+@Table(name = "disks")
 public class Disk extends Component {
 
     @JsonProperty("type")
@@ -18,6 +22,8 @@ public class Disk extends Component {
 
     @JsonProperty("rpm")
     private Integer rpm;
+
+    public Disk(){}
 
     public Disk(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, String type, Integer capacity, String capacityUnits, Integer rpm) {
         super(name, vendor, price, priceUnits, amountAvailable);

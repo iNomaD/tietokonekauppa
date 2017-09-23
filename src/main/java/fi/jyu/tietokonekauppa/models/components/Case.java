@@ -3,16 +3,23 @@ package fi.jyu.tietokonekauppa.models.components;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fi.jyu.tietokonekauppa.models.Component;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "cases")
 public class Case extends Component {
 
     @JsonProperty("weight")
-    private float weight;//lbs
+    private Float weight;//lbs
 
     @JsonProperty("dimensions")
     private String dimensions;//inches
 
     @JsonProperty("color")
     private String color;
+
+    public Case(){};
 
     public Case(String name, String vendor, Integer price, String priceUnits, Integer amountAvailable, float weight, String dimensions, String color) {
         super(name, vendor, price, priceUnits, amountAvailable);
@@ -21,11 +28,11 @@ public class Case extends Component {
         this.color = color;
     }
 
-    public float getWeight() {
+    public Float getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Float weight) {
         this.weight = weight;
     }
 

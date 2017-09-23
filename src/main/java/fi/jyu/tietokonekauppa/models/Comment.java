@@ -1,28 +1,40 @@
 package fi.jyu.tietokonekauppa.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
-    Long id;
+    private Long id;
 
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("item")
-    Component item;
+    private Component item;
 
+    @Enumerated(EnumType.STRING)
     @JsonProperty("item_type")
-    Component.Type itemType;
+    private Component.Type itemType;
 
     @JsonProperty("contents")
-    String contents;
+    private String contents;
 
     @JsonProperty("user_name")
-    String userName;
+    private String userName;
 
     @JsonProperty("date")
-    Date date;
+    private Date date;
+
+    public Comment(){};
 
     public Comment(Component item, String contents, String userName, Date date) {
         this.item = item;
