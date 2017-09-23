@@ -7,14 +7,14 @@
 <li>Jersey 2.23</li>
 <li>Hibernate 4</li>
 <li>PostgreSQL</li>
-<ul>
+</ul>
+<br/>
   
 <b>Frontend Technologies:</b>
 <ul>
 <li>Bootstrap</li>
 <li>AngularJS 2</li>
-<ul>
-
+</ul>
 <br/>
 
 <p>Update credentials in resources/config.properties</p>
