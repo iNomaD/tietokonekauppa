@@ -28,6 +28,8 @@ jdbc.password = 12345 (your password)
 </pre>
 
 <h2>Use app</h2>
-<p>Go to GUI: localhost:8080/index.jsp</p>
+<p>Common GUI: localhost:8080/index.jsp</p>
+<p>Admin GUI: http://localhost:8080/admin</p>
+
 <p>Common API: localhost:8080/api/</p>
 <p>Admin  API: localhost:8080/api/admin/</p>
