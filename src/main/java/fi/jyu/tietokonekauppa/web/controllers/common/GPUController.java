@@ -1,9 +1,9 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
-import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.GPU;
 import fi.jyu.tietokonekauppa.services.GPUService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,8 @@ import java.util.List;
 @Path("/gpus")
 public class GPUController {
 
-    private GPUService gpuService = new GPUService();
+    @Autowired
+    private GPUService gpuService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,7 +26,7 @@ public class GPUController {
 
     @GET
     @Path("/{id}/comments")
-    public CommentController getCommentResource(){
-        return new CommentController(Component.Type.GPU);
+    public CommentResource getCommentResource(){
+        return new CommentResource();
     }
 }

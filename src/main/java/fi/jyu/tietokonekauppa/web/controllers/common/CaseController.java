@@ -1,9 +1,9 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
-import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.Case;
 import fi.jyu.tietokonekauppa.services.CaseService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,8 @@ import java.util.List;
 @Path("/cases")
 public class CaseController {
 
-    private CaseService caseService = new CaseService();
+    @Autowired
+    private CaseService caseService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,7 +26,7 @@ public class CaseController {
 
     @GET
     @Path("/{id}/comments")
-    public CommentController getCommentResource(){
-        return new CommentController(Component.Type.Case);
+    public CommentResource getCommentResource(){
+        return new CommentResource();
     }
 }

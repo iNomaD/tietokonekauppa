@@ -2,22 +2,44 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
+import fi.jyu.tietokonekauppa.repositories.CommentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CommentService {
 
+    @Autowired
+    CommentRepository commentRepository;
+
+    @Autowired
+    DiskService diskService;
+
     public List<Comment> getAll() {
-        // TODO to implement
-        return null;
+        List<Comment> result = new ArrayList<>();
+        commentRepository.findAll().forEach(result::add);
+        return result;
     }
 
-    public List<Comment> getAllComments(Component.Type type, long itemId) {
+    public List<Comment> getAllComments(long itemId) {
         List<Comment> result = new ArrayList<>();
         List<Comment> comments = getAll();
         for(Comment c : comments){
-            if(c.getItemType() == type && c.getItem().getId() == itemId){
+            // check id
+            if(c.getItem().getId() == itemId){
+                // check type
+                /*
+                Component item = null;
+                switch (c.getItemType()){
+                    case Disk:
+                        item = diskService.get(itemId);
+                }
+                if(item != null){
+                    result.add(c);
+                }*/
                 result.add(c);
             }
         }
@@ -25,30 +47,42 @@ public class CommentService {
     }
 
     public Comment get(long id) {
-        // TODO to implement
-        return null;
+        return commentRepository.findOne(id);
     }
 
-    public Comment getComment(Component.Type type, long itemId, long commentId) {
-        return get(commentId);
+    public Comment getComment(long itemId, long commentId) {
+        Comment comment = commentRepository.findOne(commentId);
+        // check id
+        if(comment != null && comment.getItem().getId()==itemId){
+            // check type
+            /*
+            Component item = null;
+            switch (comment.getItemType()){
+                case Disk:
+                    item = diskService.get(itemId);
+            }
+            if(item != null){
+                return comment;
+            }*/
+            return comment;
+        }
+        return null;
     }
 
     public boolean isCommentExist(Comment item) {
-        // TODO to implement
-        return false;
+        return commentRepository.exists(item.getId());
     }
 
     public Comment add(Comment item) {
-        // TODO to implement
-        return null;
+        item.setId(new Long(0));
+        return commentRepository.save(item);
     }
 
     public Comment update(Comment item) {
-        // TODO to implement
-        return null;
+        return commentRepository.save(item);
     }
 
     public void remove(long id) {
-        // TODO to implement
+        commentRepository.delete(id);
     }
 }

@@ -1,9 +1,9 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
-import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.Processor;
 import fi.jyu.tietokonekauppa.services.ProcessorService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,8 @@ import java.util.List;
 @Path("/processors")
 public class ProcessorController {
 
-    private ProcessorService ProcessorService = new ProcessorService();
+    @Autowired
+    private ProcessorService ProcessorService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,7 +26,7 @@ public class ProcessorController {
 
     @GET
     @Path("/{id}/comments")
-    public CommentController getCommentResource(){
-        return new CommentController(Component.Type.Processor);
+    public CommentResource getCommentResource(){
+        return new CommentResource();
     }
 }

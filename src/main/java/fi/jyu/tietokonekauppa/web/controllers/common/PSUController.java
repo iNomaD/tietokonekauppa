@@ -1,9 +1,9 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
-import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.PSU;
 import fi.jyu.tietokonekauppa.services.PSUService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,7 +13,8 @@ import java.util.List;
 @Path("/psus")
 public class PSUController {
 
-    private PSUService PSUService = new PSUService();
+    @Autowired
+    private PSUService PSUService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -25,7 +26,7 @@ public class PSUController {
 
     @GET
     @Path("/{id}/comments")
-    public CommentController getCommentResource(){
-        return new CommentController(Component.Type.PSU);
+    public CommentResource getCommentResource(){
+        return new CommentResource();
     }
 }

@@ -2,10 +2,12 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.RAM;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class RAMService {
 
     public List<RAM> getAll() {

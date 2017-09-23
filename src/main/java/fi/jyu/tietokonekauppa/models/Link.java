@@ -3,10 +3,11 @@ package fi.jyu.tietokonekauppa.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "links")
-public class Link {
+public class Link implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

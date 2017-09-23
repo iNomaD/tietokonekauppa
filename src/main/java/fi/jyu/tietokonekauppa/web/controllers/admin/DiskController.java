@@ -1,29 +1,29 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
-import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.components.Disk;
 import fi.jyu.tietokonekauppa.services.DiskService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
 import java.net.URI;
 import java.util.List;
 
 import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
 
 @Path("/admin/disks")
+@Produces(MediaType.APPLICATION_JSON)
 public class DiskController {
 
-    private DiskService diskService = new DiskService();
+    @Autowired
+    private DiskService diskService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getDisks(){
         List<Disk> list = diskService.getAll();
         return Response.ok().entity(list).build();
@@ -42,6 +42,7 @@ public class DiskController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addDisk (Disk item, @Context UriInfo uriInfo){
+        System.out.println("disk:"+item);
         if(diskService.isDiskExist(item)){
             throw new DataExistsException("Disk already exists");
         }

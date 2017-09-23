@@ -15,7 +15,15 @@
         <servlet-name>Jersey Web Application</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+
+    <!-- Spring Listener -->
     <listener>
-        <listener-class>fi.jyu.tietokonekauppa.listeners.ApplicationStratup</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <!-- loading Spring Context for registering beans with ApplicationContext -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>WEB-INF/spring-hibernate-jersey2.xml</param-value>
+    </context-param>
 </web-app>

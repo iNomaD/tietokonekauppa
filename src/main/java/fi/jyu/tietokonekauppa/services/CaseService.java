@@ -2,10 +2,12 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.Case;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CaseService {
 
     public List<Case> getAll() {

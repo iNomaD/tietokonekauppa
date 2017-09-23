@@ -1,16 +1,23 @@
 package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.Disk;
+import fi.jyu.tietokonekauppa.repositories.DiskRepository;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class DiskService {
+    @Autowired
+    private DiskRepository diskRepository;
 
     public List<Disk> getAll() {
-        // TODO to implement
-        return null;
+        List<Disk> result = new ArrayList<>();
+        diskRepository.findAll().forEach(result::add);
+        return result;
     }
 
     public List<Disk> getAll(int minPrice, int maxPrice, PriceUnits priceUnits) {
@@ -18,7 +25,11 @@ public class DiskService {
         List<Disk> all = getAll();
         for(Disk item : all){
             UnitConverterService.convert(item, priceUnits);
-            if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
+            if(item.getPrice() == null){
+                //if data is missing we can pass it
+                result.add(item);
+            }
+            else if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
                 result.add(item);
             }
         }
@@ -26,26 +37,23 @@ public class DiskService {
     }
 
     public Disk get(long id) {
-        // TODO to implement
-        return null;
+        return diskRepository.findOne(id);
     }
 
     public boolean isDiskExist(Disk item) {
-        // TODO to implement
-        return false;
+        return diskRepository.exists(item.getId());
     }
 
     public Disk add(Disk item) {
-        // TODO to implement
-        return null;
+        item.setId(new Long(0));
+        return diskRepository.save(item);
     }
 
     public Disk update(Disk item) {
-        // TODO to implement
-        return null;
+        return diskRepository.save(item);
     }
 
     public void remove(long id) {
-        // TODO to implement
+        diskRepository.delete(id);
     }
 }

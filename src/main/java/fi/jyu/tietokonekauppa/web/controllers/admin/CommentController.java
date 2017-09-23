@@ -4,6 +4,7 @@ import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.services.CommentService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -14,12 +15,13 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/admin/comments")
+@Produces(MediaType.APPLICATION_JSON)
 public class CommentController {
 
-    private CommentService commentService = new CommentService();
+    @Autowired
+    private CommentService commentService;
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     public Response getComments(){
         List<Comment> list = commentService.getAll();
         return Response.ok().entity(list).build();

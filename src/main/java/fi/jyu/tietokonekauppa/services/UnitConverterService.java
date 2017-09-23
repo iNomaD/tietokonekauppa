@@ -2,12 +2,14 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UnitConverterService {
     private static double USD_IN_EUR = 1.19385;
 
     public static void convert(Component component, PriceUnits priceUnits){
-        if(priceUnits != null) {
+        if(priceUnits != null && component.getPriceUnits() != null) {
             String currentPriceUnits = component.getPriceUnits();
             //from USD to EUR
             if (currentPriceUnits.equalsIgnoreCase("USD") && priceUnits == PriceUnits.EUR) {

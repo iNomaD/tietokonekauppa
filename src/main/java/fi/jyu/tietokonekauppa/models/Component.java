@@ -3,12 +3,15 @@ package fi.jyu.tietokonekauppa.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Component {
+public abstract class Component implements Serializable{
 
     public static enum Type{
         Case, Disk, GPU, Motherboard, Processor, PSU, RAM;
@@ -35,22 +38,25 @@ public abstract class Component {
     @JsonProperty("id")
     private Long id;
 
+    @NotNull
     @JsonProperty("name")
     private String name; // name that appears in the table
 
     @JsonProperty("vendor")
     private String vendor;
 
+    @NotNull
     @JsonProperty("price")
     private Integer price;
 
+    @NotNull
     @JsonProperty("price_units")
     private String priceUnits; // USD or EUR
 
     @JsonProperty("amount_available")
     private Integer amountAvailable; // >=0
 
-    @OneToMany(mappedBy="component", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="component", cascade=CascadeType.ALL)
     @JsonProperty("links")
     private List<Link> links = new ArrayList<>();
 
