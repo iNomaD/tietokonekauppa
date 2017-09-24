@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,9 +15,20 @@ public class CommentService {
 
     @Autowired
     CommentRepository commentRepository;
-
-    //@Autowired
-    //DiskService diskService;
+    @Autowired
+    CaseService caseService;
+    @Autowired
+    DiskService diskService;
+    @Autowired
+    GPUService gpuService;
+    @Autowired
+    MotherboardService motherboardService;
+    @Autowired
+    ProcessorService processorService;
+    @Autowired
+    PSUService psuService;
+    @Autowired
+    RAMService ramService;
 
     public List<Comment> getAll() {
         List<Comment> result = new ArrayList<>();
@@ -31,16 +43,10 @@ public class CommentService {
             // check id
             if(c.getItem().getId() == itemId){
                 // check type
-                /*
-                Component item = null;
-                switch (c.getItemType()){
-                    case Disk:
-                        item = diskService.get(itemId);
-                }
-                if(item != null){
+                Component item = getComponentByIdAndItemType(itemId, c.getItemType());
+                if(item != null || c.getItemType() == null){
                     result.add(c);
-                }*/
-                result.add(c);
+                }
             }
         }
         return result;
@@ -55,16 +61,10 @@ public class CommentService {
         // check id
         if(comment != null && comment.getItem().getId()==itemId){
             // check type
-            /*
-            Component item = null;
-            switch (comment.getItemType()){
-                case Disk:
-                    item = diskService.get(itemId);
-            }
-            if(item != null){
+            Component item = getComponentByIdAndItemType(itemId, comment.getItemType());
+            if(item != null || comment.getItemType() == null){
                 return comment;
-            }*/
-            return comment;
+            }
         }
         return null;
     }
@@ -76,6 +76,47 @@ public class CommentService {
     public Comment add(Comment item) {
         item.setId(new Long(0));
         return commentRepository.save(item);
+    }
+
+    public Comment add(long itemId, String itemType, String contents, String username){
+        Component.Type type = Component.Type.getType(itemType.substring(0, itemType.length() - 1).toLowerCase());
+        Component item = getComponentByIdAndItemType(itemId, type);
+        if(item != null){
+            Comment comment = new Comment(item, contents, username, new Date());
+            comment.setItemType(type);
+            return commentRepository.save(comment);
+        }
+        return null;
+    }
+
+    private Component getComponentByIdAndItemType(long id, Component.Type type){
+        Component item = null;
+        if(type != null) {
+            switch (type) {
+                case Case:
+                    item = caseService.get(id);
+                    break;
+                case Disk:
+                    item = diskService.get(id);
+                    break;
+                case GPU:
+                    item = gpuService.get(id);
+                    break;
+                case Motherboard:
+                    item = motherboardService.get(id);
+                    break;
+                case Processor:
+                    item = processorService.get(id);
+                    break;
+                case PSU:
+                    item = psuService.get(id);
+                    break;
+                case RAM:
+                    item = ramService.get(id);
+                    break;
+            }
+        }
+        return item;
     }
 
     public Comment update(Comment item) {

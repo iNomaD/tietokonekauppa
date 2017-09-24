@@ -3,7 +3,6 @@ package fi.jyu.tietokonekauppa.web.controllers.common;
 import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.services.CommentService;
-import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,12 +40,14 @@ public class CommentResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addComment (Comment item, @Context UriInfo uriInfo){
-        if(item.getId() != null && commentService.isCommentExist(item)){
-            throw new DataExistsException("Comment already exists");
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addComment (@PathParam("id") long itemId, @PathParam("type") String type,
+                                @QueryParam("contents") String contents, @QueryParam("username") String username,
+                                @Context UriInfo uriInfo){
+        if(contents == null || username == null){
+            throw new DataNotFoundException("Provide username and contents please");
         }
-        item = commentService.add(item);
+        Comment item = commentService.add(itemId, type, contents, username);
         if(item == null){
             throw new DataNotFoundException("Comment was not created");
         }

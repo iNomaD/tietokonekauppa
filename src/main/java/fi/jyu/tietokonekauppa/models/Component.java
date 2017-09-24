@@ -28,26 +28,6 @@ import java.util.List;
 )
 public abstract class Component implements Serializable{
 
-    public static enum Type{
-        Case, Disk, GPU, Motherboard, Processor, PSU, RAM;
-
-        public static Type getType(Component item) {
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.Case)
-                return Case;
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.Disk)
-                return Disk;
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.GPU)
-                return GPU;
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.Motherboard)
-                return Motherboard;
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.Processor)
-                return Processor;
-            if(item instanceof fi.jyu.tietokonekauppa.models.components.PSU)
-                return PSU;
-            return RAM;
-        }
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
@@ -139,5 +119,46 @@ public abstract class Component implements Serializable{
 
     public void setLinks(List<Link> links) {
         this.links = links;
+    }
+
+    public static enum Type{
+        Case, Disk, GPU, Motherboard, Processor, PSU, RAM;
+
+        public static Type getType(Component item) {
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Case)
+                return Case;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Disk)
+                return Disk;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.GPU)
+                return GPU;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Motherboard)
+                return Motherboard;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.Processor)
+                return Processor;
+            if(item instanceof fi.jyu.tietokonekauppa.models.components.PSU)
+                return PSU;
+            return RAM;
+        }
+
+        public static Type getType(String typeLoweCase){
+            switch (typeLoweCase){
+                case "case":
+                    return Case;
+                case "disk":
+                    return Disk;
+                case "gpu":
+                    return GPU;
+                case "motherboard":
+                    return Motherboard;
+                case "processor":
+                    return Processor;
+                case "psu":
+                    return PSU;
+                case "ram":
+                    return RAM;
+                default:
+                    return null;
+            }
+        }
     }
 }
