@@ -17,7 +17,8 @@ public class Order implements Serializable{
     @JsonProperty("id")
     private Long id;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
+    @OrderColumn(name = "id")
     @JsonProperty("components")
     private List<Component> components;
 
