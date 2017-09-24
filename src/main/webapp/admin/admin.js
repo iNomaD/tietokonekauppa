@@ -228,6 +228,31 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     //links.editionView().fields(links.listView().fields());
     admin.addEntity(links);
 
+    var order = nga.entity('orders');
+    order.listView().fields([
+        nga.field('id'),
+        nga.field('components', 'embedded_list') // Define a 1-N relationship with the (embedded) comment entity
+            .targetFields([ // which comment fields to display in the datagrid / form
+                nga.field('id')
+            ]),
+        nga.field('user_name'),
+        nga.field('user_email'),
+        nga.field('date')
+    ]);
+    order.creationView().fields([
+        nga.field('components', 'embedded_list') // Define a 1-N relationship with the (embedded) comment entity)
+            .targetFields([ // which comment fields to display in the datagrid / form
+                nga.field('id'),
+                nga.field('@type')
+            ]).validation({ required: true }),
+        // nga.field('components').validation({ required: true }),
+        nga.field('user_name').validation({ required: true }),
+        nga.field('user_email').validation({ required: true }),
+        nga.field('date')
+    ]);
+    order.editionView().fields(order.creationView().fields());
+    admin.addEntity(order);
+
     // attach the admin application to the DOM and execute it
     nga.configure(admin);
 }]);

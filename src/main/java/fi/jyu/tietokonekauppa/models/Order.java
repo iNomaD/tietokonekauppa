@@ -1,6 +1,7 @@
 package fi.jyu.tietokonekauppa.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,20 +15,20 @@ public class Order implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
-    Long id;
+    private Long id;
 
-    @OneToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JsonProperty("components")
-    List<Component> components;
+    private List<Component> components;
 
     @JsonProperty("user_name")
-    String userName;
+    private String userName;
 
     @JsonProperty("user_email")
-    String userEmail;
+    private String userEmail;
 
     @JsonProperty("date")
-    Date date;
+    private Date date;
 
     public Order(){};
 

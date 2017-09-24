@@ -16,7 +16,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 // jackson serialization
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, defaultImpl = Component.class)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Case.class, name = "Case"),
         @JsonSubTypes.Type(value = Disk.class, name = "Disk"),
