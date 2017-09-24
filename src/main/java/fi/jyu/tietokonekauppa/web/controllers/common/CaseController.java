@@ -23,10 +23,4 @@ public class CaseController {
         List<Case> list = caseService.getAll(minPrice, maxPrice, priceUnits);
         return Response.ok().entity(list).build();
     }
-
-    @GET
-    @Path("/{id}/comments")
-    public CommentResource getCommentResource(){
-        return new CommentResource();
-    }
 }

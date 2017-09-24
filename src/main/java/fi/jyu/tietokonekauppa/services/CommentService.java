@@ -15,8 +15,8 @@ public class CommentService {
     @Autowired
     CommentRepository commentRepository;
 
-    @Autowired
-    DiskService diskService;
+    //@Autowired
+    //DiskService diskService;
 
     public List<Comment> getAll() {
         List<Comment> result = new ArrayList<>();
