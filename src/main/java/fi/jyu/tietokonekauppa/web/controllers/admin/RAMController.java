@@ -1,9 +1,11 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.components.RAM;
+import fi.jyu.tietokonekauppa.services.LinkService;
 import fi.jyu.tietokonekauppa.services.RAMService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -16,7 +18,11 @@ import java.util.List;
 @Path("/admin/rams")
 public class RAMController {
 
-    private RAMService RAMService = new RAMService();
+    @Autowired
+    private RAMService RAMService;
+
+    @Autowired
+    private LinkService linkService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,15 +44,15 @@ public class RAMController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCase (RAM item, @Context UriInfo uriInfo){
-        if(RAMService.isRAMExist(item)){
+        if(item.getId() != null && RAMService.isRAMExist(item)){
             throw new DataExistsException("RAM already exists");
         }
         item = RAMService.add(item);
         if(item == null){
             throw new DataNotFoundException("RAM was not created");
         }
-        //addLinks(item, uriInfo, RAMController.class, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
-        //item = RAMService.update(item);
+        linkService.addLinks(item, uriInfo, RAMController.class, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
+        item = RAMService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

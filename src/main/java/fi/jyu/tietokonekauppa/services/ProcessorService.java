@@ -1,7 +1,13 @@
 package fi.jyu.tietokonekauppa.services;
 
+import fi.jyu.tietokonekauppa.models.components.Case;
+import fi.jyu.tietokonekauppa.models.components.Disk;
 import fi.jyu.tietokonekauppa.models.components.Processor;
+import fi.jyu.tietokonekauppa.repositories.CaseRepository;
+import fi.jyu.tietokonekauppa.repositories.DiskRepository;
+import fi.jyu.tietokonekauppa.repositories.ProcessorRepository;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,10 +15,13 @@ import java.util.List;
 
 @Service
 public class ProcessorService {
+    @Autowired
+    private ProcessorRepository processorRepository;
 
     public List<Processor> getAll() {
-        // TODO to implement
-        return null;
+        List<Processor> result = new ArrayList<>();
+        processorRepository.findAll().forEach(result::add);
+        return result;
     }
 
     public List<Processor> getAll(int minPrice, int maxPrice, PriceUnits priceUnits) {
@@ -20,7 +29,11 @@ public class ProcessorService {
         List<Processor> all = getAll();
         for(Processor item : all){
             UnitConverterService.convert(item, priceUnits);
-            if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
+            if(item.getPrice() == null){
+                //if data is missing we can pass it
+                result.add(item);
+            }
+            else if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
                 result.add(item);
             }
         }
@@ -28,26 +41,23 @@ public class ProcessorService {
     }
 
     public Processor get(long id) {
-        // TODO to implement
-        return null;
+        return processorRepository.findOne(id);
     }
 
     public boolean isProcessorExist(Processor item) {
-        // TODO to implement
-        return false;
+        return processorRepository.exists(item.getId());
     }
 
     public Processor add(Processor item) {
-        // TODO to implement
-        return null;
+        item.setId(new Long(0));
+        return processorRepository.save(item);
     }
 
     public Processor update(Processor item) {
-        // TODO to implement
-        return null;
+        return processorRepository.save(item);
     }
 
     public void remove(long id) {
-        // TODO to implement
+        processorRepository.delete(id);
     }
 }
