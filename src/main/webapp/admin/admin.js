@@ -37,19 +37,28 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
 
     var cases = nga.entity('cases');
     cases.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('weight'),
         nga.field('dimensions'),
         nga.field('color')
     ]);
-    cases.creationView().fields(cases.listView().fields());
-    cases.editionView().fields(cases.listView().fields());
-    //admin.addEntity(cases);
+    cases.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('amount_available'),
+        nga.field('weight'),
+        nga.field('dimensions'),
+        nga.field('color')
+    ]);
+    cases.editionView().fields(cases.creationView().fields());
+    admin.addEntity(cases);
 
     var gpu = nga.entity('gpus');
     gpu.listView().fields([
