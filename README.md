@@ -13,13 +13,13 @@
 <b>Frontend Technologies:</b>
 <ul>
 <li>Bootstrap</li>
-<li>AngularJS 2</li>
+<li>AngularJS</li>
 <li>ng-admin</li>
 </ul>
 
 <h2>Prepare database</h2>
 <p>Install PostgreSQL</p>
-<p>Create table tietokonekauppa with pgAdmin or cmd</p>
+<p>Create database tietokonekauppa with pgAdmin or cmd</p>
 <pre>createdb -E utf8 -U postgres tietokonekauppa</pre>
 <p>Update credentials in resources/application.properties</p>
 <pre>
