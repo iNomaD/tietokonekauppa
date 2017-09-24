@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, defaultImpl = Order.class)
 public class Order implements Serializable{
 
     @Id
@@ -18,7 +17,7 @@ public class Order implements Serializable{
     @JsonProperty("id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
     @JsonProperty("components")
     private List<Component> components;
 
