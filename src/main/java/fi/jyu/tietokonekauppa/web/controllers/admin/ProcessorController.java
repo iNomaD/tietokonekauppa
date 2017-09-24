@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/processors")
 public class ProcessorController {
 
@@ -47,8 +45,8 @@ public class ProcessorController {
         if(item == null){
             throw new DataNotFoundException("Processor was not created");
         }
-        addLinks(item, uriInfo, ProcessorController.class, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
-        item = ProcessorService.update(item);
+        //addLinks(item, uriInfo, ProcessorController.class, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
+        //item = ProcessorService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

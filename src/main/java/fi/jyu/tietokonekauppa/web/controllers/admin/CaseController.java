@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/cases")
 public class CaseController {
 
@@ -47,8 +45,8 @@ public class CaseController {
         if(item == null){
             throw new DataNotFoundException("Case was not created");
         }
-        addLinks(item, uriInfo, CaseController.class, fi.jyu.tietokonekauppa.web.controllers.common.CaseController.class);
-        item = caseService.update(item);
+        //addLinks(item, uriInfo, CaseController.class, fi.jyu.tietokonekauppa.web.controllers.common.CaseController.class);
+        //item = caseService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

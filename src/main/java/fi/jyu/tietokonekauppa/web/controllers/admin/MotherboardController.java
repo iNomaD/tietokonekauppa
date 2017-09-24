@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/motherboards")
 public class MotherboardController {
 
@@ -47,8 +45,8 @@ public class MotherboardController {
         if(item == null){
             throw new DataNotFoundException("Motherboard was not created");
         }
-        addLinks(item, uriInfo, MotherboardController.class, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
-        item = MotherboardService.update(item);
+        //addLinks(item, uriInfo, MotherboardController.class, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
+        //item = MotherboardService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/gpus")
 public class GPUController {
 
@@ -47,8 +45,8 @@ public class GPUController {
         if(item == null){
             throw new DataNotFoundException("GPU was not created");
         }
-        addLinks(item, uriInfo, GPUController.class, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
-        item = gpuService.update(item);
+        //linkService.addLinks(item, uriInfo, GPUController.class, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
+        //item = gpuService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

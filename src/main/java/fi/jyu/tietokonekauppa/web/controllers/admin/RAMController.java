@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/rams")
 public class RAMController {
 
@@ -47,8 +45,8 @@ public class RAMController {
         if(item == null){
             throw new DataNotFoundException("RAM was not created");
         }
-        addLinks(item, uriInfo, RAMController.class, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
-        item = RAMService.update(item);
+        //addLinks(item, uriInfo, RAMController.class, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
+        //item = RAMService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

@@ -40,10 +40,17 @@ public class CommentController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addComment (Comment item, @Context UriInfo uriInfo){
-        if(commentService.isCommentExist(item)){
+        System.out.println(item.getId());
+        System.out.println(item.getItem());
+        System.out.println(item.getContents());
+        System.out.println(item.getItemType());
+        if(item.getId() != null && commentService.isCommentExist(item)){
             throw new DataExistsException("Comment already exists");
         }
         item = commentService.add(item);
+        if(item == null){
+            throw new DataNotFoundException("Comment was not created");
+        }
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

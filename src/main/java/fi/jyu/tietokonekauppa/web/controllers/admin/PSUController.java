@@ -13,8 +13,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/psus")
 public class PSUController {
 
@@ -47,8 +45,8 @@ public class PSUController {
         if(item == null){
             throw new DataNotFoundException("PSU was not created");
         }
-        addLinks(item, uriInfo, PSUController.class, fi.jyu.tietokonekauppa.web.controllers.common.PSUController.class);
-        item = PSUService.update(item);
+        //addLinks(item, uriInfo, PSUController.class, fi.jyu.tietokonekauppa.web.controllers.common.PSUController.class);
+        //item = PSUService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

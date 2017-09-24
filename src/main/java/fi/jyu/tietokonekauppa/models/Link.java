@@ -1,5 +1,6 @@
 package fi.jyu.tietokonekauppa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -20,15 +21,18 @@ public class Link implements Serializable{
     @JsonProperty("rel")
     private String rel;
 
+
     @ManyToOne
     @JoinColumn(name = "component_id")
+    @JsonIgnore
     private Component component;
 
     public Link(){};
 
-    public Link(String link, String rel) {
+    public Link(Component component, String link, String rel) {
         this.link = link;
         this.rel = rel;
+        this.component = component;
     }
 
     public Long getId() {

@@ -2,6 +2,7 @@ package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.components.Disk;
 import fi.jyu.tietokonekauppa.services.DiskService;
+import fi.jyu.tietokonekauppa.services.LinkService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,15 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 
-import static fi.jyu.tietokonekauppa.web.Utils.addLinks;
-
 @Path("/admin/disks")
 @Produces(MediaType.APPLICATION_JSON)
 public class DiskController {
 
     @Autowired
     private DiskService diskService;
+
+    @Autowired
+    private LinkService linkService;
 
     @GET
     public Response getDisks(){
@@ -42,15 +44,14 @@ public class DiskController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addDisk (Disk item, @Context UriInfo uriInfo){
-        System.out.println("disk:"+item);
-        if(diskService.isDiskExist(item)){
+        if(item.getId() != null && diskService.isDiskExist(item)){
             throw new DataExistsException("Disk already exists");
         }
         item = diskService.add(item);
         if(item == null){
             throw new DataNotFoundException("Disk was not created");
         }
-        addLinks(item, uriInfo, DiskController.class, fi.jyu.tietokonekauppa.web.controllers.common.DiskController.class);
+        linkService.addLinks(item, uriInfo, DiskController.class, fi.jyu.tietokonekauppa.web.controllers.common.DiskController.class);
         item = diskService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

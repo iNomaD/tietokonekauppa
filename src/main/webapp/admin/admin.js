@@ -5,24 +5,35 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
       .baseApiUrl('http://localhost:8080/api/admin/'); // main API endpoint
     // create a user entity
     // the API endpoint for this entity will be 'http://jsonplaceholder.typicode.com/users/:id
-    var user = nga.entity('disks');
+    var disks = nga.entity('disks');
     // set the fields of the user entity list view
-    user.listView().fields([
-        nga.field('name'),
+    disks.listView().fields([
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('type'),
         nga.field('capacity'),
         nga.field('capacityUnits'),
         nga.field('rpm')
     ]);
-    user.creationView().fields(user.listView().fields());
-    user.editionView().fields(user.listView().fields());
+    disks.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true}), //TODO add pattern: '[EUR|USD]'
+        nga.field('amount_available'),
+        nga.field('type'),
+        nga.field('capacity'),
+        nga.field('capacityUnits'),
+        nga.field('rpm')
+    ]);
+    disks.editionView().fields(disks.creationView().fields());
+
     // add the user entity to the admin application
-    admin.addEntity(user);
+    admin.addEntity(disks);
 
     var cases = nga.entity('cases');
     cases.listView().fields([
@@ -38,7 +49,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     cases.creationView().fields(cases.listView().fields());
     cases.editionView().fields(cases.listView().fields());
-    admin.addEntity(cases);
+    //admin.addEntity(cases);
 
     var gpu = nga.entity('gpus');
     gpu.listView().fields([
@@ -56,7 +67,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     gpu.creationView().fields(gpu.listView().fields());
     gpu.editionView().fields(gpu.listView().fields());
-    admin.addEntity(gpu);
+    //admin.addEntity(gpu);
 
     var motherboard = nga.entity('motherboards');
     motherboard.listView().fields([
@@ -73,7 +84,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     motherboard.creationView().fields(motherboard.listView().fields());
     motherboard.editionView().fields(motherboard.listView().fields());
-    admin.addEntity(motherboard);
+    //admin.addEntity(motherboard);
 
     var processor = nga.entity('processors');
     processor.listView().fields([
@@ -91,7 +102,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     processor.creationView().fields(processor.listView().fields());
     processor.editionView().fields(processor.listView().fields());
-    admin.addEntity(processor);
+    //admin.addEntity(processor);
 
     var psu = nga.entity('psus');
     psu.listView().fields([
@@ -107,7 +118,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     psu.creationView().fields(psu.listView().fields());
     psu.editionView().fields(psu.listView().fields());
-    admin.addEntity(psu);
+    //admin.addEntity(psu);
 
     var ram = nga.entity('rams');
     ram.listView().fields([
@@ -125,7 +136,37 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     ]);
     ram.creationView().fields(ram.listView().fields());
     ram.editionView().fields(ram.listView().fields());
-    admin.addEntity(ram);
+    //admin.addEntity(ram);
+
+    var comments = nga.entity('comments');
+    comments.listView().fields([
+        nga.field('id'),
+        nga.field('item'),
+        nga.field('item_type'),
+        nga.field('contents'),
+        nga.field('user_name'),
+        nga.field('date')
+    ]);
+    comments.creationView().fields([
+        nga.field('item').validation({ required: true }).label('id of item'),
+        nga.field('item_type').label('type of item'),
+        nga.field('contents').validation({ required: true }),
+        nga.field('user_name'),
+        nga.field('date')
+    ]);
+    comments.editionView().fields(comments.creationView().fields());
+    admin.addEntity(comments);
+
+    var links = nga.entity('links');
+    links.listView().fields([
+        nga.field('id'),
+        nga.field('link'),
+        nga.field('rel'),
+        nga.field('component_id')
+    ]);
+    //links.creationView().fields(links.listView().fields());
+    //links.editionView().fields(links.listView().fields());
+    admin.addEntity(links);
 
     // attach the admin application to the DOM and execute it
     nga.configure(admin);

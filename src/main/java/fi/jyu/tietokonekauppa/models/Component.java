@@ -58,7 +58,7 @@ public abstract class Component implements Serializable{
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy="component", cascade=CascadeType.ALL)
     @JsonProperty("links")
-    private List<Link> links = new ArrayList<>();
+    private List<Link> links;
 
     protected Component(){}
 
@@ -118,8 +118,11 @@ public abstract class Component implements Serializable{
         this.amountAvailable = amountAvailable;
     }
 
-    public void addLink(String url, String rel) {
-        Link link = new Link(url, rel);
-        links.add(link);
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
     }
 }
