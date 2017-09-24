@@ -174,7 +174,6 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('memorySize'),
         nga.field('ramType'),
         nga.field('formFactor'),
@@ -233,7 +232,9 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('id'),
         nga.field('components', 'embedded_list') // Define a 1-N relationship with the (embedded) comment entity
             .targetFields([ // which comment fields to display in the datagrid / form
-                nga.field('id')
+                nga.field('id'),
+                nga.field('@type'),
+                nga.field('price')
             ]),
         nga.field('user_name'),
         nga.field('user_email'),
