@@ -51,7 +51,7 @@ public class MotherboardController {
         if(item == null){
             throw new DataNotFoundException("Motherboard was not created");
         }
-        linkService.addLinks(item, uriInfo, MotherboardController.class, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
         item = MotherboardService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

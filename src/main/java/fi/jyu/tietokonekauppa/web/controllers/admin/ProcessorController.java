@@ -51,7 +51,7 @@ public class ProcessorController {
         if(item == null){
             throw new DataNotFoundException("Processor was not created");
         }
-        linkService.addLinks(item, uriInfo, ProcessorController.class, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
         item = ProcessorService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

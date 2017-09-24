@@ -51,7 +51,7 @@ public class RAMController {
         if(item == null){
             throw new DataNotFoundException("RAM was not created");
         }
-        linkService.addLinks(item, uriInfo, RAMController.class, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.RAMController.class);
         item = RAMService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

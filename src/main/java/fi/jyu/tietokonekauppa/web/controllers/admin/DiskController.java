@@ -51,7 +51,7 @@ public class DiskController {
         if(item == null){
             throw new DataNotFoundException("Disk was not created");
         }
-        linkService.addLinks(item, uriInfo, DiskController.class, fi.jyu.tietokonekauppa.web.controllers.common.DiskController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.DiskController.class);
         item = diskService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

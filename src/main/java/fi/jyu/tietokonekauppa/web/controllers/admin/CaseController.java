@@ -51,7 +51,7 @@ public class CaseController {
         if(item == null){
             throw new DataNotFoundException("Case was not created");
         }
-        linkService.addLinks(item, uriInfo, CaseController.class, fi.jyu.tietokonekauppa.web.controllers.common.CaseController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.CaseController.class);
         item = caseService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

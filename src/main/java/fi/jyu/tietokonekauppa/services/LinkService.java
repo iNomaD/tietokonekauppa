@@ -42,16 +42,16 @@ public class LinkService {
         linkRepository.delete(id);
     }
 
-    public void addLinks(Component item, UriInfo uriInfo, Class adminController, Class commonController){
-        String uri = uriInfo.getBaseUriBuilder().path(adminController)
+    public void addLinks(Component item, UriInfo uriInfo, Class commonController){
+        String uri = uriInfo.getBaseUriBuilder().path(commonController)
                 .path(Long.toString(item.getId()))
                 .build()
                 .toString();
         addLink(item, uri,"self");
 
-        uri = uriInfo.getBaseUriBuilder().path(adminController)
-                .path(commonController, "getCommentResource")
-                .resolveTemplate("id", item.getId())
+        uri = uriInfo.getBaseUriBuilder().path(commonController)
+                .path(Long.toString(item.getId()))
+                .path("/comments")
                 .build()
                 .toString();
         addLink(item, uri, "comments");

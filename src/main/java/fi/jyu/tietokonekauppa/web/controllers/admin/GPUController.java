@@ -52,7 +52,7 @@ public class GPUController {
         if(item == null){
             throw new DataNotFoundException("GPU was not created");
         }
-        linkService.addLinks(item, uriInfo, GPUController.class, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
         item = gpuService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

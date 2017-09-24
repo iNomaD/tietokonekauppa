@@ -51,7 +51,7 @@ public class PSUController {
         if(item == null){
             throw new DataNotFoundException("PSU was not created");
         }
-        linkService.addLinks(item, uriInfo, PSUController.class, fi.jyu.tietokonekauppa.web.controllers.common.PSUController.class);
+        linkService.addLinks(item, uriInfo, fi.jyu.tietokonekauppa.web.controllers.common.PSUController.class);
         item = PSUService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();

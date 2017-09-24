@@ -3,6 +3,7 @@ package fi.jyu.tietokonekauppa.web.controllers.common;
 import fi.jyu.tietokonekauppa.models.components.Case;
 import fi.jyu.tietokonekauppa.services.CaseService;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -22,5 +23,16 @@ public class CaseController {
                                @QueryParam("price_units") PriceUnits priceUnits){
         List<Case> list = caseService.getAll(minPrice, maxPrice, priceUnits);
         return Response.ok().entity(list).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getCase(@PathParam("id") long id){
+        Case item = caseService.get(id);
+        if(item == null){
+            throw new DataNotFoundException("Case with id "+id+" not found");
+        }
+        return Response.ok().entity(item).build();
     }
 }
