@@ -35,10 +35,4 @@ public class DiskController {
         }
         return Response.ok().entity(item).build();
     }
-
-    @GET
-    @Path("/{id}/comments")
-    public CommentResource getCommentResource(){
-        return new CommentResource();
-    }
 }

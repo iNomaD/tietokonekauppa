@@ -23,10 +23,4 @@ public class PSUController {
         List<PSU> list = PSUService.getAll(minPrice, maxPrice, priceUnits);
         return Response.ok().entity(list).build();
     }
-
-    @GET
-    @Path("/{id}/comments")
-    public CommentResource getCommentResource(){
-        return new CommentResource();
-    }
 }
