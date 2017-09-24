@@ -1,6 +1,7 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.Comment;
+import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.services.CommentService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
@@ -40,10 +41,6 @@ public class CommentController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addComment (Comment item, @Context UriInfo uriInfo){
-        System.out.println(item.getId());
-        System.out.println(item.getItem());
-        System.out.println(item.getContents());
-        System.out.println(item.getItemType());
         if(item.getId() != null && commentService.isCommentExist(item)){
             throw new DataExistsException("Comment already exists");
         }
@@ -51,6 +48,8 @@ public class CommentController {
         if(item == null){
             throw new DataNotFoundException("Comment was not created");
         }
+        item.setItemType(Component.Type.getType(item.getItem()));
+        commentService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

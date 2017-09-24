@@ -1,6 +1,7 @@
 package fi.jyu.tietokonekauppa.models.components;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fi.jyu.tietokonekauppa.models.Component;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "motherboards")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, defaultImpl = Motherboard.class)
 public class Motherboard extends Component {
 
     @JsonProperty("cpuModelSocket")

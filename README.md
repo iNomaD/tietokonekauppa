@@ -14,6 +14,7 @@
 <ul>
 <li>Bootstrap</li>
 <li>AngularJS 2</li>
+<li>ng-admin</li>
 </ul>
 
 <h2>Prepare database</h2>

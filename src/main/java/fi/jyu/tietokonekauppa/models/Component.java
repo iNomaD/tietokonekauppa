@@ -1,16 +1,31 @@
 package fi.jyu.tietokonekauppa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import fi.jyu.tietokonekauppa.models.components.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+// persistence
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+// jackson serialization
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Case.class, name = "Case"),
+        @JsonSubTypes.Type(value = Disk.class, name = "Disk"),
+        @JsonSubTypes.Type(value = GPU.class, name = "GPU"),
+        @JsonSubTypes.Type(value = Motherboard.class, name = "Motherboard"),
+        @JsonSubTypes.Type(value = Processor.class, name = "Processor"),
+        @JsonSubTypes.Type(value = PSU.class, name = "PSU"),
+        @JsonSubTypes.Type(value = RAM.class, name = "RAM") }
+)
 public abstract class Component implements Serializable{
 
     public static enum Type{

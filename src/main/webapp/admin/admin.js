@@ -14,7 +14,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('type'),
+        nga.field('type').label('HDD|SSD'),
         nga.field('capacity'),
         nga.field('capacityUnits'),
         nga.field('rpm')
@@ -23,9 +23,9 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true}), //TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
         nga.field('amount_available'),
-        nga.field('type'),
+        nga.field('type').label('HDD|SSD'),
         nga.field('capacity'),
         nga.field('capacityUnits'),
         nga.field('rpm')
@@ -51,7 +51,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}),
         nga.field('amount_available'),
         nga.field('weight'),
         nga.field('dimensions'),
@@ -150,28 +150,31 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     var comments = nga.entity('comments');
     comments.listView().fields([
         nga.field('id'),
-        nga.field('item'),
-        nga.field('item_type'),
-        nga.field('contents'),
+        nga.field('item.id'),
+        nga.field('item.@type'),
+        nga.field('contents').isDetailLink(true),
         nga.field('user_name'),
         nga.field('date')
     ]);
     comments.creationView().fields([
-        nga.field('item').validation({ required: true }).label('id of item'),
-        nga.field('item_type').label('type of item'),
+        nga.field('item.id').validation({ required: true }),
+        nga.field('item.@type').validation({ required: true, pattern: 'Case|Disk|GPU|Motherboard|Processor|PSU|RAM'}),
+        nga.field('contents').validation({ required: true}),
+        nga.field('user_name'),
+        nga.field('date')
+    ]);
+    comments.editionView().fields([
         nga.field('contents').validation({ required: true }),
         nga.field('user_name'),
         nga.field('date')
     ]);
-    comments.editionView().fields(comments.creationView().fields());
     admin.addEntity(comments);
 
     var links = nga.entity('links');
     links.listView().fields([
         nga.field('id'),
         nga.field('link'),
-        nga.field('rel'),
-        nga.field('component_id')
+        nga.field('rel')
     ]);
     //links.creationView().fields(links.listView().fields());
     //links.editionView().fields(links.listView().fields());

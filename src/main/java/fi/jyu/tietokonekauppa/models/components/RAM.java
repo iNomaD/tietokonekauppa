@@ -1,6 +1,7 @@
 package fi.jyu.tietokonekauppa.models.components;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fi.jyu.tietokonekauppa.models.Component;
 
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rams")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, defaultImpl = RAM.class)
 public class RAM extends Component {
 
     @JsonProperty("memorySize")

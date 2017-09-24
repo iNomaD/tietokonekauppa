@@ -1,14 +1,15 @@
 package fi.jyu.tietokonekauppa.models.components;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import fi.jyu.tietokonekauppa.models.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "disks")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, defaultImpl = Disk.class)
 public class Disk extends Component {
 
     @JsonProperty("type")
