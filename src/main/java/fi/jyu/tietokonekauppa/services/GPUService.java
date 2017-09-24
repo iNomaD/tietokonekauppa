@@ -1,7 +1,9 @@
 package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.GPU;
+import fi.jyu.tietokonekauppa.repositories.GPURepository;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,10 +11,13 @@ import java.util.List;
 
 @Service
 public class GPUService {
+    @Autowired
+    private GPURepository gpuRepository;
 
     public List<GPU> getAll() {
-        // TODO to implement
-        return null;
+        List<GPU> result = new ArrayList<>();
+        gpuRepository.findAll().forEach(result::add);
+        return result;
     }
 
     public List<GPU> getAll(int minPrice, int maxPrice, PriceUnits priceUnits) {
@@ -20,7 +25,11 @@ public class GPUService {
         List<GPU> all = getAll();
         for(GPU item : all){
             UnitConverterService.convert(item, priceUnits);
-            if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
+            if(item.getPrice() == null){
+                //if data is missing we can pass it
+                result.add(item);
+            }
+            else if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
                 result.add(item);
             }
         }
@@ -28,26 +37,23 @@ public class GPUService {
     }
 
     public GPU get(long id) {
-        // TODO to implement
-        return null;
+        return gpuRepository.findOne(id);
     }
 
     public boolean isGPUExist(GPU item) {
-        // TODO to implement
-        return false;
+        return gpuRepository.exists(item.getId());
     }
 
     public GPU add(GPU item) {
-        // TODO to implement
-        return null;
+        item.setId(new Long(0));
+        return gpuRepository.save(item);
     }
 
     public GPU update(GPU item) {
-        // TODO to implement
-        return null;
+        return gpuRepository.save(item);
     }
 
     public void remove(long id) {
-        // TODO to implement
+        gpuRepository.delete(id);
     }
 }

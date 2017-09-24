@@ -1,9 +1,11 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.components.Processor;
+import fi.jyu.tietokonekauppa.services.LinkService;
 import fi.jyu.tietokonekauppa.services.ProcessorService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -16,7 +18,11 @@ import java.util.List;
 @Path("/admin/processors")
 public class ProcessorController {
 
-    private ProcessorService ProcessorService = new ProcessorService();
+    @Autowired
+    private ProcessorService ProcessorService;
+
+    @Autowired
+    private LinkService linkService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,15 +44,15 @@ public class ProcessorController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCase (Processor item, @Context UriInfo uriInfo){
-        if(ProcessorService.isProcessorExist(item)){
+        if(item.getId() != null && ProcessorService.isProcessorExist(item)){
             throw new DataExistsException("Processor already exists");
         }
         item = ProcessorService.add(item);
         if(item == null){
             throw new DataNotFoundException("Processor was not created");
         }
-        //addLinks(item, uriInfo, ProcessorController.class, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
-        //item = ProcessorService.update(item);
+        linkService.addLinks(item, uriInfo, ProcessorController.class, fi.jyu.tietokonekauppa.web.controllers.common.ProcessorController.class);
+        item = ProcessorService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

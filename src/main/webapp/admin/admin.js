@@ -62,76 +62,114 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
 
     var gpu = nga.entity('gpus');
     gpu.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('ramSize'),
         nga.field('ramType'),
         nga.field('coprocessor'),
         nga.field('busWidth'),
         nga.field('clockSpeed')
     ]);
-    gpu.creationView().fields(gpu.listView().fields());
-    gpu.editionView().fields(gpu.listView().fields());
-    //admin.addEntity(gpu);
+    gpu.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('ramSize'),
+        nga.field('ramType'),
+        nga.field('coprocessor'),
+        nga.field('busWidth'),
+        nga.field('clockSpeed')
+    ]);
+    gpu.editionView().fields(gpu.creationView().fields());
+    admin.addEntity(gpu);
 
     var motherboard = nga.entity('motherboards');
     motherboard.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('cpuModelSocket'),
         nga.field('ramMemoryTechnology'),
         nga.field('formFactor'),
         nga.field('memoryMaximumSize')
     ]);
-    motherboard.creationView().fields(motherboard.listView().fields());
-    motherboard.editionView().fields(motherboard.listView().fields());
-    //admin.addEntity(motherboard);
+    motherboard.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('cpuModelSocket'),
+        nga.field('ramMemoryTechnology'),
+        nga.field('formFactor'),
+        nga.field('memoryMaximumSize')
+    ]);
+    motherboard.editionView().fields(motherboard.creationView().fields());
+    admin.addEntity(motherboard);
 
     var processor = nga.entity('processors');
     processor.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('processorCount'),
         nga.field('speed'),
         nga.field('ramType'),
         nga.field('socket'),
         nga.field('manufacturer')
     ]);
-    processor.creationView().fields(processor.listView().fields());
-    processor.editionView().fields(processor.listView().fields());
-    //admin.addEntity(processor);
+    processor.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('processorCount'),
+        nga.field('speed'),
+        nga.field('ramType'),
+        nga.field('socket'),
+        nga.field('manufacturer')
+    ]);
+    processor.editionView().fields(processor.creationView().fields());
+    admin.addEntity(processor);
 
     var psu = nga.entity('psus');
     psu.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
         nga.field('amount_available'),
-        nga.field('links'),
         nga.field('size'),
         nga.field('weight'),
         nga.field('dimensions')
     ]);
-    psu.creationView().fields(psu.listView().fields());
-    psu.editionView().fields(psu.listView().fields());
-    //admin.addEntity(psu);
+    psu.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('size'),
+        nga.field('weight'),
+        nga.field('dimensions')
+    ]);
+    psu.editionView().fields(psu.creationView().fields());
+    admin.addEntity(psu);
 
     var ram = nga.entity('rams');
     ram.listView().fields([
-        nga.field('name'),
+        nga.field('id'),
+        nga.field('name').isDetailLink(true),
         nga.field('vendor'),
         nga.field('price'),
         nga.field('price_units'),
@@ -143,9 +181,19 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('speed'),
         nga.field('ramMemoryTechnology')
     ]);
-    ram.creationView().fields(ram.listView().fields());
-    ram.editionView().fields(ram.listView().fields());
-    //admin.addEntity(ram);
+    ram.creationView().fields([
+        nga.field('name').validation({ required: true }),
+        nga.field('vendor'),
+        nga.field('price').validation({ required: true }),
+        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('memorySize'),
+        nga.field('ramType'),
+        nga.field('formFactor'),
+        nga.field('speed'),
+        nga.field('ramMemoryTechnology')
+    ]);
+    ram.editionView().fields(ram.creationView().fields());
+    admin.addEntity(ram);
 
     var comments = nga.entity('comments');
     comments.listView().fields([

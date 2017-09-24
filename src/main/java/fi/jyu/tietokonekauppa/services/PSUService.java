@@ -1,7 +1,9 @@
 package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.PSU;
+import fi.jyu.tietokonekauppa.repositories.PSURepository;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,10 +11,13 @@ import java.util.List;
 
 @Service
 public class PSUService {
+    @Autowired
+    private PSURepository psuRepository;
 
     public List<PSU> getAll() {
-        // TODO to implement
-        return null;
+        List<PSU> result = new ArrayList<>();
+        psuRepository.findAll().forEach(result::add);
+        return result;
     }
 
     public List<PSU> getAll(int minPrice, int maxPrice, PriceUnits priceUnits) {
@@ -20,7 +25,11 @@ public class PSUService {
         List<PSU> all = getAll();
         for(PSU item : all){
             UnitConverterService.convert(item, priceUnits);
-            if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
+            if(item.getPrice() == null){
+                //if data is missing we can pass it
+                result.add(item);
+            }
+            else if(item.getPrice() >= minPrice && item.getPrice() <= maxPrice){
                 result.add(item);
             }
         }
@@ -28,26 +37,23 @@ public class PSUService {
     }
 
     public PSU get(long id) {
-        // TODO to implement
-        return null;
+        return psuRepository.findOne(id);
     }
 
     public boolean isPSUExist(PSU item) {
-        // TODO to implement
-        return false;
+        return psuRepository.exists(item.getId());
     }
 
     public PSU add(PSU item) {
-        // TODO to implement
-        return null;
+        item.setId(new Long(0));
+        return psuRepository.save(item);
     }
 
     public PSU update(PSU item) {
-        // TODO to implement
-        return null;
+        return psuRepository.save(item);
     }
 
     public void remove(long id) {
-        // TODO to implement
+        psuRepository.delete(id);
     }
 }

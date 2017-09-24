@@ -1,9 +1,11 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.components.Motherboard;
+import fi.jyu.tietokonekauppa.services.LinkService;
 import fi.jyu.tietokonekauppa.services.MotherboardService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -16,7 +18,11 @@ import java.util.List;
 @Path("/admin/motherboards")
 public class MotherboardController {
 
-    private MotherboardService MotherboardService = new MotherboardService();
+    @Autowired
+    private MotherboardService MotherboardService;
+
+    @Autowired
+    private LinkService linkService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,15 +44,15 @@ public class MotherboardController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addCase (Motherboard item, @Context UriInfo uriInfo){
-        if(MotherboardService.isMotherboardExist(item)){
+        if(item.getId() != null && MotherboardService.isMotherboardExist(item)){
             throw new DataExistsException("Motherboard already exists");
         }
         item = MotherboardService.add(item);
         if(item == null){
             throw new DataNotFoundException("Motherboard was not created");
         }
-        //addLinks(item, uriInfo, MotherboardController.class, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
-        //item = MotherboardService.update(item);
+        linkService.addLinks(item, uriInfo, MotherboardController.class, fi.jyu.tietokonekauppa.web.controllers.common.MotherboardController.class);
+        item = MotherboardService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();

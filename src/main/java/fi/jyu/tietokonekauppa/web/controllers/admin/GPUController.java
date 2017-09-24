@@ -1,9 +1,12 @@
 package fi.jyu.tietokonekauppa.web.controllers.admin;
 
 import fi.jyu.tietokonekauppa.models.components.GPU;
+import fi.jyu.tietokonekauppa.services.DiskService;
 import fi.jyu.tietokonekauppa.services.GPUService;
+import fi.jyu.tietokonekauppa.services.LinkService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -16,7 +19,11 @@ import java.util.List;
 @Path("/admin/gpus")
 public class GPUController {
 
-    private GPUService gpuService = new GPUService();
+    @Autowired
+    private GPUService gpuService;
+
+    @Autowired
+    private LinkService linkService;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -38,15 +45,15 @@ public class GPUController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addGPU (GPU item, @Context UriInfo uriInfo){
-        if(gpuService.isGPUExist(item)){
+        if(item.getId() != null && gpuService.isGPUExist(item)){
             throw new DataExistsException("GPU already exists");
         }
         item = gpuService.add(item);
         if(item == null){
             throw new DataNotFoundException("GPU was not created");
         }
-        //linkService.addLinks(item, uriInfo, GPUController.class, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
-        //item = gpuService.update(item);
+        linkService.addLinks(item, uriInfo, GPUController.class, fi.jyu.tietokonekauppa.web.controllers.common.GPUController.class);
+        item = gpuService.update(item);
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();
