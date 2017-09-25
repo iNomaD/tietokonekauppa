@@ -1,0 +1,98 @@
+<h1 id="hhd">Hard Disk</h1>
+        <div >
+            <table  id="hd" ng-controller="hdCtrl" class="table table-hover table-bordered table-responsive tbc">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Introduction</th>
+                    <th>Price</th>
+                    <th>Number</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr ng-repeat="hd in hds">
+                    <td>{{hd.name}}</td>
+                    <td>{{hd.vendor}}</td>
+                    <td>{{hd.price}}</td>
+                    <td>
+                        <input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}">
+                    </td>
+                </tr>
+                </tbody>
+            </table></div>
+        <br><h1 id="hram">RAM</h1>
+        <div ng-controller="ramCtrl" >
+            <table id="ram" class="table table-hover table-bordered table-responsive tbc">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Introduction</th>
+                    <th>Price</th>
+                    <th>Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="ram in rams">
+                    <td>{{ram.name}}</td>
+                    <td>{{ram.vendor}}</td>
+                    <td>{{ram.price}}</td>
+                    <td>
+                        <input class="form-control" type="number" value=0 size="3" min="0" max="{{ram.amount_available}}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><h1 id="hvc">Video Card</h1>
+        <div ng-controller="vcCtrl" >
+            <table id="vc" class="table table-hover table-bordered table-responsive tbc">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Introduction</th>
+                    <th>Price</th>
+                    <th>Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="gpu in gpus">
+                    <td>{{gpu.name}}</td>
+                    <td>{{gpu.vendor}}</td>
+                    <td>{{gpu.price}}</td>
+                    <td>
+                        <input class="form-control" type="number" value=0 size="3" min="0" max="{{gpu.amount_available}}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><h1 id="hpsu">PSU</h1>
+        <div ng-controller="psuCtrl" >
+            <table id="psu" class="table table-hover table-bordered table-responsive tbc">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Introduction</th>
+                    <th>Price</th>
+                    <th>Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="psu in psus">
+                    <td>{{psu.name}}</td>
+                    <td>{{psu.vendor}}</td>
+                    <td>{{psu.price}}</td>
+                    <td>
+                        <input class="form-control" type="number" value=0 size="3" min="0" max="{{psu.amount_available}}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div style="text-align:center;" class="btn-block">
+            <button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
+            <button type="button" class="btn btn-primary" ng-controller="resetc" ng-click="reset()">Reset</button>
+            <button type="button" class="btn btn-primary" ng-click="order()">Order</button>
+        </div>
+<script src="my.js"></script>
