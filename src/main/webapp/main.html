@@ -1,26 +1,18 @@
-<h1 id="hhd">Hard Disk</h1>
-        <div >
-            <table  id="hd" ng-controller="hdCtrl" class="table table-hover table-bordered table-responsive tbc">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Introduction</th>
-                    <th>Price</th>
-                    <th>Number</th>
-                </tr>
-                </thead>
-                <tbody >
+<p style="font-size:36px;text-align: center;">Hard Disk  <span id="hhd" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
+            <table id="hd" ng-controller="HdCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
                 <tr ng-repeat="hd in hds">
-                    <td>{{hd.name}}</td>
-                    <td>{{hd.vendor}}</td>
-                    <td>{{hd.price}}</td>
-                    <td>
+                    <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+                        {{hd.name}}</td>
+                    <td title="'Price'" filter="{ price: 'number'}" sortable="'price'">
+                        {{hd.price}}</td>
+                    <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
+                        {{hd.amount_available}}</td>
+                    <td title="'Amount'">
                         <input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}">
                     </td>
                 </tr>
-                </tbody>
-            </table></div>
-        <br><h1 id="hram">RAM</h1>
+            </table>
+        <br><p style="font-size:36px;text-align: center;">RAM  <span id="hram" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
         <div ng-controller="ramCtrl" >
             <table id="ram" class="table table-hover table-bordered table-responsive tbc">
                 <thead>
@@ -43,7 +35,7 @@
                 </tbody>
             </table>
         </div>
-        <br><h1 id="hvc">Video Card</h1>
+        <br><p style="font-size:36px;text-align: center;">Video Cards  <span id="hvc" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
         <div ng-controller="vcCtrl" >
             <table id="vc" class="table table-hover table-bordered table-responsive tbc">
                 <thead>
@@ -66,7 +58,7 @@
                 </tbody>
             </table>
         </div>
-        <br><h1 id="hpsu">PSU</h1>
+        <br><p style="font-size:36px;text-align: center;">PSUs  <span id="hpsu" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
         <div ng-controller="psuCtrl" >
             <table id="psu" class="table table-hover table-bordered table-responsive tbc">
                 <thead>
