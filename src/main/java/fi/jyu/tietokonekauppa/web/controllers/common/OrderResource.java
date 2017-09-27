@@ -6,10 +6,7 @@ import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -21,10 +18,18 @@ public class OrderResource {
     @Autowired
     private OrderService orderService;
 
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOrders(){
+        // TODO implement
+        return null;
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addOrder (Order item, @Context UriInfo uriInfo){
+        // TODO rework method according to API reference
         if(item.getId() != null && orderService.isOrderExist(item)){
             throw new DataExistsException("Order already exists");
         }

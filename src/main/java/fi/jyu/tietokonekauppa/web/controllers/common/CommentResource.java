@@ -27,23 +27,12 @@ public class CommentResource {
         return Response.ok().entity(comments).build();
     }
 
-    @GET
-    @Path("/{comment_id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getComment(@PathParam("id") long id,
-                              @PathParam("comment_id") long commentId){
-        Comment comment = commentService.getComment(id, commentId);
-        if(comment == null){
-            throw new DataNotFoundException("Comment with id "+commentId+" not found");
-        }
-        return Response.ok().entity(comment).build();
-    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addComment (@PathParam("id") long itemId, @PathParam("type") String type,
                                 @QueryParam("contents") String contents, @QueryParam("username") String username,
                                 @Context UriInfo uriInfo){
+        // TODO rework method according to API reference
         if(contents == null || username == null){
             throw new DataNotFoundException("Provide username and contents please");
         }
@@ -56,5 +45,26 @@ public class CommentResource {
         String newId = String.valueOf(item.getId());
         URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
         return Response.created(uri).entity(item).build();
+    }
+
+    @GET
+    @Path("/{comment_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getComment(@PathParam("id") long id,
+                               @PathParam("comment_id") long commentId){
+        Comment comment = commentService.getComment(id, commentId);
+        if(comment == null){
+            throw new DataNotFoundException("Comment with id "+commentId+" not found");
+        }
+        return Response.ok().entity(comment).build();
+    }
+
+    @DELETE
+    @Path("/{comment_id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteComment(@PathParam("id") long id,
+                               @PathParam("comment_id") long commentId){
+        // TODO implement
+        return null;
     }
 }
