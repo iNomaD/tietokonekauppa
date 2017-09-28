@@ -1,5 +1,6 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
+import fi.jyu.tietokonekauppa.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -10,7 +11,7 @@ import javax.ws.rs.core.Response;
 public class UserResource {
 
     //@Autowired
-    //UserService userService;
+    UserService userService;
 
     @GET
     @Path("/signup")

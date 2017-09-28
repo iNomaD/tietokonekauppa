@@ -39,4 +39,28 @@ public class UserService {
     public void remove(long id) {
         userRepository.delete(id);
     }
+
+    public boolean userCredentialExists(String username, String password) {
+        User user = new User();
+        user = getUser(username);
+        if(user!=null && user.getPassword().equals(password)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public User getUser(String username) {
+        User user = new User();
+        List<User> all = getAll();
+        for(User item : all){
+            if(item.getLogin() == null){
+                return item;
+            }
+            else if(item.getLogin().equals(username)){
+                return item;
+            }
+        }
+        return null;
+    }
 }

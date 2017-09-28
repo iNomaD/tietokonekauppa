@@ -27,41 +27,41 @@
         <param-value>WEB-INF/spring-hibernate-jersey2.xml</param-value>
     </context-param>
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>customer creation</web-resource-name>
-            <url-pattern>/*</url-pattern>
-            <http-method>POST</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-        </auth-constraint>
-    </security-constraint>
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>customer creation</web-resource-name>-->
+            <!--<url-pattern>/*</url-pattern>-->
+            <!--<http-method>POST</http-method>-->
+        <!--</web-resource-collection>-->
+        <!--<auth-constraint>-->
+            <!--<role-name>admin</role-name>-->
+        <!--</auth-constraint>-->
+    <!--</security-constraint>-->
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>customer search</web-resource-name>
-            <url-pattern>/profiles/*</url-pattern>
-            <http-method>GET</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-            <role-name>user</role-name>
-        </auth-constraint>
-    </security-constraint>
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>customer search</web-resource-name>-->
+            <!--<url-pattern>/profiles/*</url-pattern>-->
+            <!--<http-method>GET</http-method>-->
+        <!--</web-resource-collection>-->
+        <!--<auth-constraint>-->
+            <!--<role-name>admin</role-name>-->
+            <!--<role-name>user</role-name>-->
+        <!--</auth-constraint>-->
+    <!--</security-constraint>-->
 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>customer update</web-resource-name>
-            <url-pattern>/profiles/*</url-pattern>
-            <http-method>PUT</http-method>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>admin</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <login-config>
-        <auth-method>BASIC</auth-method>
-        <realm-name>my-realm</realm-name>
-    </login-config>
+    <!--<security-constraint>-->
+        <!--<web-resource-collection>-->
+            <!--<web-resource-name>customer update</web-resource-name>-->
+            <!--<url-pattern>/profiles/*</url-pattern>-->
+            <!--<http-method>PUT</http-method>-->
+        <!--</web-resource-collection>-->
+        <!--<auth-constraint>-->
+            <!--<role-name>admin</role-name>-->
+        <!--</auth-constraint>-->
+    <!--</security-constraint>-->
+    <!--<login-config>-->
+        <!--<auth-method>BASIC</auth-method>-->
+        <!--<realm-name>my-realm</realm-name>-->
+    <!--</login-config>-->
 </web-app>

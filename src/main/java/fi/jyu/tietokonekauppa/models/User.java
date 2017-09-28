@@ -3,6 +3,7 @@ package fi.jyu.tietokonekauppa.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.security.auth.Subject;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class User implements Principal {
     @JsonProperty("login")
     private String login;
 
+    @NotNull
     @JsonProperty("email")
     private String email;
 
@@ -28,28 +30,26 @@ public class User implements Principal {
     @JsonProperty("password")
     private String password;
 
-    @JsonProperty("role")
-    private List<String> role;
+    @NotNull
+    @JsonProperty("first_name")
+    private String first_name;
 
-    public User(String login, String email,
-                String password){
-        this.login = login;
-        this.email = email;
-        this.password = password;
-        this.role = new ArrayList<String>();
-    };
-    // getters and setters
-    @Override
-    public String getName() {
-        return this.login;
-    }
+    @NotNull
+    @JsonProperty("last_name")
+    private String last_name;
+
+    @JsonProperty("role")
+    @ElementCollection(targetClass=String.class)
+    private List<String> role;
 
     public User(){};
 
-    public User(String login, String email, String password, List<String> role) {
+    public User(String login, String email, String password, String first_name, String last_name, List<String> role) {
         this.login = login;
         this.email = email;
         this.password = password;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.role = role;
     }
 
@@ -85,11 +85,37 @@ public class User implements Principal {
         this.password = password;
     }
 
+    public String getFirst_name() {
+        return first_name;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
     public List<String> getRole() {
         return role;
     }
 
     public void setRole(List<String> role) {
         this.role = role;
+    }
+
+    @Override
+    public String getName() {
+        return login;
+    }
+
+    @Override
+    public boolean implies(Subject subject) {
+        return false;
     }
 }
