@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    $("#hmb").click(function(){
+        $("#mb").slideToggle();
+    });
+    $("#hcpu").click(function(){
+        $("#cpu").slideToggle();
+    });
     $("#hhd").click(function(){
         $("#hd").slideToggle();
     });

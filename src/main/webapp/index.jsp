@@ -27,7 +27,10 @@
             })
             .when("/index.jsp", {
                 templateUrl : "templates/main.html"
-            });
+            })
+            .when("/disks",{
+            templateUrl : "templates/main.html"
+        });
     });
     app.service('sharedProperties', function () {
         var currency = 1;
@@ -100,7 +103,7 @@
             }
         });
     });
-    app.controller('voCtrl', function($scope, $http, NgTableParams, sharedProperties) {
+    app.controller('vcCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.currency = sharedProperties.getCurrencyy();
         if($scope.currency == 0)
             $http({
@@ -190,7 +193,72 @@
             }
         });
     });
-    app.controller('resetc',function ($scope) {
+    app.controller('mbCtrl', function($scope, $http, NgTableParams, sharedProperties) {
+        $scope.currency = sharedProperties.getCurrencyy();
+        if($scope.currency == 0)
+            $http({
+                method : "GET",
+                url : "/api/motherboards"
+            }).then(function mySuccess(response) {
+                $scope.mbs = response.data;
+            }, function myError(response) {
+                $scope.mbs = response.statusText;
+            });
+        else
+            $http({
+                method : "GET",
+                url : "/api/motherboards?price_units=EUR"
+            }).then(function mySuccess(response) {
+                $scope.mbs = response.data;
+            }, function myError(response) {
+                $scope.mbs = response.statusText;
+            });
+        $scope.tableParams = new NgTableParams({
+            page: 1, // show first page
+            count: 5 // count per page
+        }, {
+            total: $scope.mbs, // length of data
+            getData: function($defer, params) {
+                $defer.resolve($scope.mbs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            }
+        });
+    });
+    app.controller('psuCtrl', function($scope, $http, NgTableParams, sharedProperties) {
+        $scope.currency = sharedProperties.getCurrencyy();
+        if($scope.currency == 0)
+            $http({
+                method : "GET",
+                url : "/api/psus"
+            }).then(function mySuccess(response) {
+                $scope.psus = response.data;
+            }, function myError(response) {
+                $scope.psus = response.statusText;
+            });
+        else
+            $http({
+                method : "GET",
+                url : "/api/psus?price_units=EUR"
+            }).then(function mySuccess(response) {
+                $scope.psus = response.data;
+            }, function myError(response) {
+                $scope.psus = response.statusText;
+            });
+        $scope.tableParams = new NgTableParams({
+            page: 1, // show first page
+            count: 5 // count per page
+        }, {
+            total: $scope.psus, // length of data
+            getData: function($defer, params) {
+                $defer.resolve($scope.psus.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            }
+        });
+    });
+    app.controller('DiskInformation', function ($location,$scope) {
+        $scope.redirectDI = function(x){
+            $location.path("/disks/"+x);
+        }
+    })
+    /*app.controller('resetc',function ($scope) {
         $scope.reset = function(){
             for(var i=0;i<document.getElementsByName("input").length;i++){
                 document.getElementsByTagName("input")[i].value = 0;
@@ -206,7 +274,7 @@
         }, function myError(response) {
             $scope.myWelcome = response.statusText;
         });
-    });
+    });*/
 </script>
 <body ng-app="myApp">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
