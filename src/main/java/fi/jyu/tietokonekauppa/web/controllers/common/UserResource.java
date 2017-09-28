@@ -20,7 +20,7 @@ public class UserResource {
     @Autowired
     UserService userService;
 
-    @GET
+    @POST
     @Path("/signup")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signUp(@QueryParam("login") String login, @QueryParam("password") String password,
@@ -48,7 +48,7 @@ public class UserResource {
         return Response.ok().entity(new StringStatus("ok")).build();
     }
 
-    @GET
+    @POST
     @Path("/signin")
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(@QueryParam("login") String login, @QueryParam("password") String password){
@@ -69,7 +69,7 @@ public class UserResource {
         return Response.ok().entity(new StringStatus("ok")).build();
     }
 
-    @GET
+    @POST
     @Path("/logout")
     @Produces(MediaType.APPLICATION_JSON)
     public Response logout(){
