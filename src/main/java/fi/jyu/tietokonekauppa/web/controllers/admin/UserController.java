@@ -15,6 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/admin/users")
+@Produces(MediaType.APPLICATION_JSON)
 public class UserController {
     @Autowired
     private UserService userService;

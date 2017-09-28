@@ -254,6 +254,29 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
     order.editionView().fields(order.creationView().fields());
     admin.addEntity(order);
 
+    var user = nga.entity('users');
+    user.listView().fields([
+        nga.field('id'),
+        nga.field('login').isDetailLink(true),
+        nga.field('email'),
+        nga.field('password'),
+        nga.field('first_name'),
+        nga.field('last_name'),
+        nga.field('role')
+    ]);
+    user.creationView().fields([
+        nga.field('login').validation({ required: true }),
+        nga.field('email').validation({ required: true }),
+        nga.field('password').validation({ required: true }),
+        nga.field('first_name').validation({ required: true }),
+        nga.field('last_name').validation({ required: true }),
+        nga.field('role', 'choice')
+            .choices([{ value: ["user"], label: 'user' },
+            { value: ["admin"], label: 'admin' }])
+    ]);
+    user.editionView().fields(user.creationView().fields());
+    admin.addEntity(user);
+
     // attach the admin application to the DOM and execute it
     nga.configure(admin);
 }]);
