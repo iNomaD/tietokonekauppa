@@ -34,3 +34,6 @@ jdbc.password = 12345 (your password)
 
 <p>Common API: localhost:8080/api/</p>
 <p>Admin  API: localhost:8080/api/admin/</p>
+
+<h2>API reference</h2>
+<a href="https://docs.google.com/gview?url=https://github.com/iNomaD/tietokonekauppa/raw/master/docs/API%20reference.docx&embedded=true">API reference.docx</a>
