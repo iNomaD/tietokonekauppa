@@ -14,7 +14,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class ProfileResource {
-    private ProfileService profileService = new ProfileService();
+    //private ProfileService profileService = new ProfileService();
     @Context
     private SecurityContext securityContext;
     @GET
@@ -23,6 +23,7 @@ public class ProfileResource {
         if (!securityContext.isUserInRole("admin")){
             throw new WebApplicationException("Not authorized", 401);
         }
-        return profileService.getProfile(profileName);
+        //return profileService.getProfile(profileName);
+        return null;
     }
 }

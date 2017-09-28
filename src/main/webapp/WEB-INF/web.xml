@@ -27,6 +27,7 @@
         <param-value>WEB-INF/spring-hibernate-jersey2.xml</param-value>
     </context-param>
 
+    <!-- DOENS't WORK TODO fix
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer creation</web-resource-name>
@@ -64,4 +65,5 @@
         <auth-method>BASIC</auth-method>
         <realm-name>my-realm</realm-name>
     </login-config>
+    -->
 </web-app>

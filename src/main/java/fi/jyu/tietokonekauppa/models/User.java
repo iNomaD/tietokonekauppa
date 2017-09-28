@@ -28,6 +28,9 @@ public class User implements Principal {
     @JsonProperty("password")
     private String password;
 
+    @ElementCollection
+    @CollectionTable(name="roles", joinColumns=@JoinColumn(name="user_id"))
+    @Column(name="role")
     @JsonProperty("role")
     private List<String> role;
 
