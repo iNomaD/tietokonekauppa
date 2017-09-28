@@ -2,47 +2,49 @@ package fi.jyu.tietokonekauppa.web;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+import java.util.Map;
+
 public class ErrorMessage {
 
-    @JsonProperty("error_message")
-    private String errorMessage;
+    @JsonProperty("status")
+    private String status;
 
-    @JsonProperty("error_code")
-    private int errorCode; //own custom error code
+    @JsonProperty("errors")
+    private List<String> errors;
 
-    @JsonProperty("documentation")
-    private String documentation; //link to documentation regarding a error and it’s resolving
+    @JsonProperty("fields")
+    private Map<String, String[]> fields;
 
     public ErrorMessage(){}
 
-    public ErrorMessage(String errorMessage, int errorCode, String documentation) {
-        super();
-        this.errorMessage = errorMessage;
-        this.errorCode = errorCode;
-        this.documentation = documentation;
+    public ErrorMessage(String status, List<String> errors, Map<String, String[]> fields) {
+        this.status = status;
+        this.errors = errors;
+        this.fields = fields;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getStatus() {
+        return status;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public List<String> getErrors() {
+        return errors;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setErrors(List<String> errors) {
+        this.errors = errors;
     }
 
-    public String getDocumentation() {
-        return documentation;
+    public Map<String, String[]> getFields() {
+        return fields;
     }
 
-    public void setDocumentation(String documentation) {
-        this.documentation = documentation;
+    public void setFields(Map<String, String[]> fields) {
+        this.fields = fields;
     }
 }

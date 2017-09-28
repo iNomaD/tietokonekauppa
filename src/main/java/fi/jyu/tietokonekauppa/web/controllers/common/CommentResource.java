@@ -4,6 +4,7 @@ import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.services.CommentService;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
@@ -12,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
-import java.util.List;
+import java.util.*;
 
 @Path("/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
 public class CommentResource {
@@ -34,7 +35,12 @@ public class CommentResource {
                                 @Context UriInfo uriInfo){
         // TODO rework method according to API reference
         if(contents == null || username == null){
-            throw new DataNotFoundException("Provide username and contents please");
+            List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
+            Map<String, String[]> fields = new HashMap<String, String[]>() {{
+                if(contents == null) put("contents", new String[]{"not provided"});
+                if(username == null) put("username", new String[]{"not provided"});
+            }};
+            throw new FormException(errors, fields);
         }
         Comment item = commentService.add(itemId, type, contents, username);
         if(item == null){
