@@ -17,6 +17,7 @@ import java.net.URI;
 import java.util.List;
 
 @Path("/admin/cases")
+@Produces(MediaType.APPLICATION_JSON)
 public class CaseController {
 
     @Autowired

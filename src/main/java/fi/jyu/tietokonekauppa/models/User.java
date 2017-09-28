@@ -1,5 +1,6 @@
 package fi.jyu.tietokonekauppa.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Principal {
 
     @Id
@@ -38,8 +40,9 @@ public class User implements Principal {
     @JsonProperty("last_name")
     private String last_name;
 
-    @JsonProperty("role")
-    @ElementCollection(targetClass=String.class)
+    @ElementCollection(fetch=FetchType.EAGER)
+    @CollectionTable(name="roles", joinColumns=@JoinColumn(name = "id", referencedColumnName = "id"))
+    @Column(name="role")
     private List<String> role;
 
     public User(){};
@@ -111,7 +114,7 @@ public class User implements Principal {
 
     @Override
     public String getName() {
-        return login;
+        return this.first_name + " " + this.last_name;
     }
 
     @Override

@@ -1,38 +1,29 @@
-<header class="masthead" style="background-color: #563d7c">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="site-heading">
-                    <h1 class="text-center">Tietokonekauppa</h1>
-                    <span class="subheading">Tervetuloa!</span>
-                </div>
-            </div>
-        </div>
+<div class="container" style="margin-bottom: 0;">
+    <div class="jumbotron text-center">
+        <h1>Tietokonekauppa</h1>
+        <p>Choose computer parts for you</p>
     </div>
-</header>
-<p style="font-size:36px;text-align: center;">Mother Boards <span id="hmb" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="mb" ng-controller="mbCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<p style="font-size:36px;text-align: center;">Mother Boards <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#mb"></span></p>
+<table id="mb" ng-controller="mbCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="mb in mbs">
         <td title="'Vendor'" filter="{ type: 'text'}" sortable="'text'">
             {{mb.manufacturer}}</td>
         <td title="'Socket'" filter="{ socket: 'text'}" sortable="'socket'">
             Socket {{mb.cpuModelSocket}}</td>
-        <td title="'Supp. mem.'" filter="{ typeRam: 'text'}" sortable="'type'">
+        <td title="'Supp. mem.'" filter="{ typeRam: 'text'}" sortable="'typeRam'">
             {{mb.RamType}}</td>
-        <td title="'Max. mem.'" filter="{ typeRam: 'text'}" sortable="'type'">
+        <td title="'Max. mem.'" filter="{ maxMem: 'text'}" sortable="'maxMem'">
             {{mb.memoryMaximumSize}}</td>
         <td title="'Price'" filter="{ price: 'number'}" sortable="'price'">
             {{mb.price}}</td>
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{mb.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{mb.amount_available}}">
-        </td>
-        <td><button ng-controller="CPUInformation" data-ng-click="redirectCPI(mb.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="MBInformation" data-ng-click="redirectCPI(mb.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{mb.amount_available}}"></div></td>
     </tr>
 </table>
-<br><p style="font-size:36px;text-align: center;">CPUs <span id="hcpu" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="cpu" ng-controller="cpuCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">CPUs <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#cpu"></span></p>
+<table id="cpu" ng-controller="cpuCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="cpu in cpus">
         <td title="'Vendor'" filter="{ type: 'text'}" sortable="'text'">
             {{cpu.manufacturer}}</td>
@@ -43,13 +34,12 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{hd.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}">
-        </td>
-        <td><button ng-controller="CPUInformation" data-ng-click="redirectCPI(hd.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="CPUInformation" data-ng-click="redirectCPI(cpu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{cpu.amount_available}}"></div></td>
+    </tr>
     </tr>
 </table>
-<br><p style="font-size:36px;text-align: center;">RAMs  <span id="hram" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="ram" ng-controller="ramCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">RAMs  <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#ram"></span></p>
+<table id="ram" ng-controller="ramCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="ram in rams">
         <td title="'Vendor'" filter="{ vendor: 'text'}" sortable="'vendor'">
             {{ram.vendor}}</td>
@@ -64,13 +54,12 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{ram.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{ram.amount_available}}">
-        </td>
-        <td><button ng-controller="RamInformation" data-ng-click="redirectRI(ram.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="RAMInformation" data-ng-click="redirectCPI(ram.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{ram.amount_available}}"></div></td>
+    </tr>
     </tr>
 </table>
-<br><p style="font-size:36px;text-align: center;">Drives <span id="hhd" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-            <table id="hd" ng-controller="HdCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">Drives <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#hd"></span></p>
+            <table id="hd" ng-controller="HdCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
                 <tr ng-repeat="hd in hds">
                     <td title="'Vendor'" filter="{ vendor: 'text'}" sortable="'vendor'">
                         {{hd.vendor}}</td>
@@ -83,13 +72,12 @@
                     <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
                         {{hd.amount_available}}</td>
                     <td title="'Amount'">
-                        <input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}">
-                    </td>
-                    <td><button ng-controller="DiskInformation" data-ng-click="redirectDI(hd.id)"  type="button" class="btn btn-primary" >More</button></td>
+                        <button style="float:right;" ng-controller="DiskInformation" data-ng-click="redirectCPI(hd.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}"></div></td>
+                </tr>
                 </tr>
             </table>
-<br><p style="font-size:36px;text-align: center;">Video cards <span id="hgpu" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="vc" ng-controller="vcCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">Video cards <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#vc"></span></p>
+<table id="vc" ng-controller="vcCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="gpu in gpus">
         <td title="'Manufacturer'" filter="{ manufacturer: 'text'}" sortable="'manufacturer'">
             {{gpu.manufacturer}}</td>
@@ -102,13 +90,12 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{gpu.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{gpu.amount_available}}">
-        </td>
-        <td><button ng-controller="VCInformation" data-ng-click="redirectGI(gpu.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="VCInformation" data-ng-click="redirectCPI(gpu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{gpu.amount_available}}"></div></td>
+    </tr>
     </tr>
 </table>
-<br><p style="font-size:36px;text-align: center;">PSUs <span id="hpsu" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="psu" ng-controller="psuCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">PSUs <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#psu"></span></p>
+<table id="psu" ng-controller="psuCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="psu in psus">
         <td title="'Vendor'" filter="{ vendor: 'text'}" sortable="'vendor'">
             {{psu.vendor}}</td>
@@ -119,13 +106,12 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{psu.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{psu.amount_available}}">
-        </td>
-        <td><button ng-controller="PSUInformation" data-ng-click="redirectGI(psu.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="PSUInformation" data-ng-click="redirectCPI(psu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{psu.amount_available}}"></div></td>
+    </tr>
     </tr>
 </table>
-<br><p style="font-size:36px;text-align: center;">Cases <span id="hcase" style="font-size:20px;" class="glyphicon glyphicon-chevron-down"></span></p>
-<table id="case" ng-controller="caseCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc" show-filter="true">
+<br><p style="font-size:36px;text-align: center;">Cases <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#case"></span></p>
+<table id="case" ng-controller="caseCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive tbc collapse in" show-filter="true">
     <tr ng-repeat="case in cases">
         <td title="'Vendor'" filter="{ vendor: 'text'}" sortable="'vendor'">
             {{case.vendor}}</td>
@@ -136,15 +122,13 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{case.amount_available}}</td>
         <td title="'Amount'">
-            <input class="form-control" type="number" value=0 size="3" min="0" max="{{case.amount_available}}">
-        </td>
-        <td><button ng-controller="PSUInformation" data-ng-click="redirectCaI(case.id)"  type="button" class="btn btn-primary" >More</button></td>
+            <button style="float:right;" ng-controller="CaseInformation" data-ng-click="redirectCPI(case.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{case.amount_available}}"></div></td>
+    </tr>
     </tr>
 </table>
         <br>
         <div style="text-align:center;" class="btn-block">
-            <button type="button" class="btn btn-primary" ng-click="refresh()">Refresh</button>
             <button type="button" class="btn btn-primary" ng-controller="resetc" ng-click="reset()">Reset</button>
             <button type="button" class="btn btn-primary" ng-click="order()">Order</button>
         </div>
-<script src="../js/my.js"></script>
+</div>
