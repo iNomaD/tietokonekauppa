@@ -40,9 +40,8 @@ public class User implements Principal {
     @JsonProperty("last_name")
     private String last_name;
 
-    @ElementCollection(fetch=FetchType.EAGER)
-    @CollectionTable(name="roles", joinColumns=@JoinColumn(name = "id", referencedColumnName = "id"))
-    @Column(name="role")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @JsonProperty("role")
     private List<String> role;
 
     public User(){};

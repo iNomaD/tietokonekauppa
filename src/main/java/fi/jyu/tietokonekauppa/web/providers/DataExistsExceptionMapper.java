@@ -1,6 +1,7 @@
 package fi.jyu.tietokonekauppa.web.providers;
 
 import fi.jyu.tietokonekauppa.web.ErrorMessage;
+import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 
 import javax.ws.rs.core.Response;
@@ -11,9 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 
 @Provider // the annotation preregisters our Mapper for JAX-RS to be used
-public class DataExistsExceptionMapper implements ExceptionMapper<DataNotFoundException> {
+public class DataExistsExceptionMapper implements ExceptionMapper<DataExistsException> {
     @Override
-    public Response toResponse(DataNotFoundException ex) {
+    public Response toResponse(DataExistsException ex) {
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());
         ErrorMessage errorMessage = new ErrorMessage("error", errors, null);

@@ -1,8 +1,11 @@
 package fi.jyu.tietokonekauppa.web.controllers.common;
 
 
+import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.UserService;
 import fi.jyu.tietokonekauppa.web.StringStatus;
+import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
+import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,16 +25,17 @@ public class UserResource {
 
     @POST
     @Path("/signup")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signUp(@QueryParam("login") String login, @QueryParam("password") String password,
-                               @QueryParam("first_name") String firstName, @QueryParam("last_name") String lastName,
-                               @QueryParam("email") String email){
+    public Response signUp(@FormParam("login") String login, @FormParam("password") String password,
+                               @FormParam("first_name") String firstName, @FormParam("last_name") String lastName,
+                               @FormParam("email") String email){
         System.out.println(login);
         System.out.println(password);
         System.out.println(firstName);
         System.out.println(lastName);
         System.out.println(email);
-        if(login == null || password == null || firstName != null || lastName != null || email != null){
+        if(login == null || password == null || firstName == null || lastName == null || email == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
             Map<String, String[]> fields = new HashMap<String, String[]>() {{
                 if(login == null) put("login", new String[]{"not provided"});
@@ -43,15 +47,23 @@ public class UserResource {
             throw new FormException(errors, fields);
         }
 
-        // TODO implement business logic
+        try {
+            User user = userService.signUp(login, password, firstName, lastName, email);
+            if (user == null) {
+                throw new DataNotFoundException("Could not create user");
+            }
+        } catch (DataExistsException e){
+            throw e;
+        }
 
         return Response.ok().entity(new StringStatus("ok")).build();
     }
 
     @POST
     @Path("/signin")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response signIn(@QueryParam("login") String login, @QueryParam("password") String password){
+    public Response signIn(@FormParam("login") String login, @FormParam("password") String password){
         System.out.println(login);
         System.out.println(password);
         if(login == null || password == null){
@@ -63,8 +75,9 @@ public class UserResource {
             throw new FormException(errors, fields);
         }
 
-
-        // TODO implement business logic
+        if(!userService.userCredentialExists(login, password)){
+            throw new DataNotFoundException("Wrong username or password");
+        }
 
         return Response.ok().entity(new StringStatus("ok")).build();
     }
