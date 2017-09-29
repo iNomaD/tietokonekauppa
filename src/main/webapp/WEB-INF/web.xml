@@ -27,20 +27,6 @@
         <param-value>WEB-INF/spring-hibernate-jersey2.xml</param-value>
     </context-param>
 
-    <entity name="User" class="fi.jyu.tietokonekauppa.models.User" access="FIELD">
-        <attributes>
-            <id name="id">
-                <column name="id" />
-            </id>
-            <element-collection name="role" target-class="java.lang.String">
-                <column name="role" />
-                <collection-table name="roles">
-                    <join-column name="id" />
-                </collection-table>
-            </element-collection>
-        </attributes>
-    </entity>
-
     <!-- DOENS't WORK TODO fix
     <security-constraint>
         <web-resource-collection>
