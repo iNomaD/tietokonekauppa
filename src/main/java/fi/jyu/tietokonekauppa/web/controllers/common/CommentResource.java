@@ -31,18 +31,20 @@ public class CommentResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public Response addComment (@PathParam("id") long itemId, @PathParam("type") String type,
-                                @QueryParam("contents") String contents, @QueryParam("username") String username,
+                                @QueryParam("contents") String contents,
                                 @Context UriInfo uriInfo){
-        // TODO rework method according to API reference
-        if(contents == null || username == null){
+        System.out.println("DEBUG contents "+contents);
+        if(contents == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
             Map<String, String[]> fields = new HashMap<String, String[]>() {{
                 if(contents == null) put("contents", new String[]{"not provided"});
-                if(username == null) put("username", new String[]{"not provided"});
             }};
             throw new FormException(errors, fields);
         }
-        Comment item = commentService.add(itemId, type, contents, username);
+
+        // TODO rework method according to API reference
+        // TODO we should get get user from SecurityContext
+        Comment item = commentService.add(itemId, type, contents, "username???");
         if(item == null){
             throw new DataNotFoundException("Comment was not created");
         }
