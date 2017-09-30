@@ -28,10 +28,16 @@
                 templateUrl : "templates/main.html"
             })
             .when("/disks/:diskId",{
-                templateUrl : "templates/DiskInformation.html"
+            templateUrl : "templates/DiskInformation.html"
+
             })
             .when("/cpus/:cpuId",{
                 templateUrl : "templates/CPUInformation.html"
+
+            })
+            .when("/cpus/:mbId",{
+                templateUrl : "templates/MBInformation.html"
+
             })
             .when("/cases/:caseId",{
                 templateUrl : "templates/CaseInformation.html"
@@ -42,8 +48,8 @@
         ;
     });
     app.service('sharedProperties', function () {
-        var currency = 1;
-        var diskID,cpuID,caseID,mbID,gpuID,ramID;
+        var currency = 0;
+        var diskID,cpuID,caseID,mbID,gpuID,ramID,vcID,psuID;
         return {
             getCurrency: function () {
                 return currency;
@@ -56,6 +62,48 @@
             },
             setDiskID: function(value) {
                 diskID = value;
+            },
+            getCPUID: function () {
+                return cpuID;
+            },
+            setCPUID: function(value) {
+                cpuID = value;
+            },
+            getCaseID: function () {
+                return caseID;
+            },
+            setCaseID: function(value) {
+                caseID = value;
+            },
+            getMBID: function () {
+                return mbID;
+            },
+            setMBID: function(value) {
+                mbID = value;
+            },
+            getGPUID: function () {
+                return gpuID;
+            },
+            setGPUID: function(value) {
+                gpuID = value;
+            },
+            getRAMID: function () {
+                return ramID;
+            },
+            setRAMID: function(value) {
+                ramID = value;
+            },
+            getPSUID: function () {
+                return psuID;
+            },
+            setPSUID: function(value) {
+                psuID = value;
+            },
+            getVCID: function () {
+                return vcID;
+            },
+            setVCID: function(value) {
+                vcID = value;
             }
         };
     });
@@ -269,64 +317,127 @@
             }
         });
     });
-    app.controller('DiskInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
-            sharedProperties.setDiskID(x);
-            $location.path("/disks/"+x);
-        }
-    });
     app.controller('CPUInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
+        $scope.redirect = function(x){
             sharedProperties.setCPUID(x);
             $location.path("/cpus/"+x);
         }
     });
     app.controller('PSUInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
+        $scope.redirect = function(x){
             sharedProperties.setPSUID(x);
             $location.path("/psus/"+x);
         }
     });
-    app.controller('RamInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
+    app.controller('RAMInformation', function ($location,$scope,sharedProperties) {
+        $scope.redirect = function(x){
             sharedProperties.setRAMID(x);
             $location.path("/rams/"+x);
         }
     });
     app.controller('VCInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
+        $scope.redirect = function(x){
             sharedProperties.setVCID(x);
             $location.path("/gpus/"+x);
         }
     });
     app.controller('MBInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
-            sharedProperties.setMBID(x);
-            $location.path("/mbs/"+x);
-        }
     });
     app.controller('CaseInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirectDI = function(x){
+        $scope.redirect = function(x){
             sharedProperties.setCaseID(x);
             $location.path("/cases/"+x);
         }
     });
     app.controller('resetc',function ($scope) {
         $scope.reset = function(){
-            for(var i=0;i<document.getElementsByName("input").length;i++){
-                document.getElementsByTagName("input")[i].value = 0;
+            for(var i=6;i<document.getElementById("mb").getElementsByTagName('input').length;i++){
+                document.getElementById("mb").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=4;i<document.getElementById("cpu").getElementsByTagName('input').length;i++){
+                document.getElementById("cpu").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=6;i<document.getElementById("ram").getElementsByTagName('input').length;i++){
+                document.getElementById("ram").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=6;i<document.getElementById("hd").getElementsByTagName('input').length;i++){
+                document.getElementById("hd").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=5;i<document.getElementById("vc").getElementsByTagName('input').length;i++){
+                document.getElementById("vc").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=4;i<document.getElementById("psu").getElementsByTagName('input').length;i++){
+                document.getElementById("psu").getElementsByTagName('input')[i].value = 0;
+            }
+            for(var i=4;i<document.getElementById("case").getElementsByTagName('input').length;i++){
+                   document.getElementById("case").getElementsByTagName('input')[i].value = 0;
             }
         }
     });
     app.controller('Order', function($scope, $http) {
-        $http({
-            method : "POST",
-            url : "/api/orders"
-        }).then(function mySuccess(response) {
-            $scope.myWelcome = response.data;
-        }, function myError(response) {
-            $scope.myWelcome = response.statusText;
-        });
+        $scope.order = function(){
+            $scope.order = "[";
+            for(var i=6;i<document.getElementById("mb").getElementsByTagName('input').length;i++){
+                if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("mb").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('mb').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Motherboard\"},';
+                    }
+                }
+            }
+            for(var i=4;i<document.getElementById("cpu").getElementsByTagName('input').length;i++){
+                if (document.getElementById("cpu").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("cpu").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('cpu').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"CPU\"},';
+                    }
+                }
+            }
+            for(var i=6;i<document.getElementById("ram").getElementsByTagName('input').length;i++){
+                if (document.getElementById("ram").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("ram").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('ram').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"RAM\"},';
+                    }
+                }
+            }
+            for(var i=6;i<document.getElementById("hd").getElementsByTagName('input').length;i++){
+                if (document.getElementById("hd").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("hd").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('hd').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Disk\"},';
+                    }
+                }
+            }
+            for(var i=5;i<document.getElementById("vc").getElementsByTagName('input').length;i++){
+                if (document.getElementById("vc").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("vc").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('vc').getElementsByTagName('td')[6*(i-5)+5].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"GPU\"},';
+                    }
+                }
+            }
+            for(var i=4;i<document.getElementById("psu").getElementsByTagName('input').length;i++){
+                if (document.getElementById("psu").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("psu").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('psu').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"PSU\"},';
+                    }
+                }
+            }
+            for(var i=4;i<document.getElementById("case").getElementsByTagName('input').length;i++){
+                if (document.getElementById("case").getElementsByTagName('input')[i].value > 0){
+                    for(var j=0;j<document.getElementById("case").getElementsByTagName('input')[i].value;j++){
+                        $scope.order += '{\"id\": '+ document.getElementById('case').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Case\"},';
+                    }
+                }
+            }
+            if($scope.order[$scope.order.length-1] == ',')
+                $scope.order = $scope.order.substr(0,$scope.order.length-2) + ']';
+            else
+                $scope.order += ']';
+            $http({
+                method: "POST",
+                headers: {'Content-Type': 'application/json'},
+                url: "/api/orders/",
+                data: $scope.order
+            })
+
+        }
     });
     app.controller('DiskInfoCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.diskid = sharedProperties.getDiskID();
@@ -398,7 +509,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
         </ul>
     </div>
 </nav>
