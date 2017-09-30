@@ -2,6 +2,7 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
+import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.repositories.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,21 +15,10 @@ import java.util.List;
 public class CommentService {
 
     @Autowired
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
+
     @Autowired
-    CaseService caseService;
-    @Autowired
-    DiskService diskService;
-    @Autowired
-    GPUService gpuService;
-    @Autowired
-    MotherboardService motherboardService;
-    @Autowired
-    ProcessorService processorService;
-    @Autowired
-    PSUService psuService;
-    @Autowired
-    RAMService ramService;
+    private ComponentService componentService;
 
     public List<Comment> getAll() {
         List<Comment> result = new ArrayList<>();
@@ -43,7 +33,7 @@ public class CommentService {
             // check id
             if(c.getItem().getId() == itemId){
                 // check type
-                Component item = getComponentByIdAndItemType(itemId, c.getItemType());
+                Component item = componentService.getComponentByIdAndItemType(itemId, c.getItemType());
                 if(item != null || c.getItemType() == null){
                     result.add(c);
                 }
@@ -61,7 +51,7 @@ public class CommentService {
         // check id
         if(comment != null && comment.getItem().getId()==itemId){
             // check type
-            Component item = getComponentByIdAndItemType(itemId, comment.getItemType());
+            Component item = componentService.getComponentByIdAndItemType(itemId, comment.getItemType());
             if(item != null || comment.getItemType() == null){
                 return comment;
             }
@@ -78,45 +68,25 @@ public class CommentService {
         return commentRepository.save(item);
     }
 
-    public Comment add(long itemId, String itemType, String contents, String username){
-        Component.Type type = Component.Type.getType(itemType.substring(0, itemType.length() - 1).toLowerCase());
-        Component item = getComponentByIdAndItemType(itemId, type);
-        if(item != null){
-            Comment comment = new Comment(item, contents, username, new Date());
-            comment.setItemType(type);
-            return commentRepository.save(comment);
+    public Comment getCommentByContents(String contents) {
+        List<Comment> all = getAll();
+        for(Comment item : all){
+            if(item.getContents().equals(contents)){
+                return item;
+            }
         }
         return null;
     }
 
-    private Component getComponentByIdAndItemType(long id, Component.Type type){
-        Component item = null;
-        if(type != null) {
-            switch (type) {
-                case Case:
-                    item = caseService.get(id);
-                    break;
-                case Disk:
-                    item = diskService.get(id);
-                    break;
-                case GPU:
-                    item = gpuService.get(id);
-                    break;
-                case Motherboard:
-                    item = motherboardService.get(id);
-                    break;
-                case Processor:
-                    item = processorService.get(id);
-                    break;
-                case PSU:
-                    item = psuService.get(id);
-                    break;
-                case RAM:
-                    item = ramService.get(id);
-                    break;
-            }
+    public Comment add(long itemId, String itemType, String contents, User user){
+        Component.Type type = Component.Type.getType(itemType.substring(0, itemType.length() - 1).toLowerCase());
+        Component item = componentService.getComponentByIdAndItemType(itemId, type);
+        if(item != null){
+            Comment comment = new Comment(item, contents, "username???", new Date());
+            comment.setItemType(type);
+            return commentRepository.save(comment);
         }
-        return item;
+        return null;
     }
 
     public Comment update(Comment item) {
