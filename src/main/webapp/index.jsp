@@ -28,17 +28,18 @@
                 templateUrl : "templates/main.html"
             })
             .when("/disks/:diskId",{
-            templateUrl : "templates/DiskInformation.html"
-
-        })
+                templateUrl : "templates/DiskInformation.html"
+            })
             .when("/cpus/:cpuId",{
                 templateUrl : "templates/CPUInformation.html"
-
             })
-    .when("/cases/:caseId",{
-            templateUrl : "templates/CaseInformation.html"
-
-        });
+            .when("/cases/:caseId",{
+                templateUrl : "templates/CaseInformation.html"
+            })
+            .when("/singup/",{
+                templateUrl : "users/singup/index.html"
+            })
+        ;
     });
     app.service('sharedProperties', function () {
         var currency = 1;
@@ -357,6 +358,36 @@
                 $defer.resolve($scope.disk.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+    });
+    app.controller('SingUp', function ($location,$scope,$http) {
+        $scope.passwordGood = "red";
+        $scope.sendNewMember = function(x){
+            if ($scope.passwordGood != "green") $scope.itOk = "Check your password!"
+            else {
+                $scope.itOk = "Sended!";
+                $http({
+                    method: "POST",
+                    url: "/api/users/signup/",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+//                    transformRequest: function(x){
+//                        var str = [];
+//                        for(var p in x)
+//                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(x[p]));
+//                        return str.join("&");
+//                    }
+                    data :  $.param({login: x.login,password: x.password,first_name: x.first_name,last_name: x.last_name,email: x.email})
+                }).then(function ServAnsw(response) {
+                    if (response.status != "ok")
+                        $scope.itOk = "Something wrong!";
+                    else $scope.itOk = "Registed!";
+                });
+            }
+        };
+        $scope.passwordFerif = function (p,pc) {
+            if(p != pc) $scope.passwordGood = "red";
+            else $scope.passwordGood = "green";
+        }
+        //$http($scope.req).then($scope.itOk = response.data);
     });
 </script>
 <body ng-app="myApp">
