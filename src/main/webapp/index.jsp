@@ -35,15 +35,15 @@
                 templateUrl : "templates/CPUInformation.html"
 
             })
-            .when("/cpus/:mbId",{
+            .when("/mbs/:mbId",{
                 templateUrl : "templates/MBInformation.html"
 
             })
             .when("/cases/:caseId",{
                 templateUrl : "templates/CaseInformation.html"
             })
-            .when("/singup/",{
-                templateUrl : "users/singup/index.html"
+            .when("/signup/",{
+                templateUrl : "/users/singup/index.html"
             })
         ;
     });
@@ -166,6 +166,10 @@
                 $defer.resolve($scope.rams.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+        $scope.redirect = function(x){
+            sharedProperties.setRAMID(x);
+            $location.path("/rams/"+x);
+        };
     });
     app.controller('vcCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.currency = sharedProperties.getCurrency();
@@ -196,13 +200,17 @@
                 $defer.resolve($scope.gpus.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+        $scope.redirect = function(x){
+            sharedProperties.setVCID(x);
+            $location.path("/gpus/"+x);
+        };
     });
     app.controller('caseCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.currency = sharedProperties.getCurrency();
-        if($scope.currency == 0)
+        if ($scope.currency == 0)
             $http({
-                method : "GET",
-                url : "/api/cases"
+                method: "GET",
+                url: "/api/cases"
             }).then(function mySuccess(response) {
                 $scope.cases = response.data;
             }, function myError(response) {
@@ -210,8 +218,8 @@
             });
         else
             $http({
-                method : "GET",
-                url : "/api/cases?price_units=EUR"
+                method: "GET",
+                url: "/api/cases?price_units=EUR"
             }).then(function mySuccess(response) {
                 $scope.cases = response.data;
             }, function myError(response) {
@@ -222,10 +230,14 @@
             count: 5 // count per page
         }, {
             total: $scope.cases, // length of data
-            getData: function($defer, params) {
+            getData: function ($defer, params) {
                 $defer.resolve($scope.cases.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+        $scope.redirect = function(x){
+            sharedProperties.setCaseID(x);
+            $location.path("/cases/"+x);
+        }
     });
     app.controller('cpuCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.currency = sharedProperties.getCurrency();
@@ -256,6 +268,10 @@
                 $defer.resolve($scope.cpus.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+        $scope.redirect = function(x){
+            sharedProperties.setCPUID(x);
+            $location.path("/cpus/"+x);
+        };
     });
     app.controller('mbCtrl', function($scope, $http, NgTableParams, sharedProperties) {
         $scope.currency = sharedProperties.getCurrency();
@@ -316,38 +332,10 @@
                 $defer.resolve($scope.psus.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
-    });
-    app.controller('CPUInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirect = function(x){
-            sharedProperties.setCPUID(x);
-            $location.path("/cpus/"+x);
-        }
-    });
-    app.controller('PSUInformation', function ($location,$scope,sharedProperties) {
         $scope.redirect = function(x){
             sharedProperties.setPSUID(x);
             $location.path("/psus/"+x);
-        }
-    });
-    app.controller('RAMInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirect = function(x){
-            sharedProperties.setRAMID(x);
-            $location.path("/rams/"+x);
-        }
-    });
-    app.controller('VCInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirect = function(x){
-            sharedProperties.setVCID(x);
-            $location.path("/gpus/"+x);
-        }
-    });
-    app.controller('MBInformation', function ($location,$scope,sharedProperties) {
-    });
-    app.controller('CaseInformation', function ($location,$scope,sharedProperties) {
-        $scope.redirect = function(x){
-            sharedProperties.setCaseID(x);
-            $location.path("/cases/"+x);
-        }
+        };
     });
     app.controller('resetc',function ($scope) {
         $scope.reset = function(){
@@ -508,8 +496,8 @@
             <a class="navbar-brand" href="/">Tietokonekauppa</a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+            <li><a href="signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
         </ul>
     </div>
 </nav>
