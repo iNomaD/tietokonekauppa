@@ -35,7 +35,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
-            <role-name>user</role-name>
+            <role-name>customer</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -47,7 +47,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
-            <role-name>user</role-name>
+            <role-name>customer</role-name>
         </auth-constraint>
     </security-constraint>
 
@@ -59,7 +59,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
-            <role-name>user</role-name>
+            <role-name>customer</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -70,7 +70,7 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
-            <role-name>user</role-name>
+            <role-name>customer</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
@@ -81,6 +81,6 @@
         <role-name>admin</role-name>
     </security-role>
     <security-role>
-        <role-name>user</role-name>
+        <role-name>customer</role-name>
     </security-role>
 </web-app>

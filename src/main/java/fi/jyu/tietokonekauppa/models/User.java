@@ -15,6 +15,9 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Principal {
 
+    public static final String ADMIN = "admin";
+    public static final String CUSTOMER = "customer";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
@@ -42,7 +45,7 @@ public class User implements Principal {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JsonProperty("role")
-    private List<String> role; // admin or customer
+    private List<String> role;
 
     public User(){};
 

@@ -4,6 +4,8 @@ import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.CommentService;
+import fi.jyu.tietokonekauppa.web.StringStatus;
+import fi.jyu.tietokonekauppa.web.exceptions.AccessDeniedException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
@@ -14,7 +16,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.*;
 
-@Path("/secured/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
+@Path("/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
@@ -38,7 +40,7 @@ public class CommentResource {
     public Response addComment (@PathParam("id") long itemId, @PathParam("type") String type,
                                 @QueryParam("contents") String contents,
                                 @Context UriInfo uriInfo){
-        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
             throw new WebApplicationException("Not authorized", 401);
         }
 
@@ -82,7 +84,7 @@ public class CommentResource {
     @Path("/{comment_id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteComment(@PathParam("id") long id,@PathParam("comment_id") long commentId){
-        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
             throw new WebApplicationException("Not authorized", 401);
         }
         User user = (User) securityContext.getUserPrincipal();
@@ -90,13 +92,13 @@ public class CommentResource {
         if(comment == null){
             throw new DataNotFoundException("Comment with id "+commentId+" not found");
         }
-        if (comment.getUserName() != null && comment.getUserName().equals(user.getLogin())){
-            commentService.remove(commentId);
-            Map<String, String[]> status = new HashMap<String, String[]>() {{
-                put("status", new String[]{"ok"});
-            }};
-            return Response.ok().entity(status).build();
+
+        // if user is not admin and the comment does not belong to him
+        if(!user.getRole().contains(User.ADMIN) &&
+            !(comment.getUserName() != null && comment.getUserName().equals(user.getLogin()))){
+            throw new AccessDeniedException("Resource is not available for this user");
         }
-        return null;
+        commentService.remove(commentId);
+        return Response.ok().entity(new StringStatus("ok")).build();
     }
 }

@@ -5,6 +5,7 @@ import fi.jyu.tietokonekauppa.models.Order;
 import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.OrderService;
 import fi.jyu.tietokonekauppa.web.StringStatus;
+import fi.jyu.tietokonekauppa.web.exceptions.AccessDeniedException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
@@ -17,7 +18,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.*;
 
-@Path("/secured/orders")
+@Path("/orders")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class OrderResource {
@@ -30,7 +31,7 @@ public class OrderResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrders(){
-        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
             throw new WebApplicationException("Not authorized", 401);
         }
         User user = (User) securityContext.getUserPrincipal();
@@ -41,18 +42,23 @@ public class OrderResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Order getOrders(@PathParam("id") long id){
-        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+    public Response getOrder(@PathParam("id") long id){
+        if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
             throw new WebApplicationException("Not authorized", 401);
         }
-        return orderService.get(id);
+        User user = (User) securityContext.getUserPrincipal();
+        Order order = orderService.get(id, user);
+        if(order == null){
+            throw new AccessDeniedException("Resource is not available for this user");
+        }
+        return Response.ok().entity(order).build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addOrder (@QueryParam("notes") String notes, List<Component> items, @Context UriInfo uriInfo){
-        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
             throw new WebApplicationException("Not authorized", 401);
         }
         System.out.println("DEBUG notes "+notes);

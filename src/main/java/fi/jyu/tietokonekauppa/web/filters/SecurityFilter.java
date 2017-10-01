@@ -34,15 +34,14 @@ public class SecurityFilter implements ContainerRequestFilter {
             StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
             String username = tokenizer.nextToken();
             String password = tokenizer.nextToken();
-//                if ("user".equals(username) && "password".equals(password)) { return; }
             if (userService.userCredentialExists(username, password)) {
                 user = userService.getUser(username);
                 String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
                 requestContext.setSecurityContext(new MyCustomSecurityContext(user, scheme));
             }
         }
-        if ((requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX))
-                ||(requestContext.getMethod().equals("DELETE"))) {
+
+        if ((requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX))) {
             if(user!=null) return;
             List<String> errors = new ArrayList<>();
             errors.add("User cannot access the resource.");
