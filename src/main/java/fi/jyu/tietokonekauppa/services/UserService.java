@@ -5,11 +5,14 @@ import fi.jyu.tietokonekauppa.repositories.UserRepository;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;

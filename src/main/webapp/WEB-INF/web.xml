@@ -27,7 +27,6 @@
         <param-value>WEB-INF/spring-hibernate-jersey2.xml</param-value>
     </context-param>
 
-    <!-- DOENS't WORK TODO fix
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer creation</web-resource-name>
@@ -36,13 +35,14 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
+            <role-name>user</role-name>
         </auth-constraint>
     </security-constraint>
 
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer search</web-resource-name>
-            <url-pattern>/profiles/*</url-pattern>
+            <url-pattern>/secured/*</url-pattern>
             <http-method>GET</http-method>
         </web-resource-collection>
         <auth-constraint>
@@ -54,8 +54,19 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer update</web-resource-name>
-            <url-pattern>/profiles/*</url-pattern>
+            <url-pattern>/*</url-pattern>
             <http-method>PUT</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+            <role-name>user</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>customer delete</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
             <role-name>admin</role-name>
@@ -65,5 +76,10 @@
         <auth-method>BASIC</auth-method>
         <realm-name>my-realm</realm-name>
     </login-config>
-    -->
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+    <security-role>
+        <role-name>user</role-name>
+    </security-role>
 </web-app>

@@ -9,33 +9,54 @@ import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Path("/orders")
+@Path("/secured/orders")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class OrderResource {
     @Autowired
     private OrderService orderService;
 
+    @Context
+    private SecurityContext securityContext;
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrders(){
-        // TODO implement
-        return null;
+        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+            throw new WebApplicationException("Not authorized", 401);
+        }
+        List<Order> list = orderService.getAll();
+        return Response.ok().entity(list).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+//    @RolesAllowed("admin")
+    public Order getOrders(@PathParam("id") long id){
+        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+            throw new WebApplicationException("Not authorized", 401);
+        }
+        return orderService.get(id);
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addOrder (@QueryParam("notes") String notes, List<Component> items, @Context UriInfo uriInfo){
+        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+            throw new WebApplicationException("Not authorized", 401);
+        }
         System.out.println("DEBUG contents "+notes);
         System.out.println("DEBUG items "+items);
         if(notes == null){
@@ -45,21 +66,21 @@ public class OrderResource {
             }};
             throw new FormException(errors, fields);
         }
-        // TODO rework method according to API reference
-        // TODO we should get get user from SecurityContext
-        /*
-        if(item.getId() != null && orderService.isOrderExist(item)){
-            throw new DataExistsException("Order already exists");
-        }
-        item = orderService.add(item);
-        if(item == null){
-            throw new DataNotFoundException("Order was not created");
-        }
-        orderService.update(item);
-        String newId = String.valueOf(item.getId());
-        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
-        return Response.created(uri).entity(item).build();
-        */
+
+//        Order order = new Order();
+//        order.setComponents(items);
+//        order.setUserName();
+//        if(item.getId() != null && orderService.isOrderExist(item)){
+//            throw new DataExistsException("Order already exists");
+//        }
+//        item = orderService.add(item);
+//        if(item == null){
+//            throw new DataNotFoundException("Order was not created");
+//        }
+//        orderService.update(item);
+//        String newId = String.valueOf(item.getId());
+//        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build();
+//        return Response.created(uri).entity(item).build();
         return Response.ok().entity(new StringStatus("ok")).build();
     }
 }
