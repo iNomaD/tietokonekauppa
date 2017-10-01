@@ -49,7 +49,7 @@
             .when("/psus/:psuID",{
                 templateUrl : "templates/PSUInformation.html"
             })
-            .when("/orders/:orderID",{
+            .when("/orders/",{
                 templateUrl : "/templates/Orders.html"
             })
             .when("/signup/",{
@@ -62,8 +62,10 @@
     app.service('sharedProperties', function () {
         var currency = 0;
         var curUrl = "/#!";
+        var orders;
         this.currency = currency;
         this.curUrl =  curUrl;
+        this.orders = orders;
 
     });
     app.controller('HdCtrl', function($scope, $http, NgTableParams, sharedProperties,$location) {
@@ -299,31 +301,31 @@
     });
     app.controller('resetc',function ($scope) {
         $scope.reset = function(){
-            for(var i=6;i<document.getElementById("mb").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("mb").getElementsByTagName('input').length;i++){
                 document.getElementById("mb").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=4;i<document.getElementById("cpu").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("cpu").getElementsByTagName('input').length;i++){
                 document.getElementById("cpu").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=6;i<document.getElementById("ram").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("ram").getElementsByTagName('input').length;i++){
                 document.getElementById("ram").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=6;i<document.getElementById("hd").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("hd").getElementsByTagName('input').length;i++){
                 document.getElementById("hd").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=5;i<document.getElementById("vc").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("vc").getElementsByTagName('input').length;i++){
                 document.getElementById("vc").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=4;i<document.getElementById("psu").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("psu").getElementsByTagName('input').length;i++){
                 document.getElementById("psu").getElementsByTagName('input')[i].value = 0;
             }
-            for(var i=4;i<document.getElementById("case").getElementsByTagName('input').length;i++){
+            for(var i=0;i<document.getElementById("case").getElementsByTagName('input').length;i++){
                    document.getElementById("case").getElementsByTagName('input')[i].value = 0;
             }
         }
     });
-    app.controller('Order', function($scope, $http) {
-        $scope.order = function(notes) {
+    app.controller('Order', function($scope, $http,sharedProperties,$location) {
+        $scope.orderreq = function orderreq(notes) {
             $scope.order = "[";
             for (var i = 0; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0) {
@@ -374,6 +376,9 @@
                     }
                 }
             }
+            alert($scope.order);
+            if(notes == undefined)
+                notes ="";
             if ($scope.order != "[") {
                 if ($scope.order[$scope.order.length - 1] == ',')
                     $scope.order = $scope.order.substr(0, $scope.order.length - 1) + ']';
@@ -389,9 +394,9 @@
                     url: "/api/orders?notes=" + notes,
                     data: $scope.order
                 })
-                //$location.path("")
+                $location.path("/orders");
             }
-        }
+        };
     });
     app.controller('DiskInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
         $scope.diskid = $routeParams.diskID;
@@ -703,8 +708,26 @@
                 }
         }
     });
-    app.controller("OrderInfo",function(){
-
+    app.controller("OrderInfo",function($scope,NgTableParams,$http){
+        $http({
+            method : "GET",
+            headers: {'Authorization': 'Basic ' + btoa("admin" + ":" + "admin")},
+            //headers: {'Authorization': 'Bearer'+sessionStorage.Token},
+            url : "/api/orders"
+        }).then(function mySuccess(response) {
+            $scope.orders = response.data;
+        }, function myError(response) {
+            $scope.orders = response.statusText;
+        });
+        $scope.tableParams = new NgTableParams({
+            page: 1, // show first page
+            count: 5 // count per page
+        }, {
+            total: $scope.orders, // length of data
+            getData: function($defer, params) {
+                $defer.resolve($scope.orders.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+            }
+        });
     })
 </script>
 <body ng-app="myApp">
