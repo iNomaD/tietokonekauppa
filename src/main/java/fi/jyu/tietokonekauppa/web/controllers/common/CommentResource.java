@@ -16,7 +16,7 @@ import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.*;
 
-@Path("/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
+@Path("/{type:cases|disks|gpus|mbs|processors|psus|rams}/{id}/comments")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
