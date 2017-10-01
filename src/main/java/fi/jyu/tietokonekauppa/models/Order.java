@@ -31,13 +31,17 @@ public class Order implements Serializable{
     @JsonProperty("date")
     private Date date;
 
+    @JsonProperty("note")
+    private String note;
+
     public Order(){};
 
-    public Order(List<Component> components, String userName, String userEmail, Date date) {
+    public Order(List<Component> components, String userName, String userEmail, Date date, String note) {
         this.components = components;
         this.userName = userName;
         this.userEmail = userEmail;
         this.date = date;
+        this.note = note;
     }
 
     public Long getId() {
@@ -78,5 +82,13 @@ public class Order implements Serializable{
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

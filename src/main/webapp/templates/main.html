@@ -19,7 +19,7 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{mb.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="MBInformation" data-ng-click="redirectCPI(mb.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{mb.amount_available}}"></div></td>
+            <div style="display:none;" ng-model="mbid">{{mb.id}}</div><button style="float:right;" ng-click="redirect({{mbid}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{mb.amount_available}}"></div></td>
     </tr>
 </table>
 <br><p style="font-size:36px;text-align: center;">CPUs <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#cpu"></span></p>
@@ -34,7 +34,7 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{hd.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="CPUInformation" data-ng-click="redirectCPI(cpu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{cpu.amount_available}}"></div></td>
+            <button style="float:right;" data-ng-click="redirect({{cpu.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{cpu.amount_available}}"></div><div style="display:none;">{{cpu.id}}</div></td>
     </tr>
     </tr>
 </table>
@@ -54,7 +54,7 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{ram.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="RAMInformation" data-ng-click="redirectCPI(ram.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{ram.amount_available}}"></div></td>
+            <button style="float:right;" data-ng-click="redirect({{ram.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{ram.amount_available}}"></div><div style="display:none;">{{ram.id}}</div></td>
     </tr>
     </tr>
 </table>
@@ -72,7 +72,7 @@
                     <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
                         {{hd.amount_available}}</td>
                     <td title="'Amount'">
-                        <button style="float:right;" ng-controller="DiskInformation" data-ng-click="redirectCPI(hd.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}"></div></td>
+                        <button style="float:right;" data-ng-click="redirect({{hd.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{hd.amount_available}}"><div style="display:none;">{{hd.id}}</div></div></td>
                 </tr>
                 </tr>
             </table>
@@ -90,7 +90,7 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{gpu.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="VCInformation" data-ng-click="redirectCPI(gpu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{gpu.amount_available}}"></div></td>
+            <button style="float:right;" data-ng-click="redirect({{gpu.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{gpu.amount_available}}"></div><div style="display:none;">{{gpu.id}}</div></td>
     </tr>
     </tr>
 </table>
@@ -106,7 +106,7 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{psu.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="PSUInformation" data-ng-click="redirectCPI(psu.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{psu.amount_available}}"></div></td>
+            <button style="float:right;" data-ng-click="redirect({{psu.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{psu.amount_available}}"></div><div style="display:none;">{{psu.id}}</div></td>
     </tr>
     </tr>
 </table>
@@ -122,13 +122,13 @@
         <td title="'Amount Avai.'" filter="{ amount: 'number'}" sortable="'amount'">
             {{case.amount_available}}</td>
         <td title="'Amount'">
-            <button style="float:right;" ng-controller="CaseInformation" data-ng-click="redirectCPI(case.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control" type="number" value=0 size="3" min="0" max="{{case.amount_available}}"></div></td>
+            <button style="float:right;" data-ng-click="redirect({{case.id}})"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{case.amount_available}}"></div><div style="display:none;">{{case.id}}</div></td>
     </tr>
     </tr>
 </table>
         <br>
         <div style="text-align:center;" class="btn-block">
             <button type="button" class="btn btn-primary" ng-controller="resetc" ng-click="reset()">Reset</button>
-            <button type="button" class="btn btn-primary" ng-click="order()">Order</button>
+            <button type="button" class="btn btn-primary" ng-controller="Order" ng-click="order()">Order</button>
         </div>
 </div>

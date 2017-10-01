@@ -2,7 +2,9 @@ package fi.jyu.tietokonekauppa.web.controllers.common;
 
 import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
+import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.CommentService;
+import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +39,18 @@ public class CommentResource {
         if(contents == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
             Map<String, String[]> fields = new HashMap<String, String[]>() {{
-                if(contents == null) put("contents", new String[]{"not provided"});
+                put("contents", new String[]{"not provided"});
             }};
             throw new FormException(errors, fields);
+        }
+        if(commentService.getCommentByContents(contents) != null){
+            throw new DataExistsException("Comment with such content already exists.");
         }
 
         // TODO rework method according to API reference
         // TODO we should get get user from SecurityContext
-        Comment item = commentService.add(itemId, type, contents, "username???");
+        User user = null;
+        Comment item = commentService.add(itemId, type, contents, user);
         if(item == null){
             throw new DataNotFoundException("Comment was not created");
         }

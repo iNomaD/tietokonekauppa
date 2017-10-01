@@ -2,7 +2,9 @@ var myApp = angular.module('myApp', ['ng-admin']);
 myApp.config(['NgAdminConfigurationProvider', function (nga) {
     // create an admin application
     var admin = nga.application('My First Admin')
-      .baseApiUrl('http://localhost:8080/api/admin/'); // main API endpoint
+        .baseApiUrl('/api/admin/');
+      //.baseApiUrl(location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '') + '/api/admin/'); // main API endpoint
+
     // create a user entity
     // the API endpoint for this entity will be 'http://jsonplaceholder.typicode.com/users/:id
     var disks = nga.entity('disks');
@@ -24,7 +26,7 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
         nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
-        nga.field('amount_available'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('type').label('HDD|SSD'),
         nga.field('capacity'),
         nga.field('capacityUnits'),
@@ -51,8 +53,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}),
-        nga.field('amount_available'),
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('weight'),
         nga.field('dimensions'),
         nga.field('color')
@@ -78,7 +80,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('ramSize'),
         nga.field('ramType'),
         nga.field('coprocessor'),
@@ -105,7 +108,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('cpuModelSocket'),
         nga.field('ramMemoryTechnology'),
         nga.field('formFactor'),
@@ -132,7 +136,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('processorCount'),
         nga.field('speed'),
         nga.field('ramType'),
@@ -158,7 +163,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('size'),
         nga.field('weight'),
         nga.field('dimensions')
@@ -184,7 +190,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('name').validation({ required: true }),
         nga.field('vendor'),
         nga.field('price').validation({ required: true }),
-        nga.field('price_units').validation({ required: true }),//TODO add pattern: '[EUR|USD]'
+        nga.field('price_units').validation({ required: true, pattern: 'EUR|USD'}).label('EUR|USR'),
+        nga.field('amount_available').validation({ required: true }),
         nga.field('memorySize'),
         nga.field('ramType'),
         nga.field('formFactor'),
@@ -271,8 +278,8 @@ myApp.config(['NgAdminConfigurationProvider', function (nga) {
         nga.field('first_name').validation({ required: true }),
         nga.field('last_name').validation({ required: true }),
         nga.field('role', 'choice')
-            .choices([{ value: ["user"], label: 'user' },
-            { value: ["admin"], label: 'admin' }])
+            .choices([{ value: ["customer"], label: 'customer' },
+            { value: ["admin"], label: 'admin' }]).validation({ required: true })
     ]);
     user.editionView().fields(user.creationView().fields());
     admin.addEntity(user);
