@@ -1,0 +1,21 @@
+<div class="container" ng-controller="MBInfoCtrl">
+    <table style="margin-top: 20px;" class="table table-bordered table-striped table-bordered table-condensed">
+        <tr><td>Name</td><td>{{mb.name}}</td></tr>
+        <tr><td>Vendor</td><td>{{mb.vendor}}</td></tr>
+        <tr><td>Type</td><td>{{mb.type}}</td></tr>
+        <tr><td>Capacity</td><td>{{mb.capacity}} {{disk.capacityUnits}}</td></tr>
+        <tr><td>Rotational speed</td><td>{{disk.rpm}} Rpm</td></tr>
+        <tr><td>Available amount</td><td>{{disk.amount_available}} Rpm</td></tr>
+        <tr><td>Price</td><td>{{disk.price}} {{disk.price_units}}</td></tr>
+
+    </table>
+    <div class="panel panel-default" ng-repeat="comment in comments">
+        <div class="panel-body">{{comment.contents}}</div>
+    </div>
+    <div class="form-group">
+        <label for="comment">Comment:</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+    <button type="button" class="btn btn-primary" ng-click="back()">Back</button>
+    <button type="button" class="btn btn-primary" ng-click="Add()">Add</button>
+</div>
