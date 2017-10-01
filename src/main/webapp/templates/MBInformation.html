@@ -2,11 +2,11 @@
     <table style="margin-top: 20px;" class="table table-bordered table-striped table-bordered table-condensed">
         <tr><td>Name</td><td>{{mb.name}}</td></tr>
         <tr><td>Vendor</td><td>{{mb.vendor}}</td></tr>
-        <tr><td>Type</td><td>{{mb.type}}</td></tr>
-        <tr><td>Capacity</td><td>{{mb.capacity}} {{disk.capacityUnits}}</td></tr>
-        <tr><td>Rotational speed</td><td>{{disk.rpm}} Rpm</td></tr>
-        <tr><td>Available amount</td><td>{{disk.amount_available}} Rpm</td></tr>
-        <tr><td>Price</td><td>{{disk.price}} {{disk.price_units}}</td></tr>
+        <tr><td>Socket</td><td>{{mb.cpuModelSocket}}</td></tr>
+        <tr><td>Mem. Comp.</td><td>{{mb.ramMemoryTechnology}}</td></tr>
+        <tr><td>Form Factor</td><td>{{mb.formFactor}}</td></tr>
+        <tr><td>Max. mem.</td><td>{{mb.memoryMaximumSize}} GB</td></tr>
+        <tr><td>Price</td><td>{{mb.price}} {{mb.price_units}}</td></tr>
 
     </table>
     <div class="panel panel-default" ng-repeat="comment in comments">
@@ -14,8 +14,8 @@
     </div>
     <div class="form-group">
         <label for="comment">Comment:</label>
-        <textarea class="form-control" rows="5" id="comment"></textarea>
+        <textarea class="form-control" rows="5" id="comment" ng-model="content"></textarea>
     </div>
     <button type="button" class="btn btn-primary" ng-click="back()">Back</button>
-    <button type="button" class="btn btn-primary" ng-click="Add()">Add</button>
+    <button type="button" class="btn btn-primary" ng-click="Add(content)">Add</button>
 </div>

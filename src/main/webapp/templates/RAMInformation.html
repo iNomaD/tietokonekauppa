@@ -1,12 +1,12 @@
-<div class="container" ng-controller="DiskInfoCtrl">
+<div class="container" ng-controller="RAMInfoCtrl">
     <table style="margin-top: 20px;" class="table table-bordered table-striped table-bordered table-condensed">
-        <tr><td>Name</td><td>{{disk.name}}</td></tr>
-        <tr><td>Vendor</td><td>{{disk.vendor}}</td></tr>
-        <tr><td>Type</td><td>{{disk.type}}</td></tr>
-        <tr><td>Capacity</td><td>{{disk.capacity}} {{disk.capacityUnits}}</td></tr>
-        <tr><td>Rotational speed</td><td>{{disk.rpm}} Rpm</td></tr>
-        <tr><td>Available amount</td><td>{{disk.amount_available}} Rpm</td></tr>
-        <tr><td>Price</td><td>{{disk.price}} {{disk.price_units}}</td></tr>
+        <tr><td>Name</td><td>{{ram.name}}</td></tr>
+        <tr><td>Vendor</td><td>{{ram.vendor}}</td></tr>
+        <tr><td>Memory Technology</td><td>{{ram.ramMemoryTechnology}}</td></tr>
+        <tr><td>Memory Size</td><td>{{ram.memorySize}}</td></tr>
+        <tr><td>Type</td><td>{{ram.ramType}}</td></tr>
+        <tr><td>Form Factor</td><td>{{ram.formFactor}}</td></tr>
+        <tr><td>Price</td><td>{{ram.price}} {{ram.price_units}}</td></tr>
 
     </table>
     <div class="panel panel-default" ng-repeat="comment in comments">

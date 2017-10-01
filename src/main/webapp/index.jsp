@@ -6,6 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+    <script src="https://code.angularjs.org/1.6.4/angular-cookies.js"></script>
     <script src="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 </head>
 <script>
-    var app = angular.module('myApp', ['ngRoute', 'ngTable']);
+    var app = angular.module('myApp', ['ngRoute', 'ngTable','ngCookies']);
     app.config(function($routeProvider) {
         $routeProvider
             .when("/", {
@@ -39,10 +40,18 @@
             .when("/cases/:caseID",{
                 templateUrl : "templates/CaseInformation.html"
             })
+            .when("/rams/:ramID",{
+                templateUrl : "templates/RAMInformation.html"
+            })
+            .when("/gpus/:gpuID",{
+                templateUrl : "templates/GPUInformation.html"
+            })
+            .when("/psus/:psuID",{
+                templateUrl : "templates/PSUInformation.html"
+            })
             .when("/signup",{
                 templateUrl : "/users/singup/index.html"
-            })
-        ;
+            });
     });
     app.service('sharedProperties', function () {
         var currency = 0;
@@ -245,6 +254,9 @@
                 $defer.resolve($scope.mbs.slice((params.page() - 1) * params.count(), params.page() * params.count()));
             }
         });
+        $scope.redirect = function(x){
+            sharedProperties.cUrl = $location.path("/mbs/"+x);
+        };
     });
     app.controller('psuCtrl', function($scope, $http, NgTableParams, sharedProperties,$location) {
         $scope.currency = sharedProperties.currency;
@@ -305,92 +317,85 @@
         }
     });
     app.controller('Order', function($scope, $http) {
-        $scope.order = function(){
+        $scope.order = function(notes) {
             $scope.order = "[";
-            for(var i=6;i<document.getElementById("mb").getElementsByTagName('input').length;i++){
-                if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("mb").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('mb').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Motherboard\"},';
+            for (var i = 6; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("mb").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('mb').getElementsByTagName('td')[7 * (i - 6) + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Motherboard\"},';
                     }
                 }
             }
-            for(var i=4;i<document.getElementById("cpu").getElementsByTagName('input').length;i++){
-                if (document.getElementById("cpu").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("cpu").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('cpu').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"CPU\"},';
+            for (var i = 4; i < document.getElementById("cpu").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("cpu").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("cpu").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('cpu').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"CPU\"},';
                     }
                 }
             }
-            for(var i=6;i<document.getElementById("ram").getElementsByTagName('input').length;i++){
-                if (document.getElementById("ram").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("ram").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('ram').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"RAM\"},';
+            for (var i = 6; i < document.getElementById("ram").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("ram").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("ram").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('ram').getElementsByTagName('td')[7 * (i - 6) + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"RAM\"},';
                     }
                 }
             }
-            for(var i=6;i<document.getElementById("hd").getElementsByTagName('input').length;i++){
-                if (document.getElementById("hd").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("hd").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('hd').getElementsByTagName('td')[7*(i-6)+6].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Disk\"},';
+            for (var i = 5; i < document.getElementById("hd").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("hd").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("hd").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('hd').getElementsByTagName('td')[6 * (i - 5) + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Disk\"},';
                     }
                 }
             }
-            for(var i=5;i<document.getElementById("vc").getElementsByTagName('input').length;i++){
-                if (document.getElementById("vc").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("vc").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('vc').getElementsByTagName('td')[6*(i-5)+5].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"GPU\"},';
+            for (var i = 5; i < document.getElementById("vc").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("vc").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("vc").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('vc').getElementsByTagName('td')[6 * (i - 5) + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"GPU\"},';
                     }
                 }
             }
-            for(var i=4;i<document.getElementById("psu").getElementsByTagName('input').length;i++){
-                if (document.getElementById("psu").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("psu").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('psu').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"PSU\"},';
+            for (var i = 4; i < document.getElementById("psu").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("psu").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("psu").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('psu').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"PSU\"},';
                     }
                 }
             }
-            for(var i=4;i<document.getElementById("case").getElementsByTagName('input').length;i++){
-                if (document.getElementById("case").getElementsByTagName('input')[i].value > 0){
-                    for(var j=0;j<document.getElementById("case").getElementsByTagName('input')[i].value;j++){
-                        $scope.order += '{\"id\": '+ document.getElementById('case').getElementsByTagName('td')[5*(i-4)+4].getElementsByTagName('div')[1].innerHTML+', \"@type\": \"Case\"},';
+            for (var i = 4; i < document.getElementById("case").getElementsByTagName('input').length; i++) {
+                if (document.getElementById("case").getElementsByTagName('input')[i].value > 0) {
+                    for (var j = 0; j < document.getElementById("case").getElementsByTagName('input')[i].value; j++) {
+                        $scope.order += '{\"id\": ' + document.getElementById('case').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Case\"},';
                     }
                 }
             }
-            if($scope.order[$scope.order.length-1] == ',')
-                $scope.order = $scope.order.substr(0,$scope.order.length-1) + ']';
+            if ($scope.order != "[") {
+            if ($scope.order[$scope.order.length - 1] == ',')
+                $scope.order = $scope.order.substr(0, $scope.order.length - 1) + ']';
             else
                 $scope.order += ']';
+
             $http({
                 method: "POST",
-                headers: {'Content-Type': 'application/json'},
-                url: "/api/orders/",
+                headers: {
+                    'Authorization': 'Basic ' + btoa("admin" + ":" + "admin"),
+                    'Content-Type': 'application/json'
+                },
+                url: "/api/orders?notes=" + notes,
                 data: $scope.order
             })
-
+        }
         }
     });
-    app.controller('DiskInfoCtrl', function($scope, $http, NgTableParams, sharedProperties, $location, $routeParams) {
+    app.controller('DiskInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
         $scope.diskid = $routeParams.diskID;
-        $scope.currency = sharedProperties.currency;
-        alert($scope.currency);
-        if($scope.currency == 0)
-            $http({
+        $http({
                 method : "GET",
-                url : "/api/disks/"+$scope.diskid+"?price_units=USD "
+                url : "/api/disks/"+$scope.diskid
             }).then(function mySuccess(response) {
                 $scope.disk = response.data;
             }, function myError(response) {
                 $scope.disk = response.statusText;
-            });
-        else
-            $http({
-                method : "GET",
-                url : "/api/disks/"+$scope.diskid+"?price_units=EUR"
-            }).then(function mySuccess(response) {
-                $scope.disk = response.data;
-            }, function myError(response) {
-                $scope.disk = response.statusText;
-            });
+        });
         $http({
             method : "GET",
             url : "/api/disks/"+$scope.diskid + "/comments/"
@@ -402,7 +407,215 @@
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
         }
-        $scope.add = function(){}
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/disks/"+$scope.diskid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('MBInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.mbid = $routeParams.mbID;
+        $http({
+                method : "GET",
+                url : "/api/motherboards/"+$scope.mbid
+            }).then(function mySuccess(response) {
+                $scope.mb = response.data;
+            }, function myError(response) {
+                $scope.mb = response.statusText;
+            });
+        $http({
+            method : "GET",
+            url : "/api/motherboards/"+$scope.mbid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/motherboards/"+$scope.mbid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('CPInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.cpuid = $routeParams.cpuID;
+        $http({
+            method : "GET",
+            url : "/api/processors/"+$scope.cpuid
+        }).then(function mySuccess(response) {
+            $scope.cpu = response.data;
+        }, function myError(response) {
+            $scope.cpu = response.statusText;
+        });
+        $http({
+            method : "GET",
+            url : "/api/processors/"+$scope.cpuid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/processors/"+$scope.cpuid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('RAMInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.ramid = $routeParams.ramID;
+        $http({
+            method : "GET",
+            url : "/api/rams/"+$scope.ramid
+        }).then(function mySuccess(response) {
+            $scope.ram = response.data;
+        }, function myError(response) {
+            $scope.ram = response.statusText;
+        });
+        $http({
+            method : "GET",
+            url : "/api/rams/"+$scope.ramid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/rams/"+$scope.ramid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('GPUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.gpuid = $routeParams.gpuID;
+        $http({
+            method : "GET",
+            url : "/api/gpus/"+$scope.gpuid
+        }).then(function mySuccess(response) {
+            $scope.gpu = response.data;
+        }, function myError(response) {
+            $scope.gpu = response.statusText;
+        });
+        $http({
+            method : "GET",
+            url : "/api/gpus/"+$scope.gpuid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/gpus/"+$scope.gpuid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('PSUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.psuid = $routeParams.psuID;
+        $http({
+            method : "GET",
+            url : "/api/psus/"+$scope.psuid
+        }).then(function mySuccess(response) {
+            $scope.psu = response.data;
+        }, function myError(response) {
+            $scope.psu = response.statusText;
+        });
+        $http({
+            method : "GET",
+            url : "/api/psus/"+$scope.psuid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/psus/"+$scope.psuid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
+    });
+    app.controller('CaseInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+        $scope.caseid = $routeParams.caseID;
+        $http({
+            method : "GET",
+            url : "/api/cases/"+$scope.caseid
+        }).then(function mySuccess(response) {
+            $scope.case = response.data;
+        }, function myError(response) {
+            $scope.case = response.statusText;
+        });
+        $http({
+            method : "GET",
+            url : "/api/cases/"+$scope.caseid + "/comments/"
+        }).then(function mySuccess(response) {
+            $scope.comments = response.data;
+        }, function myError(response) {
+            $scope.comments = response.statusText;
+        });
+        $scope.back = function(){
+            sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.Add = function(x){
+            $http({
+                method : "POST",
+                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                url : "/api/cases/"+$scope.caseid + "/comments?contents="+x
+            }).then(function mySuccess(response) {
+                $scope.status = response.data;
+            }, function myError(response) {
+                $scope.status = response.statusText;
+            });
+        }
     });
     app.controller('SingUp', function ($location,$scope,$http) {
         $scope.passwordGood = "red";
@@ -434,7 +647,21 @@
         }
         //$http($scope.req).then($scope.itOk = response.data);
     });
-    app.controller("Currency",function(sharedProperties,$scope,$route,){
+    app.controller("Currency",function(sharedProperties,$scope,$route,$cookies) {
+        if ($cookies.currency != undefined) {
+            sharedProperties.currency = $cookies.currency;
+            if (sharedProperties.currency == 1) {
+                document.getElementById('eur').className = "active";
+                document.getElementById('usd').className = "";
+            }
+            else {
+                document.getElementById('usd').className = "active";
+                document.getElementById('eur').className = "";
+            }
+        }
+        else {
+            $cookies.currency = sharedProperties.currency;
+        }
         $scope.currentUrl = sharedProperties.cUrl;
         $scope.currency = function (x) {
                 if(x != sharedProperties.currency){
@@ -447,6 +674,7 @@
                         document.getElementById('eur').className = "";
                     }
                     sharedProperties.currency = x;
+                    $cookies.put('currency',sharedProperties);
                     $route.reload();
                 }
         }
