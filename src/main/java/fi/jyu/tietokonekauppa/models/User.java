@@ -42,7 +42,7 @@ public class User implements Principal {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @JsonProperty("role")
-    private List<String> role;
+    private List<String> role; // admin or customer
 
     public User(){};
 
