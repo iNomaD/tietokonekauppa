@@ -32,7 +32,7 @@ public class OrderResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrders(){
         if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
-            throw new WebApplicationException("Not authorized", 401);
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         User user = (User) securityContext.getUserPrincipal();
         List<Order> list = orderService.getAll(user);
@@ -44,12 +44,12 @@ public class OrderResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrder(@PathParam("id") long id){
         if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
-            throw new WebApplicationException("Not authorized", 401);
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         User user = (User) securityContext.getUserPrincipal();
         Order order = orderService.get(id, user);
         if(order == null){
-            throw new AccessDeniedException("Resource is not available for this user");
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         return Response.ok().entity(order).build();
     }
@@ -59,7 +59,7 @@ public class OrderResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addOrder (@QueryParam("notes") String notes, List<Component> items, @Context UriInfo uriInfo){
         if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
-            throw new WebApplicationException("Not authorized", 401);
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         System.out.println("DEBUG notes "+notes);
         System.out.println("DEBUG items "+items);

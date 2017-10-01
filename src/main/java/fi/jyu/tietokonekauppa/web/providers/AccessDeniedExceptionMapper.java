@@ -15,7 +15,7 @@ public class AccessDeniedExceptionMapper implements ExceptionMapper<AccessDenied
     public Response toResponse(AccessDeniedException ex) {
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());
-        errors.add("AccessDeniedExcaption");
+        errors.add("AccessDeniedException");
         ErrorMessage errorMessage = new ErrorMessage("error", errors, null);
         return Response.status(Response.Status.NOT_FOUND)
                 .entity(errorMessage)

@@ -41,7 +41,7 @@ public class CommentResource {
                                 @QueryParam("contents") String contents,
                                 @Context UriInfo uriInfo){
         if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
-            throw new WebApplicationException("Not authorized", 401);
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
 
         System.out.println("DEBUG contents "+contents);
@@ -85,7 +85,7 @@ public class CommentResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteComment(@PathParam("id") long id,@PathParam("comment_id") long commentId){
         if (!securityContext.isUserInRole(User.ADMIN) && !securityContext.isUserInRole(User.CUSTOMER)){
-            throw new WebApplicationException("Not authorized", 401);
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         User user = (User) securityContext.getUserPrincipal();
         Comment comment = commentService.getComment(id, commentId);
@@ -96,7 +96,7 @@ public class CommentResource {
         // if user is not admin and the comment does not belong to him
         if(!user.getRole().contains(User.ADMIN) &&
             !(comment.getUserName() != null && comment.getUserName().equals(user.getLogin()))){
-            throw new AccessDeniedException("Resource is not available for this user");
+            throw new AccessDeniedException("Not available for User: " + securityContext.getUserPrincipal());
         }
         commentService.remove(commentId);
         return Response.ok().entity(new StringStatus("ok")).build();

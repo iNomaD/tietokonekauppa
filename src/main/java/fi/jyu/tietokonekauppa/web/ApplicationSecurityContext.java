@@ -5,10 +5,10 @@ import fi.jyu.tietokonekauppa.models.User;
 import javax.ws.rs.core.SecurityContext;
 import java.security.Principal;
 
-public class MyCustomSecurityContext implements SecurityContext {
+public class ApplicationSecurityContext implements SecurityContext {
     private User user;
     private String scheme;
-    public MyCustomSecurityContext(User user, String scheme) {
+    public ApplicationSecurityContext(User user, String scheme) {
         this.user = user;
         this.scheme = scheme;
     }
@@ -18,7 +18,7 @@ public class MyCustomSecurityContext implements SecurityContext {
     }
     @Override
     public boolean isUserInRole(String role) {
-        if (user.getRole() != null) {
+        if (user != null && user.getRole() != null) {
             return user.getRole().contains(role);
         } return false;
     }

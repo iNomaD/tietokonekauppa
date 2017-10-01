@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.security.auth.Subject;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -122,5 +122,14 @@ public class User implements Principal {
     @Override
     public boolean implies(Subject subject) {
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", role=" + (role != null ? Arrays.toString(role.toArray()) : null)+
+                '}';
     }
 }

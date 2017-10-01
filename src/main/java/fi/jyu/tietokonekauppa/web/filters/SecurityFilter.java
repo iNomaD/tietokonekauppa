@@ -3,7 +3,7 @@ package fi.jyu.tietokonekauppa.web.filters;
 import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.UserService;
 import fi.jyu.tietokonekauppa.web.ErrorMessage;
-import fi.jyu.tietokonekauppa.web.MyCustomSecurityContext;
+import fi.jyu.tietokonekauppa.web.ApplicationSecurityContext;
 import org.glassfish.jersey.internal.util.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,10 +36,10 @@ public class SecurityFilter implements ContainerRequestFilter {
             String password = tokenizer.nextToken();
             if (userService.userCredentialExists(username, password)) {
                 user = userService.getUser(username);
-                String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
-                requestContext.setSecurityContext(new MyCustomSecurityContext(user, scheme));
             }
         }
+        String scheme = requestContext.getUriInfo().getRequestUri().getScheme();
+        requestContext.setSecurityContext(new ApplicationSecurityContext(user, scheme));
 
         if ((requestContext.getUriInfo().getPath().contains(SECURED_URL_PREFIX))) {
             if(user!=null) return;
