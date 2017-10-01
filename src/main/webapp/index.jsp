@@ -627,16 +627,23 @@
     app.controller('SingUp', function ($location,$scope,$http) {
         $scope.passwordGood = "red";
         $scope.sendNewMember = function(x){
-            if ($scope.passwordGood != "green") $scope.itOk = "Check your password!"
-            else {
+            if ($scope.passwordGood != "green") {
+                $scope.itOk = "Check your password!"
+            } else {
                 $scope.itOk = "Sended!";
                 $http({
                     method: "POST",
                     url: "/api/users/signup/",
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data :  $.param({login: x.login,password: x.password,first_name: x.first_name,last_name: x.last_name,email: x.email})
+                    data: $.param({
+                        login: x.login,
+                        password: x.password,
+                        first_name: x.first_name,
+                        last_name: x.last_name,
+                        email: x.email
+                    })
                 }).then(function ServAnsw(response) {
-                    @scope.itOk = response.status;
+                    $scope.itOk = JSON.parse(response);
                 });
             }
         };
@@ -655,7 +662,7 @@
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data :  $.param({login: x.login,password: x.password})
             }).then(function ServAnsw(response) {
-                $scope.itOk = response;
+                $scope.itOk = JSON.parse(response);
             });
             };
         $scope.passwordFerif = function (p,pc) {
