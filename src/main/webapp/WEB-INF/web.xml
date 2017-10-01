@@ -30,7 +30,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer creation</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/secured/*</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>
@@ -54,7 +54,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer update</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/secured/*</url-pattern>
             <http-method>PUT</http-method>
         </web-resource-collection>
         <auth-constraint>
@@ -65,7 +65,7 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>customer delete</web-resource-name>
-            <url-pattern>/*</url-pattern>
+            <url-pattern>/secured/*</url-pattern>
             <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
