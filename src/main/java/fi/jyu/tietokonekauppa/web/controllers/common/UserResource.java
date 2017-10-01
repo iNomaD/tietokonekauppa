@@ -2,8 +2,10 @@ package fi.jyu.tietokonekauppa.web.controllers.common;
 
 
 import fi.jyu.tietokonekauppa.models.User;
+import fi.jyu.tietokonekauppa.services.JWTService;
 import fi.jyu.tietokonekauppa.services.UserService;
-import fi.jyu.tietokonekauppa.web.StringStatus;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.StringStatus;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.UserToken;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
@@ -17,11 +19,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
+
 @Path("/users")
 public class UserResource {
 
     @Autowired
     UserService userService;
+    @Autowired
+    JWTService jwtService;
 
     @POST
     @Path("/signup")
@@ -30,11 +36,6 @@ public class UserResource {
     public Response signUp(@FormParam("login") String login, @FormParam("password") String password,
                                @FormParam("first_name") String firstName, @FormParam("last_name") String lastName,
                                @FormParam("email") String email){
-        System.out.println(login);
-        System.out.println(password);
-        System.out.println(firstName);
-        System.out.println(lastName);
-        System.out.println(email);
         if(login == null || password == null || firstName == null || lastName == null || email == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
             Map<String, String[]> fields = new HashMap<String, String[]>() {{
@@ -64,8 +65,6 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response signIn(@FormParam("login") String login, @FormParam("password") String password){
-        System.out.println(login);
-        System.out.println(password);
         if(login == null || password == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
             Map<String, String[]> fields = new HashMap<String, String[]>() {{
@@ -79,7 +78,13 @@ public class UserResource {
             throw new DataNotFoundException("Wrong username or password");
         }
 
-        return Response.ok().entity(new StringStatus("ok")).build();
+        User user = userService.getUser(login);
+        String token = jwtService.issueToken(login);
+        UserToken userToken = new UserToken(user.getId(), login,
+                user.getEmail(), user.getFirst_name(), user.getLast_name(), user.getRole(), token);
+        System.out.println("Authorized: "+userToken);
+
+        return Response.ok().header(AUTHORIZATION, "Bearer " + token).entity(userToken).build();
     }
 
     @POST

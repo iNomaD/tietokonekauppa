@@ -2,7 +2,7 @@ package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.components.GPU;
 import fi.jyu.tietokonekauppa.repositories.GPURepository;
-import fi.jyu.tietokonekauppa.web.PriceUnits;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.PriceUnits;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

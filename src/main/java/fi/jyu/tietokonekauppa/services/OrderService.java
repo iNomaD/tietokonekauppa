@@ -3,14 +3,9 @@ package fi.jyu.tietokonekauppa.services;
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.Order;
 import fi.jyu.tietokonekauppa.models.User;
-import fi.jyu.tietokonekauppa.models.components.Case;
-import fi.jyu.tietokonekauppa.repositories.CaseRepository;
 import fi.jyu.tietokonekauppa.repositories.OrderRepository;
-import fi.jyu.tietokonekauppa.repositories.UserRepository;
-import fi.jyu.tietokonekauppa.web.PriceUnits;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
-import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

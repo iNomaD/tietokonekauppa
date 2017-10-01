@@ -1,6 +1,6 @@
 package fi.jyu.tietokonekauppa.web.providers;
 
-import fi.jyu.tietokonekauppa.web.PriceUnits;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.PriceUnits;
 
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;

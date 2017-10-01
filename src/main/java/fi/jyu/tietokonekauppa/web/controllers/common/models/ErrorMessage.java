@@ -1,4 +1,4 @@
-package fi.jyu.tietokonekauppa.web;
+package fi.jyu.tietokonekauppa.web.controllers.common.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

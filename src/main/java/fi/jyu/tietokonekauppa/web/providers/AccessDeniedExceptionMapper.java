@@ -1,6 +1,6 @@
 package fi.jyu.tietokonekauppa.web.providers;
 
-import fi.jyu.tietokonekauppa.web.ErrorMessage;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.ErrorMessage;
 import fi.jyu.tietokonekauppa.web.exceptions.AccessDeniedException;
 
 import javax.ws.rs.core.Response;

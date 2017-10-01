@@ -1,7 +1,7 @@
 package fi.jyu.tietokonekauppa.services;
 
 import fi.jyu.tietokonekauppa.models.Component;
-import fi.jyu.tietokonekauppa.web.PriceUnits;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.PriceUnits;
 import org.springframework.stereotype.Service;
 
 @Service

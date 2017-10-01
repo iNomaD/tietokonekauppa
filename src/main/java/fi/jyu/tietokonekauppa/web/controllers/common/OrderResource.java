@@ -4,15 +4,11 @@ import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.Order;
 import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.OrderService;
-import fi.jyu.tietokonekauppa.web.StringStatus;
 import fi.jyu.tietokonekauppa.web.exceptions.AccessDeniedException;
-import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.net.URI;

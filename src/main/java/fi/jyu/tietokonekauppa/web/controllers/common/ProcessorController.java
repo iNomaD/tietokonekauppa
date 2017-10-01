@@ -2,7 +2,7 @@ package fi.jyu.tietokonekauppa.web.controllers.common;
 
 import fi.jyu.tietokonekauppa.models.components.Processor;
 import fi.jyu.tietokonekauppa.services.ProcessorService;
-import fi.jyu.tietokonekauppa.web.PriceUnits;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.PriceUnits;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 

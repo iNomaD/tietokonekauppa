@@ -4,7 +4,7 @@ import fi.jyu.tietokonekauppa.models.Comment;
 import fi.jyu.tietokonekauppa.models.Component;
 import fi.jyu.tietokonekauppa.models.User;
 import fi.jyu.tietokonekauppa.services.CommentService;
-import fi.jyu.tietokonekauppa.web.StringStatus;
+import fi.jyu.tietokonekauppa.web.controllers.common.models.StringStatus;
 import fi.jyu.tietokonekauppa.web.exceptions.AccessDeniedException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataExistsException;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
