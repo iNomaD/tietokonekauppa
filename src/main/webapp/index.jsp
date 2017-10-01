@@ -49,6 +49,9 @@
             .when("/psus/:psuID",{
                 templateUrl : "templates/PSUInformation.html"
             })
+            .when("/orders/:orderID",{
+                templateUrl : "/templates/Orders.html"
+            })
             .when("/signup",{
                 templateUrl : "/users/singup/index.html"
             });
@@ -319,71 +322,72 @@
     app.controller('Order', function($scope, $http) {
         $scope.order = function(notes) {
             $scope.order = "[";
-            for (var i = 6; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("mb").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('mb').getElementsByTagName('td')[7 * (i - 6) + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Motherboard\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('mb').getElementsByTagName('td')[7 * i + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Motherboard\"},';
                     }
                 }
             }
-            for (var i = 4; i < document.getElementById("cpu").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("cpu").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("cpu").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("cpu").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('cpu').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"CPU\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('cpu').getElementsByTagName('td')[5 * i + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"CPU\"},';
                     }
                 }
             }
-            for (var i = 6; i < document.getElementById("ram").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("ram").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("ram").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("ram").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('ram').getElementsByTagName('td')[7 * (i - 6) + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"RAM\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('ram').getElementsByTagName('td')[7 * i + 6].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"RAM\"},';
                     }
                 }
             }
-            for (var i = 5; i < document.getElementById("hd").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("hd").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("hd").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("hd").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('hd').getElementsByTagName('td')[6 * (i - 5) + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Disk\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('hd').getElementsByTagName('td')[6 * i + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Disk\"},';
                     }
                 }
             }
-            for (var i = 5; i < document.getElementById("vc").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("vc").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("vc").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("vc").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('vc').getElementsByTagName('td')[6 * (i - 5) + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"GPU\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('vc').getElementsByTagName('td')[6 * i + 5].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"GPU\"},';
                     }
                 }
             }
-            for (var i = 4; i < document.getElementById("psu").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("psu").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("psu").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("psu").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('psu').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"PSU\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('psu').getElementsByTagName('td')[5 * i + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"PSU\"},';
                     }
                 }
             }
-            for (var i = 4; i < document.getElementById("case").getElementsByTagName('input').length; i++) {
+            for (var i = 0; i < document.getElementById("case").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("case").getElementsByTagName('input')[i].value > 0) {
                     for (var j = 0; j < document.getElementById("case").getElementsByTagName('input')[i].value; j++) {
-                        $scope.order += '{\"id\": ' + document.getElementById('case').getElementsByTagName('td')[5 * (i - 4) + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Case\"},';
+                        $scope.order += '{\"id\": ' + document.getElementById('case').getElementsByTagName('td')[5 * i + 4].getElementsByTagName('div')[1].innerHTML + ', \"@type\": \"Case\"},';
                     }
                 }
             }
             if ($scope.order != "[") {
-            if ($scope.order[$scope.order.length - 1] == ',')
-                $scope.order = $scope.order.substr(0, $scope.order.length - 1) + ']';
-            else
-                $scope.order += ']';
+                if ($scope.order[$scope.order.length - 1] == ',')
+                    $scope.order = $scope.order.substr(0, $scope.order.length - 1) + ']';
+                else
+                    $scope.order += ']';
 
-            $http({
-                method: "POST",
-                headers: {
-                    'Authorization': 'Basic ' + btoa("admin" + ":" + "admin"),
-                    'Content-Type': 'application/json'
-                },
-                url: "/api/orders?notes=" + notes,
-                data: $scope.order
-            })
-        }
+                $http({
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Basic ' + btoa("admin" + ":" + "admin"),
+                        'Content-Type': 'application/json'
+                    },
+                    url: "/api/orders?notes=" + notes,
+                    data: $scope.order
+                })
+                //$location.path("")
+            }
         }
     });
     app.controller('DiskInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
@@ -679,6 +683,9 @@
                 }
         }
     });
+    app.controller("OrderInfo",function(){
+
+    })
 </script>
 <body ng-app="myApp">
 <nav class="navbar navbar-inverse" style="margin-bottom: 0;">
