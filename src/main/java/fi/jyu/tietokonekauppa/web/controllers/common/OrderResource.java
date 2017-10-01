@@ -30,7 +30,7 @@ public class OrderResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrders(){
-        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
             throw new WebApplicationException("Not authorized", 401);
         }
         User user = (User) securityContext.getUserPrincipal();
@@ -42,7 +42,7 @@ public class OrderResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Order getOrders(@PathParam("id") long id){
-        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
             throw new WebApplicationException("Not authorized", 401);
         }
         return orderService.get(id);
@@ -52,7 +52,7 @@ public class OrderResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addOrder (@QueryParam("notes") String notes, List<Component> items, @Context UriInfo uriInfo){
-        if (!securityContext.isUserInRole("admin") && securityContext.isUserInRole("user")){
+        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
             throw new WebApplicationException("Not authorized", 401);
         }
         System.out.println("DEBUG notes "+notes);
@@ -72,7 +72,7 @@ public class OrderResource {
             }};
             throw new FormException(errors, fields);
         }
-        User user =  (User) securityContext.getUserPrincipal();;
+        User user =  (User) securityContext.getUserPrincipal();
         Order item;
         try {
             item = orderService.add(items, notes, user);

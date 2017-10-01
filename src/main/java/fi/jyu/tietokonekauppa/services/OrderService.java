@@ -9,12 +9,11 @@ import fi.jyu.tietokonekauppa.repositories.OrderRepository;
 import fi.jyu.tietokonekauppa.repositories.UserRepository;
 import fi.jyu.tietokonekauppa.web.PriceUnits;
 import fi.jyu.tietokonekauppa.web.exceptions.DataNotFoundException;
+import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class OrderService {
@@ -64,10 +63,19 @@ public class OrderService {
             if(retrieved == null){
                 throw new DataNotFoundException("Component id="+component.getId()+" type="+type.toString()+" not found");
             }
+            int amount = component.getAmountAvailable();
+            if(amount == 0){
+                List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
+                Map<String, String[]> fields = new HashMap<String, String[]>() {{
+                    put(component.getName(), new String[]{"not available"});
+                }};
+                throw new FormException(errors, fields);
+            }else {
+                component.setAmountAvailable(component.getAmountAvailable() - 1);
+            }
         }
-        Order order = new Order(items, "userName???", "userEmail???", new Date(), note);
+        Order order = new Order(items, user.getName(), user.getEmail(), new Date(), note);
         return orderRepository.save(order);
-        // TODO check whether each of the components are available and decrease current amount by 1
     }
 
     public Order update(Order item) {

@@ -82,7 +82,7 @@ public class CommentService {
         Component.Type type = Component.Type.getType(itemType.substring(0, itemType.length() - 1).toLowerCase());
         Component item = componentService.getComponentByIdAndItemType(itemId, type);
         if(item != null){
-            Comment comment = new Comment(item, contents, "username???", new Date());
+            Comment comment = new Comment(item, contents, user.getLogin(), new Date());
             comment.setItemType(type);
             return commentRepository.save(comment);
         }

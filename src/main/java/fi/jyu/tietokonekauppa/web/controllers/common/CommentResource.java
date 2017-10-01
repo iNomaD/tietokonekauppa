@@ -10,18 +10,20 @@ import fi.jyu.tietokonekauppa.web.exceptions.FormException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.*;
 
-@Path("/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
+@Path("/secured/{type:cases|disks|gpus|motherboards|processors|psus|rams}/{id}/comments")
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class CommentResource {
 
     @Autowired
     private CommentService commentService;
+
+    @Context
+    private SecurityContext securityContext;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -32,9 +34,14 @@ public class CommentResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response addComment (@PathParam("id") long itemId, @PathParam("type") String type,
                                 @QueryParam("contents") String contents,
                                 @Context UriInfo uriInfo){
+        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+            throw new WebApplicationException("Not authorized", 401);
+        }
+
         System.out.println("DEBUG contents "+contents);
         if(contents == null){
             List<String> errors = new ArrayList<String>() {{ add("form exception"); }};
@@ -47,9 +54,7 @@ public class CommentResource {
             throw new DataExistsException("Comment with such content already exists.");
         }
 
-        // TODO rework method according to API reference
-        // TODO we should get get user from SecurityContext
-        User user = null;
+        User user = (User) securityContext.getUserPrincipal();
         Comment item = commentService.add(itemId, type, contents, user);
         if(item == null){
             throw new DataNotFoundException("Comment was not created");
@@ -76,9 +81,22 @@ public class CommentResource {
     @DELETE
     @Path("/{comment_id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteComment(@PathParam("id") long id,
-                               @PathParam("comment_id") long commentId){
-        // TODO implement
+    public Response deleteComment(@PathParam("id") long id,@PathParam("comment_id") long commentId){
+        if (!securityContext.isUserInRole("admin") && !securityContext.isUserInRole("user")){
+            throw new WebApplicationException("Not authorized", 401);
+        }
+        User user = (User) securityContext.getUserPrincipal();
+        Comment comment = commentService.getComment(id, commentId);
+        if(comment == null){
+            throw new DataNotFoundException("Comment with id "+commentId+" not found");
+        }
+        if (comment.getUserName() != null && comment.getUserName().equals(user.getLogin())){
+            commentService.remove(commentId);
+            Map<String, String[]> status = new HashMap<String, String[]>() {{
+                put("status", new String[]{"ok"});
+            }};
+            return Response.ok().entity(status).build();
+        }
         return null;
     }
 }
