@@ -70,7 +70,7 @@ public class OrderService {
             }
             recognizedItems.add(retrieved);
         }
-        Order order = new Order(recognizedItems, user.getName(), user.getEmail(), new Date(), note);
+        Order order = new Order(recognizedItems, user.getLogin(), user.getEmail(), new Date(), note);
         order = orderRepository.save(order);
 
         // decrease amount available after successful creation of order
