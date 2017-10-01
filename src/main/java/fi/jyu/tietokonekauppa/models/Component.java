@@ -150,6 +150,8 @@ public abstract class Component implements Serializable{
                     return GPU;
                 case "motherboard":
                     return Motherboard;
+                case "mb":
+                    return Motherboard;
                 case "processor":
                     return Processor;
                 case "psu":
