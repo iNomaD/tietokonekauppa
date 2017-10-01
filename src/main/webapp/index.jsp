@@ -49,8 +49,11 @@
             .when("/psus/:psuID",{
                 templateUrl : "templates/PSUInformation.html"
             })
-            .when("/signup",{
+            .when("/signup/",{
                 templateUrl : "/users/singup/index.html"
+            })
+            .when("/signin/",{
+                templateUrl : "/users/singin/index.html"
             });
     });
     app.service('sharedProperties', function () {
@@ -627,20 +630,30 @@
                     method: "POST",
                     url: "/api/users/signup/",
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-//                    transformRequest: function(x){
-//                        var str = [];
-//                        for(var p in x)
-//                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(x[p]));
-//                        return str.join("&");
-//                    }
                     data :  $.param({login: x.login,password: x.password,first_name: x.first_name,last_name: x.last_name,email: x.email})
                 }).then(function ServAnsw(response) {
-                    if (response.status != "ok")
-                        $scope.itOk = "Something wrong!";
-                    else $scope.itOk = "Registed!";
+                    @scope.itOk = response.status;
                 });
             }
         };
+        $scope.passwordFerif = function (p,pc) {
+            if(p != pc) $scope.passwordGood = "red";
+            else $scope.passwordGood = "green";
+        }
+        //$http($scope.req).then($scope.itOk = response.data);
+    });
+    app.controller('SingIn', function ($location,$scope,$http) {
+        $scope.sendMember = function(x){
+            $scope.itOk = "Sended!";
+            $http({
+                method: "POST",
+                url: "/api/users/signin/",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data :  $.param({login: x.login,password: x.password})
+            }).then(function ServAnsw(response) {
+                $scope.itOk = response;
+            });
+            };
         $scope.passwordFerif = function (p,pc) {
             if(p != pc) $scope.passwordGood = "red";
             else $scope.passwordGood = "green";
