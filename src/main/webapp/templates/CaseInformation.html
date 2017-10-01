@@ -1,12 +1,11 @@
-<div class="container" ng-controller="DiskInfoCtrl">
+<div class="container" ng-controller="CaseInfoCtrl">
     <table style="margin-top: 20px;" class="table table-bordered table-striped table-bordered table-condensed">
-        <tr><td>Name</td><td>{{disk.name}}</td></tr>
-        <tr><td>Vendor</td><td>{{disk.vendor}}</td></tr>
-        <tr><td>Type</td><td>{{disk.type}}</td></tr>
-        <tr><td>Capacity</td><td>{{disk.capacity}} {{disk.capacityUnits}}</td></tr>
-        <tr><td>Rotational speed</td><td>{{disk.rpm}} Rpm</td></tr>
-        <tr><td>Available amount</td><td>{{disk.amount_available}} Rpm</td></tr>
-        <tr><td>Price</td><td>{{disk.price}} {{disk.price_units}}</td></tr>
+        <tr><td>Name</td><td>{{case.name}}</td></tr>
+        <tr><td>Vendor</td><td>{{case.vendor}}</td></tr>
+        <tr><td>Weight</td><td>{{case.weight}}</td></tr>
+        <tr><td>Dimensions</td><td>{{case.dimensions}} Inch.</td></tr>
+        <tr><td>Color</td><td>{{case.weight}} lbs</td></tr>
+        <tr><td>Price</td><td>{{case.price}} {{case.price_units}}</td></tr>
 
     </table>
     <div class="panel panel-default" ng-repeat="comment in comments">

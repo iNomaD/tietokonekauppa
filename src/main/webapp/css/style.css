@@ -12,3 +12,7 @@ h1 {
     height:150px;
     overflow:auto;
 }
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
