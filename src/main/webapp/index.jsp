@@ -431,7 +431,7 @@
             });
         $http({
             method : "GET",
-            url : "/api/motherboards/"+$scope.mbid + "/comments/"
+            url : "/api/mbs/"+$scope.mbid + "/comments/"
         }).then(function mySuccess(response) {
             $scope.comments = response.data;
         }, function myError(response) {
@@ -444,7 +444,7 @@
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
-                url : "/api/motherboards/"+$scope.mbid + "/comments?contents="+x
+                url : "/api/mbs/"+$scope.mbid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
             }, function myError(response) {
