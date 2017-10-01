@@ -52,8 +52,9 @@ public class CommentResource {
             }};
             throw new FormException(errors, fields);
         }
-        if(commentService.getCommentByContents(contents) != null){
-            throw new DataExistsException("Comment with such content already exists.");
+        Comment comment;
+        if((comment = commentService.getCommentByContents(contents)) != null){
+            throw new DataExistsException("Comment with such content already exists: "+comment.getId());
         }
 
         User user = (User) securityContext.getUserPrincipal();

@@ -12,7 +12,7 @@ public class FormExceptionMapper implements ExceptionMapper<FormException> {
     @Override
     public Response toResponse(FormException ex) {
         ErrorMessage errorMessage = new ErrorMessage("error", ex.getErrors(), ex.getFields());
-        return Response.status(Response.Status.NOT_FOUND)
+        return Response.status(Response.Status.NOT_ACCEPTABLE)
                 .entity(errorMessage)
                 .build();
     }

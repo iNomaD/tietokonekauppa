@@ -32,8 +32,8 @@ public class SecurityFilter implements ContainerRequestFilter {
             authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
             String decodedString = Base64.decodeAsString(authToken);
             StringTokenizer tokenizer = new StringTokenizer(decodedString, ":");
-            String username = tokenizer.nextToken();
-            String password = tokenizer.nextToken();
+            String username = tokenizer.hasMoreElements() ? tokenizer.nextToken() : "";
+            String password = tokenizer.hasMoreElements() ? tokenizer.nextToken() : "";
             if (userService.userCredentialExists(username, password)) {
                 user = userService.getUser(username);
             }

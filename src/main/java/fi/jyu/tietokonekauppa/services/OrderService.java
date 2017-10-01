@@ -69,8 +69,8 @@ public class OrderService {
             if(retrieved == null){
                 throw new DataNotFoundException("Component id="+component.getId()+" type="+type.toString()+" not found");
             }
-            int amount = component.getAmountAvailable();
-            if(amount <= 0){
+            Integer amount = component.getAmountAvailable();
+            if(amount == null || amount <= 0){
                 throw new DataExistsException("["+component.getId()+"]"+component.getName() +" not available");
             }
             recognizedItems.add(retrieved);
