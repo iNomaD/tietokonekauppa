@@ -17,7 +17,7 @@ public class DataExistsExceptionMapper implements ExceptionMapper<DataExistsExce
         errors.add(ex.getMessage());
         errors.add("DataExistsException");
         ErrorMessage errorMessage = new ErrorMessage("error", errors, null);
-        return Response.status(Response.Status.CONFLICT)
+        return Response.status(Response.Status.OK)
                 .entity(errorMessage)
                 .build();
     }

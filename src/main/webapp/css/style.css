@@ -19,3 +19,20 @@ body{
 .collapse.in{
     display:table;
 }
+
+.registration-form{
+    width: 500px;
+    height: 500px;
+    margin: 10px 0 0 30px;
+}
+
+.registration-response{
+    width: 500px;
+    height: 50px;
+    margin: 10px 10px 10px 30px;
+}
+
+.registration-response-itok{
+    width:400px;
+    margin-left: 15px;
+}

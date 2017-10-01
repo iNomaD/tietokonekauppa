@@ -13,6 +13,7 @@
     <scipt src="angular-init.js"></scipt>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/simple_table.css">
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 </head>
 <script>
@@ -744,7 +745,7 @@
                     <li id="eur"><a href="{{currentUrl}}" ng-click="currency(1)">EUR</a></li>
                 </ul>
             <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#!login"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+            <li><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
         </ul>
     </div>
 </nav>
