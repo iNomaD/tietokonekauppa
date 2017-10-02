@@ -904,23 +904,24 @@
             $scope.orders = response.data;
         });
     });
-    app.controller('HatCtrl', function($window) {
+    app.controller('HatCtrl', function($scope, $window) {
         angular.element(document).ready(function () {
             $("#admin-button").hide();
             $("#signup-button").hide();
             $("#signin-button").hide();
             $("#logout-button").hide();
+            $scope.logoutText = "Log Out";
 
             if(($window.sessionStorage.token == undefined)){
                 $("#signup-button").show();
                 $("#signin-button").show();
             }
             else{
-                console.log($window.sessionStorage);
                 if($window.sessionStorage.role == "admin"){
                     $("#admin-button").show();
                 }
                 $("#logout-button").show();
+                $scope.logoutText = "Log Out ("+$window.sessionStorage.login+")";
             }
         });
     });
@@ -942,7 +943,7 @@
             <li id="admin-button"><a href="/admin"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
             <li id="signup-button"><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li id="signin-button"><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
-            <li id="logout-button"><a href="#!logout"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
+            <li id="logout-button"><a href="#!logout"><span class="glyphicon glyphicon-log-in"></span> {{logoutText}}</a></li>
         </ul>
     </div>
 </nav>
