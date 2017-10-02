@@ -389,7 +389,6 @@
                     }
                 }
             }
-            alert($scope.order);
             if(notes == undefined)
                 notes ="";
             if ($scope.order != "[") {
@@ -409,9 +408,16 @@
                 })
                 $location.path("/orders");
             }
+            else{
+                document.getElementById('error').innerHTML="No chose parts";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
         };
     });
-    app.controller('DiskInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('DiskInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.diskid = $routeParams.diskID;
         $http({
                 method : "GET",
@@ -433,6 +439,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -442,9 +456,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }};
     });
-    app.controller('MBInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('MBInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.mbid = $routeParams.mbID;
         $http({
                 method : "GET",
@@ -466,6 +481,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -475,9 +498,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
-    app.controller('CPInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('CPInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.cpuid = $routeParams.cpuID;
         $http({
             method : "GET",
@@ -499,6 +523,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -508,9 +540,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
-    app.controller('RAMInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('RAMInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.ramid = $routeParams.ramID;
         $http({
             method : "GET",
@@ -532,6 +565,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -541,9 +582,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
-    app.controller('GPUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('GPUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.gpuid = $routeParams.gpuID;
         $http({
             method : "GET",
@@ -565,6 +607,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -574,9 +624,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
-    app.controller('PSUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('PSUInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.psuid = $routeParams.psuID;
         $http({
             method : "GET",
@@ -598,6 +649,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -607,9 +666,10 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
-    app.controller('CaseInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams) {
+    app.controller('CaseInfoCtrl', function($scope, $http, sharedProperties, $location, $routeParams,$window) {
         $scope.caseid = $routeParams.caseID;
         $http({
             method : "GET",
@@ -631,6 +691,14 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if(document.getElementById('comment').value == ''){
+                document.getElementById('error').innerHTML="No type comment";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+            }
+            else{
             $http({
                 method : "POST",
                 headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
@@ -640,7 +708,8 @@
             }, function myError(response) {
                 $scope.status = response.statusText;
             });
-        }
+            $window.location.reload();
+        }}
     });
     app.controller('SingUp', function ($location,$scope,$http) {
         $scope.passwordGood = "red";
@@ -736,27 +805,17 @@
                 }
         }
     });
-    app.controller("OrderInfo",function($scope,NgTableParams,$http){
+    app.controller("OrderInfo",function($scope,$http){
         $http({
             method : "GET",
             headers: {'Authorization': 'Basic ' + btoa("admin" + ":" + "admin")},
+            transformResponse: "",
             //headers: {'Authorization': 'Bearer'+sessionStorage.Token},
             url : "/api/orders"
         }).then(function mySuccess(response) {
             $scope.orders = response.data;
-        }, function myError(response) {
-            $scope.orders = response.statusText;
         });
-        $scope.tableParams = new NgTableParams({
-            page: 1, // show first page
-            count: 5 // count per page
-        }, {
-            total: $scope.orders, // length of data
-            getData: function($defer, params) {
-                $defer.resolve($scope.orders.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-            }
-        });
-    })
+    });
 </script>
 <body ng-app="myApp">
 <nav class="navbar navbar-inverse" style="margin-bottom: 0;">
@@ -776,6 +835,25 @@
         </ul>
     </div>
 </nav>
+<div class="modal fade" id="moderr" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Error</h4>
+            </div>
+            <div class="modal-body">
+                <p id="error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <div ng-view>
 </div>
 <footer>

@@ -1,16 +1,5 @@
 <div class="container" ng-controller="OrderInfo">
-    <table ng-table="vm.tableParams" mg-repeat="order in orders" class="table table-hover table-bordered table-responsive">
-    <tr ng-repeat="fields in order">
-        <td>ID Order</td><td>{{fields.id}}</td>
-        <td>Date</td><td>{{fields.date}}</td>
-        <td>Notes</td><td>{{fields.note}}</td>
-        <table>
-            <tr ng-repeat="component in fields.components">
-                <td>ID</td><td>{{component.id}}</td>
-                <td>Name</td><td>{{component.name}}</td>
-                <td>Price</td><td>{{component.price}} {{component.price_units}}</td>
-            </tr>
-        </table>
-    </tr>
-</table>
+    <table  class="table table-hover table-bordered table-responsive">
+        <div ng-model="jsonor">{{orders}}</div>
+    </table>
 </div>

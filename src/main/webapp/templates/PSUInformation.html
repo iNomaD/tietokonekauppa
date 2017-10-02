@@ -9,6 +9,7 @@
 
     </table>
     <div class="panel panel-default" ng-repeat="comment in comments">
+        <div class="panel-heading">{{comment.user_name}} | Date: {{ comment.date | date:'MM/dd/yyyy @ HH:mm'}}</div>
         <div class="panel-body">{{comment.contents}}</div>
     </div>
     <div class="form-group">
