@@ -733,7 +733,7 @@
                     //$scope.itOk = data.xhrStatus;
                     $scope.itOk = data.data.status;
                     if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
-
+                    else $window.location.href = "/signin";
                 });
             }
         };
@@ -772,6 +772,47 @@
             else $scope.passwordGood = "green";
         }
         //$http($scope.req).then($scope.itOk = response.data);
+    });
+    app.controller('SingIn', function ($location,$scope,$http,$window) {
+        $scope.sendMember = function(x){
+            $scope.itOk = "Sended!";
+            $http({
+                method: "POST",
+                url: "/api/users/signin/",
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data :  $.param({login: x.login,password: x.password})
+            }).then(function mySuccess(data, status) {
+                //$scope.itOk = data.xhrStatus;
+                $scope.itOk = data.data.id;
+                if ($scope.itOk === "") $scope.itOk = data.data.errors[0];
+                else {
+                    $window.sessionStorage.id = data.data.id;
+                    $window.sessionStorage.login = data.data.login;
+                    $window.sessionStorage.email = data.data.email;
+                    $window.sessionStorage.first_name = data.data.first_name;
+                    $window.sessionStorage.last_name = data.data.last_name;
+                    $window.sessionStorage.role = data.data.role;
+                    $window.sessionStorage.token = data.data.token;
+                }
+
+            });
+        };
+        $scope.passwordFerif = function (p,pc) {
+            if(p != pc) $scope.passwordGood = "red";
+            else $scope.passwordGood = "green";
+        }
+        //$http($scope.req).then($scope.itOk = response.data);
+    });
+    app.controller('LogOut', function ($location,$scope,$http,$window) {
+        $scope.login = $window.sessionStorage.login;
+        $scope.first_name = $window.sessionStorage.first_name;
+        $scope.last_name = $window.sessionStorage.last_name;
+        $scope.email = $window.sessionStorage.email;
+        $scope.LogOut = function (x) {
+            $window.sessionStorage.clear();
+            $scope.itOk = "Success Logout!";
+            $window.location.href = "/";
+        }
     });
     app.controller("Currency",function(sharedProperties,$scope,$route,$cookies) {
         if ($cookies.currency != undefined) {
