@@ -1007,12 +1007,13 @@
             url : "/api/orders"
         }).then(function mySuccess(response) {
             $scope.orders = JSON.parse(response.data);
-            alert(JSON.parse(response.data)[0].id);
+            //alert(JSON.parse(response.data)[0].id);
         });
     });
     app.controller('HatCtrl', function($scope, $window) {
         angular.element(document).ready(function () {
             $("#admin-button").hide();
+            $("#orders-button").hide();
             $("#signup-button").hide();
             $("#signin-button").hide();
             $("#logout-button").hide();
@@ -1025,6 +1026,9 @@
             else{
                 if($window.sessionStorage.role == "admin"){
                     $("#admin-button").show();
+                }
+                else{
+                    $("#orders-button").show();
                 }
                 $("#logout-button").show();
                 $scope.logoutText = "Log Out ("+$window.sessionStorage.login+")";
@@ -1047,6 +1051,7 @@
                 </ul>
             </li>
             <li id="admin-button"><a href="/admin"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+            <li id="orders-button"><a href="#!orders"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
             <li id="signup-button"><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li id="signin-button"><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
             <li id="logout-button"><a href="#!logout"><span class="glyphicon glyphicon-log-in"></span> {{logoutText}}</a></li>
