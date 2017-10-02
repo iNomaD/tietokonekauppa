@@ -449,6 +449,21 @@
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
         }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/disks/"+$scope.diskid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
+        }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
                 $location.path("/signin/");
@@ -499,6 +514,21 @@
         });
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/mbs/"+$scope.mbid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
         }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
@@ -551,6 +581,21 @@
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
         }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/processors/"+$scope.cpuid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
+        }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
                 $location.path("/signin/");
@@ -601,6 +646,21 @@
         });
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/rams/"+$scope.ramid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
         }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
@@ -653,6 +713,21 @@
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
         }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/gpus/"+$scope.gpuid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
+        }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
                 $location.path("/signin/");
@@ -704,6 +779,21 @@
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
         }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/psus/"+$scope.psuid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
+        }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
                 $location.path("/signin/");
@@ -754,6 +844,21 @@
         });
         $scope.back = function(){
             sharedProperties.cUrl = $location.path("/");
+        }
+        $scope.delete = function(x){
+            $http({
+                method : "DELETE",
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
+                url : "/api/cases/"+$scope.caseid + "/comments/"+x
+            }).then(function mySuccess(response) {
+                $window.location.reload();
+            }, function myError(response) {
+                document.getElementById('error').innerHTML="You don't have rights";
+                $(function () {
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            });
         }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
