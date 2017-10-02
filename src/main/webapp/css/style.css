@@ -36,3 +36,19 @@ body{
     width:400px;
     margin-left: 15px;
 }
+
+#admin-button{
+    display: none;
+}
+
+#signup-button{
+    display: none;
+}
+
+#signin-button{
+    display: none;
+}
+
+#logout-button{
+    display: none;
+}

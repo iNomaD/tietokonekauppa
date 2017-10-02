@@ -939,7 +939,7 @@
                     <li id="eur"><a href="{{currentUrl}}" ng-click="currency(1)">EUR</a></li>
                 </ul>
             </li>
-            <li id="admin-button"><a href="/admin"><span class="glyphicon glyphicon-log-in"></span> Admin</a></li>
+            <li id="admin-button"><a href="/admin"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
             <li id="signup-button"><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
             <li id="signin-button"><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
             <li id="logout-button"><a href="#!logout"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
