@@ -89,10 +89,10 @@ public class UserResource {
 
     @POST
     @Path("/logout")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response logout(){
-        // TODO implement business logic
-
+    public Response logout(String token){
+        jwtService.disableToken(token);
         return Response.ok().entity(new StringStatus("ok")).build();
     }
 }
