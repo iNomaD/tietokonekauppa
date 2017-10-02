@@ -337,7 +337,7 @@
             }
         }
     });
-    app.controller('Order', function($scope, $http,sharedProperties,$location) {
+    app.controller('Order', function($scope, $http,sharedProperties,$location,$window) {
         $scope.orderreq = function orderreq(notes) {
             $scope.order = "[";
             for (var i = 0; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
@@ -400,7 +400,7 @@
                 $http({
                     method: "POST",
                     headers: {
-                        'Authorization': 'Basic ' + btoa("admin" + ":" + "admin"),
+                        'Authorization': 'Bearer '+$window.sessionStorage.token,
                         'Content-Type': 'application/json'
                     },
                     url: "/api/orders?notes=" + notes,
@@ -846,12 +846,12 @@
                 }
         }
     });
-    app.controller("OrderInfo",function($scope,$http){
+    app.controller("OrderInfo",function($scope,$http,$window){
         $http({
             method : "GET",
-            headers: {'Authorization': 'Basic ' + btoa("admin" + ":" + "admin")},
+            //headers: {'Authorization': 'Basic ' + btoa("admin" + ":" + "admin")},
             transformResponse: "",
-            //headers: {'Authorization': 'Bearer'+sessionStorage.Token},
+            headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
             url : "/api/orders"
         }).then(function mySuccess(response) {
             $scope.orders = response.data;
