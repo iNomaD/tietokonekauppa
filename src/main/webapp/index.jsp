@@ -648,8 +648,11 @@
                         last_name: x.last_name,
                         email: x.email
                     })
-                }).then(function ServAnsw(response) {
-                    $scope.itOk = JSON.parse(response);
+                }).then(function mySuccess(data, status) {
+                    //$scope.itOk = data.xhrStatus;
+                    $scope.itOk = data.data.status;
+                    if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
+
                 });
             }
         };
@@ -667,10 +670,13 @@
                 url: "/api/users/signin/",
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data :  $.param({login: x.login,password: x.password})
-            }).then(function ServAnsw(response) {
-                $scope.itOk = JSON.parse(response);
+            }).then(function mySuccess(data, status) {
+                //$scope.itOk = data.xhrStatus;
+                $scope.itOk = data.data.status;
+                if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
+
             });
-            };
+        };
         $scope.passwordFerif = function (p,pc) {
             if(p != pc) $scope.passwordGood = "red";
             else $scope.passwordGood = "green";
