@@ -21,6 +21,7 @@
             <td title="'Amount'">
             <button style="float:right;" ng-click="redirect(mb.id)"  type="button" class="btn btn-primary" >More</button><div style="overflow: hidden; padding-right: .5em;"><input class="form-control inputr" type="number" value=0 size="3" min="0" max="{{mb.amount_available}}"></div><div style="display:none;">{{mb.id}}</div></td>
         </tr>
+        {{mbs.length}}
     </table>
     <br><p style="font-size:36px;text-align: center;">CPUs <span style="font-size:20px;" class="glyphicon glyphicon-chevron-down" data-toggle="collapse" data-target="#cpu"></span></p>
     <table id="cpu" ng-controller="cpuCtrl" ng-table="vm.tableParams" class="table table-hover table-bordered table-responsive collapse in">

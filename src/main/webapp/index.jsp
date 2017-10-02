@@ -1006,7 +1006,8 @@
             headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
             url : "/api/orders"
         }).then(function mySuccess(response) {
-            $scope.orders = response.data;
+            $scope.orders = JSON.parse(response.data);
+            alert(JSON.parse(response.data)[0].id);
         });
     });
     app.controller('HatCtrl', function($scope, $window) {
