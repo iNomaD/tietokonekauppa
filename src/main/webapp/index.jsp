@@ -439,6 +439,10 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/!/sign"+x);
+
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -449,7 +453,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/disks/"+$scope.diskid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -491,7 +495,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/mbs/"+$scope.mbid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -533,7 +537,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/processors/"+$scope.cpuid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -575,7 +579,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/rams/"+$scope.ramid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -617,7 +621,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/gpus/"+$scope.gpuid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -659,7 +663,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/psus/"+$scope.psuid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
@@ -701,7 +705,7 @@
             else{
             $http({
                 method : "POST",
-                headers:{ 'Authorization':  'Basic ' + btoa("admin" + ":" + "admin")},
+                headers: {'Authorization': 'Bearer '+$window.sessionStorage.token},
                 url : "/api/cases/"+$scope.caseid + "/comments?contents="+x
             }).then(function mySuccess(response) {
                 $scope.status = response.data;
