@@ -1,0 +1,32 @@
+<div ng-controller="LogOut">
+
+    <h1>Your infomation:</h1>
+    <div class="registration-form">
+        <table class="simple-little-table" style="width:100%">
+            <tr>
+                <td>Login</td>
+                <td><input type="text" ng-model="$window.sessionStorage.login"></td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td><input type="text" ng-model="$window.sessionStorage.first_name"></td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td><input type="text" ng-model="$window.sessionStorage.last_name"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" ng-model="$window.sessionStorage.email"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button type="button" class="btn btn-primary" data-ng-click="sendNewMember(su)">LogOut</button></td>
+            </tr>
+        </table>
+        <HR>
+
+        <div class="registration-response">Result <input type="text" ng-model="itOk" readonly class="registration-response-itok"></div>
+    </div>
+
+</div>

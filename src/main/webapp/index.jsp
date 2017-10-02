@@ -17,6 +17,15 @@
     <link rel="stylesheet" href="https://unpkg.com/ng-table@2.0.2/bundles/ng-table.min.css">
 </head>
 <script>
+
+//    $window.sessionStorage.id = "-1";
+//    sessionStorage.login = "Vasya";
+//    sessionStorage.email = "Gr@yd";
+//    sessionStorage.first_name = "V";
+//    sessionStorage.last_name = "P";
+//    sessionStorage.role = "?";
+//    sessionStorage.token = "42";
+
     var app = angular.module('myApp', ['ngRoute', 'ngTable','ngCookies']);
     app.config(function($routeProvider) {
         $routeProvider
@@ -58,6 +67,9 @@
             })
             .when("/signin/",{
                 templateUrl : "/users/singin/index.html"
+            })
+            .when("/logout/",{
+                templateUrl : "/users/logout/index.html"
             });
     });
     app.service('sharedProperties', function () {
@@ -662,7 +674,7 @@
         }
         //$http($scope.req).then($scope.itOk = response.data);
     });
-    app.controller('SingIn', function ($location,$scope,$http) {
+    app.controller('SingIn', function ($location,$scope,$http,$window) {
         $scope.sendMember = function(x){
             $scope.itOk = "Sended!";
             $http({
@@ -674,6 +686,15 @@
                 //$scope.itOk = data.xhrStatus;
                 $scope.itOk = data.data.status;
                 if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
+                else {
+                    $window.sessionStorage.id = data.data.id;
+                    $window.sessionStorage.login = JSON.stringify(data.data.login);
+                    $window.sessionStorage.email = data.data.email;
+                    $window.sessionStorage.first_name = data.data.first_name;
+                    $window.sessionStorage.last_name = data.data.last_name;
+                    $window.sessionStorage.role = data.data.role;
+                    $window.sessionStorage.token = data.data.token;
+                }
 
             });
         };
