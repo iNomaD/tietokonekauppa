@@ -339,6 +339,17 @@
     });
     app.controller('Order', function($scope, $http,sharedProperties,$location,$window) {
         $scope.orderreq = function orderreq(notes) {
+            if($window.sessionStorage.token == undefined){
+                console.log($window.sessionStorage.token);
+                document.getElementById('error').innerHTML="Register please";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                $location.path("/signup");
+                return;
+            }
+
             $scope.order = "[";
             for (var i = 0; i < document.getElementById("mb").getElementsByTagName('input').length; i++) {
                 if (document.getElementById("mb").getElementsByTagName('input')[i].value > 0) {
@@ -409,7 +420,7 @@
                 $location.path("/orders");
             }
             else{
-                document.getElementById('error').innerHTML="No chose parts";
+                document.getElementById('error').innerHTML="Please choose parts";
                 $(function () {
                     // wait till load event fires so all resources are available
                     $scope.$slider = $("#moderr").modal();
