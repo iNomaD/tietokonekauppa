@@ -451,8 +451,13 @@
         }
         $scope.Add = function(x){
             if($window.sessionStorage.token == undefined){
-                $location.path("/!/sign"+x);
-
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
             }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
@@ -496,6 +501,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -538,6 +552,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -580,6 +603,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -622,6 +654,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -664,6 +705,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -706,6 +756,15 @@
             sharedProperties.cUrl = $location.path("/");
         }
         $scope.Add = function(x){
+            if($window.sessionStorage.token == undefined){
+                $location.path("/signin/");
+                document.getElementById('error').innerHTML="Please Log In or Sing Up";
+                $(function () {
+                    // wait till load event fires so all resources are available
+                    $scope.$slider = $("#moderr").modal();
+                });
+                return;
+            }
             if(document.getElementById('comment').value == ''){
                 document.getElementById('error').innerHTML="No type comment";
                 $(function () {
@@ -748,39 +807,9 @@
                     //$scope.itOk = data.xhrStatus;
                     $scope.itOk = data.data.status;
                     if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
-                    else $window.location.href = "/signin";
+                    else $location.path("/signin");
                 });
             }
-        };
-        $scope.passwordFerif = function (p,pc) {
-            if(p != pc) $scope.passwordGood = "red";
-            else $scope.passwordGood = "green";
-        }
-        //$http($scope.req).then($scope.itOk = response.data);
-    });
-    app.controller('SingIn', function ($location,$scope,$http,$window) {
-        $scope.sendMember = function(x){
-            $scope.itOk = "Sended!";
-            $http({
-                method: "POST",
-                url: "/api/users/signin/",
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data :  $.param({login: x.login,password: x.password})
-            }).then(function mySuccess(data, status) {
-                //$scope.itOk = data.xhrStatus;
-                $scope.itOk = data.data.status;
-                if ($scope.itOk !== "ok") $scope.itOk = data.data.errors[0];
-                else {
-                    $window.sessionStorage.id = data.data.id;
-                    $window.sessionStorage.login = JSON.stringify(data.data.login);
-                    $window.sessionStorage.email = data.data.email;
-                    $window.sessionStorage.first_name = data.data.first_name;
-                    $window.sessionStorage.last_name = data.data.last_name;
-                    $window.sessionStorage.role = data.data.role;
-                    $window.sessionStorage.token = data.data.token;
-                }
-
-            });
         };
         $scope.passwordFerif = function (p,pc) {
             if(p != pc) $scope.passwordGood = "red";
@@ -808,6 +837,7 @@
                     $window.sessionStorage.last_name = data.data.last_name;
                     $window.sessionStorage.role = data.data.role;
                     $window.sessionStorage.token = data.data.token;
+                    $location.path("/");
                 }
 
             });
