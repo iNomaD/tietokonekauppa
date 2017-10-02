@@ -872,6 +872,20 @@
             $scope.orders = response.data;
         });
     });
+    app.controller('HatCtrl', function($window) {
+        angular.element(document).ready(function () {
+            if(($window.sessionStorage.token == undefined)){
+                $("#signup-button").show();
+                $("#signin-button").show();
+                $("#logout-button").hide();
+            }
+            else{
+                $("#signup-button").hide();
+                $("#signin-button").hide();
+                $("#logout-button").show();
+            }
+        });
+    });
 </script>
 <body ng-app="myApp">
 <nav class="navbar navbar-inverse" style="margin-bottom: 0;">
@@ -879,15 +893,16 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#!/">Tietokonekauppa</a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" ng-controller="HatCtrl">
             <li class="dropdown" ng-controller="Currency">
                 <a href="{{currentUrl}}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Currency <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li id="usd" class="active" ng-click="currency(0)"><a href="{{currentUrl}}">USD</a></li>
                     <li id="eur"><a href="{{currentUrl}}" ng-click="currency(1)">EUR</a></li>
                 </ul>
-            <li><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+            <li id="signup-button"><a href="#!signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li id="signin-button"><a href="#!signin"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+            <li id="logout-button"><a href="#!logout"><span class="glyphicon glyphicon-log-in"></span> Log Out</a></li>
         </ul>
     </div>
 </nav>
