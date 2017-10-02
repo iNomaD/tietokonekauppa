@@ -838,6 +838,7 @@
                     $window.sessionStorage.role = data.data.role;
                     $window.sessionStorage.token = data.data.token;
                     $location.path("/");
+                    $window.location.reload();
                 }
 
             });
@@ -856,7 +857,8 @@
         $scope.LogOut = function (x) {
             $window.sessionStorage.clear();
             $scope.itOk = "Success Logout!";
-            $window.location.href = "/";
+            $location.path("/");
+            $window.location.reload();
         }
     });
     app.controller("Currency",function(sharedProperties,$scope,$route,$cookies) {
